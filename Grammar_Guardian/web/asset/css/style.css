@@ -1,0 +1,105 @@
+
+.header-grammar{
+    height: 80px;
+    font-size: 1.6rem;
+}
+
+.grammar-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    background-color: #fff;
+    color: #333;
+    padding: 0 30px;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    z-index: 999;
+    border: 1px solid #e2dcdc;
+}
+
+.grammar-logo {
+    width: 100px;
+    height: 80px;
+}
+
+.grammar-logo img{
+    width: auto;
+    height: 100%;
+}
+
+.grammar-acc_vip{
+    font-size: 1rem;
+    background-color: green;
+    padding: 6px 10px;
+    border-radius: 20px;
+    color: #fff;
+}   
+
+.grammar-acc_vip:hover{
+    background-color: #fff;
+    color: green;
+    border: 1px solid green;
+}
+
+.grammar-acc_vip:hover h2{
+    color: green;
+}
+
+.grammar-acc_vip h2{
+    color: #fff;
+}
+
+
+.grammar-acc_current{
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+
+}
+
+.grammar-acc_current img{
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+
+.grammar-content{
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    background-color: #fff;
+    color: #333;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    border: 1px solid #e2dcdc;
+    font-size: 1.6rem;
+}
+
+
+
+.grammar-option{
+    font-size: 1.2rem;
+    padding: 0;
+}
+.grammar-option ul{
+    width: 120px;
+}
+.grammar-option a{
+    display: block;
+    color: #333;
+    padding: 10px 3px;
+    color: gray;
+}
+
+.grammar-option a:hover{
+    background-color: rgb(235, 233, 233);
+    color: black;
+}
+
+.grammar-input{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

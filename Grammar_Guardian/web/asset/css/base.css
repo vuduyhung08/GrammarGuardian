@@ -1,0 +1,132 @@
+:root {
+    --container-width: 100%;
+    --max-column: 12;
+    --column-space: 20px;
+    --spacer: 1rem;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    outline: 0;
+    border: 0;
+}
+
+html{
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+    font-family: "Poppins", sans-serif;
+}
+
+html a{
+    text-decoration: none;
+}
+
+html ul li{
+    list-style-type: none;
+}
+
+
+.container {
+    max-width: var(--container-width);
+    margin-inline: auto;
+    padding: 0 15px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-inline: calc(0px - var(--column-space) / 2);
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+/* .row.g-0 > [class^= "col-"]{
+    --column-space: 0;
+} */
+
+.row.g-0{
+    --column-space: 0;
+}
+
+.row.g-1{
+    --column-space: calc(var(--spacer) * 0.25);
+    --column-bottom: calc(var(--spacer) * 0.25);
+}
+
+.row.g-2{
+    --column-space: calc(var(--spacer) * 0.5);
+    --column-bottom: calc(var(--spacer) * 0.5);
+}
+
+.row.g-3{
+    --column-space: calc(var(--spacer));
+    --column-bottom: calc(var(--spacer));
+}
+
+.row.g-4{
+    --column-space: calc(var(--spacer) * 1.5);
+    --column-bottom: calc(var(--spacer) * 1.5);
+}
+
+.row.g-5{
+    --column-space: calc(var(--spacer) * 3);
+    --column-bottom: calc(var(--spacer) * 3);
+}
+
+[class^="col-"] {
+    flex-basis: calc(100% / var(--max-column) * var(--column-size));
+    max-width: calc(100% / var(--max-column) * var(--column-size));
+    padding-inline: calc(var(--column-space) / 2);
+    padding-bottom: var(--column-bottom);
+}
+
+.col-1 {
+    --column-size: 1;
+}
+
+.col-2 {
+    --column-size: 2;
+}
+
+.col-3 {
+    --column-size: 3;
+}
+
+.col-4 {
+    --column-size: 4;
+}
+
+.col-5 {
+    --column-size: 5;
+}
+
+.col-6 {
+    --column-size: 6;
+}
+
+.col-7 {
+    --column-size: 7;
+}
+
+.col-8 {
+    --column-size: 8;
+}
+
+.col-9 {
+    --column-size: 9;
+}
+
+.col-10 {
+    --column-size: 10;
+}
+
+.col-11 {
+    --column-size: 11;
+}
+
+.col-12 {
+    --column-size: 12;
+}
