@@ -1,5 +1,7 @@
 :root {
-    --container-width: 100%;
+    --color: green;
+    --color-white: #fff;
+    --container-width: auto;
     --max-column: 12;
     --column-space: 20px;
     --spacer: 1rem;
@@ -38,9 +40,8 @@ html ul li{
     display: flex;
     flex-wrap: wrap;
     margin-inline: calc(0px - var(--column-space) / 2);
-    justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 }
 
 /* .row.g-0 > [class^= "col-"]{

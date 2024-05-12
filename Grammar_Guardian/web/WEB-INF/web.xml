@@ -9,4 +9,9 @@
             30
         </session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>
+            HomeDemo.html
+        </welcome-file>
+    </welcome-file-list>
 </web-app>
