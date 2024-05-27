@@ -6,6 +6,7 @@ package Controller;
 
 import DAO.GrammarCheckerDAO;
 import Model.Post;
+import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -124,6 +125,30 @@ public class GrammarChecker extends HttpServlet {
             request.setAttribute("LIST_POST", listPost);
 
             request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+     private void savePost(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            HttpSession session = request.getSession(false);
+            String title = request.getParameter("title");
+            List<RuleMatch> matches = (List<RuleMatch>) session.getAttribute("CHECK_RESULT");
+            String textInput = (String) session.getAttribute("ESSAY_INPUT");
+            User userLogedIn = (User) session.getAttribute("USER");
+
+            Post post = new Post();
+            post.setTitle(title);
+            post.setDescription(textInput);
+            GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
+            boolean result = grammarCheckerDAO.SavePost(userLogedIn.getId(), post);
+
+            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
+            request.setAttribute("LIST_POST", listPost);
+
+            request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

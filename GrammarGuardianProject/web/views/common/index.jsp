@@ -222,7 +222,7 @@
             </div>
             <div class="row">
                 <form action="${pageContext.request.contextPath}/grammar-checker" method="POST">
-                    <input type="hidden" name="action" value="get-result"/>
+                    <input type="hidden" name="action" value="get-results"/>
                     <div class="col d-flex">
                         <div class="main-content">
                             <c:choose>
@@ -259,6 +259,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </div>
+                        
                         <div class="sidebar">
                             <div class="suggestions">
                                 <h2>Suggestions</h2>
@@ -294,8 +295,8 @@
                             </div>
                         </div>
                     </div>
-
             </div>
+   
         </form>
         <!-- Modal -->
         <div class="modal fade" id="save-post" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -487,53 +488,4 @@
         crossorigin="anonymous"
     ></script>
 </body>
-=======
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-=======
->>>>>>> 7ae8ad2e7850e1540dff593750b71609739123f5
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <div>
-            <form action="${pageContext.request.contextPath}/grammar-checker" method="POST">
-                <input hidden name="action" value="get-results"/>
-                <textarea required id="text" name="text" class="check-essay" placeholder="Start writing here."></textarea>
-                <button type="submit">Get results</button>
-            </form>
-        </div>
-        <div class="check-essay">
-            <c:forEach var="segment" items="${segments}">
-                <c:choose>
-                    <c:when test="${segment.error}">
-                        <span class="error" style="color: red">${segment.text}</span>
-                    </c:when>
-                    <c:otherwise>
-                        <span>${segment.text}</span>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-            <h2 style="color: green">Errors and Suggestions:</h2>
-            <ul>
-                <c:forEach var="match" items="${matches}">
-                    <li>
-                        ${match.message} at position ${match.fromPos}-${match.toPos}
-                        <br>
-                        Suggested correction: <c:forEach var="suggestion" items="${match.suggestedReplacements}">
-                        <c:out value="${suggestion}" />&nbsp;
-                    </c:forEach>
-                    </li>
-                </c:forEach>
-            </ul>
-        </div>
-    </body>
-<<<<<<< HEAD
->>>>>>> 7fc02eb (hainvt update CheckGrammar 25/4)
-=======
->>>>>>> 7ae8ad2e7850e1540dff593750b71609739123f5
-</html>

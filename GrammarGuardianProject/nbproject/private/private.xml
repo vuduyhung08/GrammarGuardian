@@ -3,17 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/src/java/Model/UserWallet.java</file>
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/src/java/DAO/AuthenticationDAO.java</file>
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/src/java/Controller/AuthenticationController.java</file>
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/web/views/common/footer.jsp</file>
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/web/views/common/forgot-password.jsp</file>
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/src/java/Model/Post_Category.java</file>
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/web/views/common/header.jsp</file>
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/web/views/common/verify-otp.jsp</file>
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/web/views/common/index.jsp</file>
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/web/META-INF/context.xml</file>
             <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/web/index.html</file>
             <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/web/WEB-INF/web.xml</file>
-            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/src/java/Model/UserWallet.java</file>
-            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/src/java/Model/Post_Category.java</file>
-            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/web/views/common/index.jsp</file>
-            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/src/java/DAL/DBContext.java</file>
-=======
             <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/src/java/Controller/GrammarChecker.java</file>
-            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/web/views/common/index.jsp</file>
->>>>>>> 7ae8ad2e7850e1540dff593750b71609739123f5
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/src/java/DAO/GrammarCheckerDAO.java</file>
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/src/java/DAL/DBContext.java</file>
         </group>
     </open-files>
 </project-private>

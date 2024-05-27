@@ -9,6 +9,7 @@ import Model.Post;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,5 +74,26 @@ public class GrammarCheckerDAO extends DBContext {
         }
         return listPosts;
     };
+    
+     public boolean SavePost(int userId, Post postCM) {
+        try {
+            String sql = "INSERT INTO [Post] (Title, Description, UserId, CreateAt, Status)"
+                    + " VALUES (?, ?, ?, ?, ?)";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, postCM.getTitle());
+            ps.setString(2, postCM.getDescription());
+            ps.setInt(3, userId);
+            LocalDateTime now = LocalDateTime.now();
+            ps.setString(4, now.toString());
+            ps.setInt(5, 0);
+            int affectedRow = ps.executeUpdate();
+            if (affectedRow > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
 
