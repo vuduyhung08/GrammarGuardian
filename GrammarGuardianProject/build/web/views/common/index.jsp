@@ -3,6 +3,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -490,6 +491,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+=======
+>>>>>>> 7ae8ad2e7850e1540dff593750b71609739123f5
 <!DOCTYPE html>
 <html>
     <head>
@@ -529,5 +532,8 @@
             </ul>
         </div>
     </body>
+<<<<<<< HEAD
 >>>>>>> 7fc02eb (hainvt update CheckGrammar 25/4)
+=======
+>>>>>>> 7ae8ad2e7850e1540dff593750b71609739123f5
 </html>
