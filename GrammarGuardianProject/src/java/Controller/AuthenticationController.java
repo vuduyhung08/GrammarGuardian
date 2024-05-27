@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -43,7 +44,7 @@ public class AuthenticationController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editoWr-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -55,8 +56,26 @@ public class AuthenticationController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession(false);
+        String action = request.getParameter("action") == null ? "" : request.getParameter("action");
+        String url = "views/common/index.jsp";
+        switch (action) {
+            case "":
+                home(request, response);
+                break;
+            case "login":
+                url = "views/common/sign-in.jsp";
+                break;
+            case "confirm-email":
+                ConfirmEmail(request, response);
+                break;
+            case "logout":
+                session.removeAttribute("USER");
+        }
+        request.getRequestDispatcher(url).forward(request, response);
+
     }
+
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -81,5 +100,13 @@ public class AuthenticationController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void ConfirmEmail(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void home(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 }
