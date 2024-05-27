@@ -119,9 +119,9 @@ public class GrammarChecker extends HttpServlet {
             session.setAttribute("ESSAY_INPUT", text);
             session.setAttribute("CHECK_RESULT", matches);
 
-//            GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
-//            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
-//            request.setAttribute("LIST_POST", listPost);
+            GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
+            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
+            request.setAttribute("LIST_POST", listPost);
 
             request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
         } catch (Exception e) {
