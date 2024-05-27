@@ -3,16 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/E:/FPT/SWP2024/Clone/GrammarGuardian/GrammarGuardianProject/src/java/DAO/AuthenticationDAO.java</file>
-            <file>file:/E:/FPT/SWP2024/Clone/GrammarGuardian/GrammarGuardianProject/src/java/Controller/AuthenticationController.java</file>
-            <file>file:/E:/FPT/SWP2024/Clone/GrammarGuardian/GrammarGuardianProject/web/views/common/index.jsp</file>
-            <file>file:/E:/FPT/SWP2024/Clone/GrammarGuardian/GrammarGuardianProject/web/index.html</file>
-            <file>file:/E:/FPT/SWP2024/Clone/GrammarGuardian/GrammarGuardianProject/web/WEB-INF/web.xml</file>
-=======
-            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/src/java/Controller/GrammarChecker.java</file>
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/web/index.html</file>
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/src/java/Model/UserWallet.java</file>
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/src/java/Model/Post_Category.java</file>
             <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/web/views/common/index.jsp</file>
->>>>>>> 7ae8ad2 (hainvt update grammarCheck DAO 26/5)
+            <file>file:/D:/Ki_5/SWP391-Group/GrammarGuardian/GrammarGuardianProject/src/java/DAL/DBContext.java</file>
         </group>
     </open-files>
 </project-private>
