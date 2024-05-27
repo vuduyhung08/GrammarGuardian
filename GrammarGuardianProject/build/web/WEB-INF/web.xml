@@ -8,4 +8,12 @@
         <servlet-name>AuthenticationController</servlet-name>
         <url-pattern>/auth</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>VerifyController</servlet-name>
+        <servlet-class>Controller.VerifyController</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>VerifyController</servlet-name>
+        <url-pattern>/verify</url-pattern>
+    </servlet-mapping>
 </web-app>
