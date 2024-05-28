@@ -5,14 +5,18 @@
         <group>
             <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/web/views/user/send-mail-noti.jsp</file>
             <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/src/java/DAO/AuthenticationDAO.java</file>
+            <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/src/java/Controller/GrammarChecker.java</file>
+            <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/src/java/Model/Role.java</file>
+            <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/src/java/Model/CreateModel/UserSignUp.java</file>
+            <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/src/java/Service/OtpService.java</file>
+            <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/src/java/Controller/AuthenticationController.java</file>
+            <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/web/views/user/profile.jsp</file>
+            <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/src/java/Controller/VerifyController.java</file>
+            <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/web/views/user/confirm-success.jsp</file>
             <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/src/java/DAO/ProfileDAO.java</file>
             <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/src/java/DAL/DBContext.java</file>
-            <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/web/views/user/change-password.jsp</file>
-            <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/src/java/Model/Role.java</file>
-            <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/src/java/Controller/AuthenticationController.java</file>
+            <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/src/java/Service/MailService.java</file>
             <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/src/java/Controller/ProfileController.java</file>
-            <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/web/views/user/profile.jsp</file>
-            <file>file:/D:/GrammarGuardian/GrammarGuardian/GrammarGuardianProject/web/views/user/confirm-success.jsp</file>
         </group>
     </open-files>
 </project-private>
