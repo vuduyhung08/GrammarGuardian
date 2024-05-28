@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
@@ -34,8 +35,8 @@ public class ProfileDAO extends DBContext {
             e.printStackTrace();
         }
     }
-    
-        public User updateProfile(User user, Part image) {
+
+    public User updateProfile(User user, Part image) {
         try {
             User userUpdate = new User();
             String sql = "";
@@ -102,5 +103,30 @@ public class ProfileDAO extends DBContext {
         return null;
     }
 
+    public boolean changePassword(User user, String newPassword) {
+        String sql = "SELECT * FROM [User] WHERE [UserName] = ? AND [Password] = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, user.getUserName());
+            ps.setString(2, user.getPassword());
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                sql = "UPDATE dbo.[User] SET [Password] = ? "
+                        + "WHERE [UserName] = ? ";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, newPassword);
+                ps.setString(2, user.getUserName());
+                int affectedRow = ps.executeUpdate();
+                if (affectedRow > 0) {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 
 }
