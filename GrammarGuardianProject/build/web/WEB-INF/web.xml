@@ -7,5 +7,11 @@
     <servlet-mapping>
         <servlet-name>AuthenticationController</servlet-name>
         <url-pattern>/AuthenticationController</url-pattern>
+        <servlet-name>GrammarChecker</servlet-name>
+        <servlet-class>Controller.GrammarChecker</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GrammarChecker</servlet-name>
+        <url-pattern>/grammar-checker</url-pattern>
     </servlet-mapping>
 </web-app>
