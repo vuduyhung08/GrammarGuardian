@@ -74,24 +74,15 @@ public class GrammarChecker extends HttpServlet {
     private void getResult(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession(false);
-
-//            Lấy giá trị của tham số "text" từ yêu cầu (request).
             String text = request.getParameter("text");
-//            Khởi tạo công cụ kiểm tra ngữ pháp cho tiếng Anh Mỹ.
             JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
-
-//            Kiểm tra văn bản và lưu các lỗi phát hiện được vào danh sách matches.
+            
             List<RuleMatch> matches = langTool.check(text);
 
-//            Tạo danh sách để lưu các đoạn văn bản và lỗi.
             // Create segments with error highlighting
             List<Map<String, Object>> segments = new ArrayList<>();
-
-//            Vòng lặp for duyệt qua từng lỗi trong matches
             int lastPos = 0;
-
             for (RuleMatch match : matches) {
-//            
                 if (match.getFromPos() > lastPos) {
                     Map<String, Object> segment = new HashMap<>();
                     segment.put("text", text.substring(lastPos, match.getFromPos()));
@@ -136,16 +127,17 @@ public class GrammarChecker extends HttpServlet {
             List<RuleMatch> matches = (List<RuleMatch>) session.getAttribute("CHECK_RESULT");
             String textInput = (String) session.getAttribute("ESSAY_INPUT");
             User userLogedIn = (User) session.getAttribute("USER");
-
-            Post post = new Post();
-            post.setTitle(title);
-            post.setDescription(textInput);
-            GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
-            boolean result = grammarCheckerDAO.SavePost(userLogedIn.getId(), post);
-
-            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
-            request.setAttribute("LIST_POST", listPost);
-
+            if (userLogedIn != null) {
+                Post post = new Post();
+                post.setTitle(title);
+                post.setDescription(textInput);
+                GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
+                boolean result = grammarCheckerDAO.SavePost(userLogedIn.getId(), post);
+                List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
+                request.setAttribute("LIST_POST", listPost);
+            } else {
+                request.getRequestDispatcher("views/common/sign-in.jsp").forward(request, response);
+            }
             request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
 
         } catch (Exception e) {

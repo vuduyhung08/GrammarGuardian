@@ -244,8 +244,13 @@
                                                 <li>
                                                     ${match.message} at position ${match.fromPos}-${match.toPos}
                                                     <br>
-                                                    Suggested correction: <c:forEach var="suggestion" items="${match.suggestedReplacements}">
-                                                        <c:out value="${suggestion}" />&nbsp;
+                                                    Suggested correction: 
+                                                    <c:set var="counter" value="0" />
+                                                    <c:forEach var="suggestion" items="${match.suggestedReplacements}">
+                                                        <c:if test="${counter < 3}">
+                                                            <c:out value="${suggestion}" />&nbsp;
+                                                            <c:set var="counter" value="${counter + 1}" />
+                                                        </c:if>
                                                     </c:forEach>
                                                 </li>
                                             </c:forEach>
@@ -259,7 +264,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </div>
-                        
+
                         <div class="sidebar">
                             <div class="suggestions">
                                 <h2>Suggestions</h2>
@@ -296,7 +301,7 @@
                         </div>
                     </div>
             </div>
-   
+
         </form>
         <!-- Modal -->
         <div class="modal fade" id="save-post" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
