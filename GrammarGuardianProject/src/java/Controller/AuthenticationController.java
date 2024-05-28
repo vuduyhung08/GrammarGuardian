@@ -5,10 +5,13 @@
 package Controller;
 
 import DAO.AuthenticationDAO;
+import DAO.GrammarCheckerDAO;
 import Model.CreateModel.UserSignUp;
 import Model.Post;
 import Model.User;
 import Service.MailService;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +19,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+
+
+
 
 
 public class AuthenticationController extends HttpServlet {
@@ -28,7 +34,7 @@ public class AuthenticationController extends HttpServlet {
         String url = "views/common/index.jsp";
         switch (action) {
             case "":
-                
+                home(request, response);
                 break;
             case "login":
                 url = "views/common/sign-in.jsp";
@@ -127,7 +133,7 @@ public class AuthenticationController extends HttpServlet {
             userSignUp.setLastName(lastName);
             userSignUp.setPhone(phone);
             session.setAttribute("email", email);
-            String link = "http://localhost:9999/GrammarGuardian/auth?action=confirm-email";
+            String link = "http://localhost:8080/GrammarGuardian/auth?action=confirm-email";
             AuthenticationDAO authDAO = new AuthenticationDAO();
             int result = authDAO.Register(userSignUp);
 
@@ -166,5 +172,14 @@ public class AuthenticationController extends HttpServlet {
         }
     }
 
-    
+    private void home(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
+            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
+            request.setAttribute("LIST_POST", listPost);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }

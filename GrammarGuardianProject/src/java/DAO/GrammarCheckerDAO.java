@@ -23,15 +23,7 @@ public class GrammarCheckerDAO extends DBContext {
     PreparedStatement ps;
     ResultSet rs;
     
-    public GrammarCheckerDAO() {
-        try {
-            con = new DBContext().getConnection();
-            System.out.println("Connect success");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
+
     public List<Post> getAllUserPost(int userId) {
         List<Post> listPosts = new ArrayList();
         try {
@@ -53,7 +45,10 @@ public class GrammarCheckerDAO extends DBContext {
         return listPosts;
     };
     
-    public List<Post> getAllPostAvailable() {
+
+
+    ;
+     public List<Post> getAllPostAvailable() {
         List<Post> listPosts = new ArrayList();
         try {
             // status = 3 was post manager approval
@@ -74,8 +69,10 @@ public class GrammarCheckerDAO extends DBContext {
         }
         return listPosts;
     };
+
     
-     public boolean SavePost(int userId, Post postCM) {
+
+    public boolean SavePost(int userId, Post postCM) {
         try {
             String sql = "INSERT INTO [Post] (Title, Description, UserId, CreateAt, Status)"
                     + " VALUES (?, ?, ?, ?, ?)";
@@ -86,6 +83,26 @@ public class GrammarCheckerDAO extends DBContext {
             LocalDateTime now = LocalDateTime.now();
             ps.setString(4, now.toString());
             ps.setInt(5, 0);
+            int affectedRow = ps.executeUpdate();
+            if (affectedRow > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    public boolean SaveError(Post postCM, String error) {
+        try {
+            String sql = "INSERT INTO [Error] (PostId, Description, SolutionId)"
+                    + " VALUES (?, ?, ?)";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, postCM.getPostId());
+            ps.setString(2, error);
+            ps.setString(3, postCM.getDescription());
+
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
                 return true;
