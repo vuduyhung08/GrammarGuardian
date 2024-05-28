@@ -75,9 +75,8 @@
                             </svg>
                             Cart
                         </a>
-                        <a class="btn btn-outline-light me-2" href="signup.html">Sign up</a>
                         <c:if test="${sessionScope.USER == null}">
-                            <a href="${pageContext.request.contextPath}/auth?action=login" class="btn btn-outline-light me-2">Login!</a>
+                            <a href="${pageContext.request.contextPath}/auth?action=login" class="btn btn-outline-light me-2">Login | Register</a>
                         </c:if>  
                         <c:if test="${sessionScope.USER != null }">
                             <div class="dropdown">

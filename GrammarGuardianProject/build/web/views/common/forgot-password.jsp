@@ -24,19 +24,24 @@
             <form action="verify" method="post">
                 <input type="hidden" name="action" value="sendOtpToMail"/>
                 <div class="bg-green-600 text-white text-center py-4" style="background-image: linear-gradient(to right top,#45af2a,#3ba023,#30901c,#268215,#1b730d,#1b730d,#1b730d,#1b730d,#268215,#30901c,#3ba023,#45af2a);">
-                    <h1 class="text-xl font-semibold" >QUÊN MẬT KHẨU</h1>
+                    <h1 class="text-xl font-semibold" >Forgot password</h1>
                 </div>
                 <div class="p-6">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-                        Địa chỉ Email:
+                        Email:
                     </label>
                     <input name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="Email">
                 </div>
                 <div class="px-6 py-4"  >
                     <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" type="button" >
-                        Gửi
+                        Send
+                    </button>
+                    <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" type="button" style="margin-top: 10px">
+                    <a href="auth?action=login" class="btn btn-outline-light me-2">Login | Register</a>
                     </button>
                 </div>
+                
+                
             </form>
 
         </div>
