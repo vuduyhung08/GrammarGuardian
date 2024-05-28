@@ -13,14 +13,12 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import java.util.Properties;
 
-/**
- *
- * @author Datnt
- */
 public class MailService {
+//        final String username = "dat.nt271102@gmail.com";
+//        final String password = "jjdicrlyxhlfutqg";
 
-    public static final String username = "bnvqm1721@gmail.com";
-    public static final String password = "tgqwyawkaytmqvka";
+    public static final String username = "huysugar123@gmail.com";
+    public static final String password = "dpmtgtmguxwknswr";
 
     public static void sendOtpToMail(String email, String otp) {
 

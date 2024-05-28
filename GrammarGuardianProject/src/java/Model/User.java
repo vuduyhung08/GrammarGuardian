@@ -10,10 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- *
- * @author Datnt
- */
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -34,3 +31,4 @@ public class User {
     private boolean IsCofirm;
     private int RoleId;
 }
+

@@ -1,4 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-    
+    <servlet>
+<<<<<<< HEAD
+        <servlet-name>AuthenticationController</servlet-name>
+        <servlet-class>Controller.AuthenticationController</servlet-class>
+    </servlet>
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> a40837fe3337e1e76bb532cef8193d3c4bd035c5
+        <servlet-name>AuthenticationController</servlet-name>
+        <servlet-class>Controller.AuthenticationController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthenticationController</servlet-name>
+<<<<<<< HEAD
+        <url-pattern>/auth</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>VerifyController</servlet-name>
+        <servlet-class>Controller.VerifyController</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>VerifyController</servlet-name>
+        <url-pattern>/verify</url-pattern>
+=======
+        <url-pattern>/AuthenticationController</url-pattern>
+     </servlet-mapping>
+>>>>>>> 0c6458de128b475fdd6e45055966c6466d5f9936
+    <servlet>
+        <servlet-name>GrammarChecker</servlet-name>
+        <servlet-class>Controller.GrammarChecker</servlet-class>
+    </servlet>
+    <servlet-mapping>
+<<<<<<< HEAD
+        <servlet-name>AuthenticationController</servlet-name>
+        <url-pattern>/auth</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GrammarChecker</servlet-name>
+        <url-pattern>/grammar-checker</url-pattern>    
+=======
+        <servlet-name>GrammarChecker</servlet-name>
+        <url-pattern>/grammar-checker</url-pattern>
+>>>>>>> a40837fe3337e1e76bb532cef8193d3c4bd035c5
+>>>>>>> 0c6458de128b475fdd6e45055966c6466d5f9936
+    </servlet-mapping>
 </web-app>
