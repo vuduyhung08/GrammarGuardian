@@ -4,10 +4,6 @@
  */
 package DAL;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a40837fe3337e1e76bb532cef8193d3c4bd035c5
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
