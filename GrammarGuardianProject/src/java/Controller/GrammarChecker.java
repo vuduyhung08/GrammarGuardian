@@ -22,7 +22,6 @@ import org.languagetool.JLanguageTool;
 import org.languagetool.language.AmericanEnglish;
 import org.languagetool.rules.RuleMatch;
 
-
 public class GrammarChecker extends HttpServlet {
 
     /**
@@ -42,7 +41,7 @@ public class GrammarChecker extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet GrammarChecker</title>");            
+            out.println("<title>Servlet GrammarChecker</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet GrammarChecker at " + request.getContextPath() + "</h1>");
@@ -51,46 +50,46 @@ public class GrammarChecker extends HttpServlet {
         }
     }
 
-  
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String action = request.getParameter("action") == null ? "": request.getParameter("action"); 
-       switch(action){
-           case "get-results":
-               getResult(request, response);
-               break;
-       }
-       
+        String action = request.getParameter("action") == null ? "" : request.getParameter("action");
+        switch (action) {
+            case "get-results":
+                getResult(request, response);
+                break;
+            case "save-post":
+                savePost(request, response);
+                break;
+        }
+
     }
 
-    
     private void getResult(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession(false);
-            
+
 //            Lấy giá trị của tham số "text" từ yêu cầu (request).
             String text = request.getParameter("text");
 //            Khởi tạo công cụ kiểm tra ngữ pháp cho tiếng Anh Mỹ.
             JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
-            
+
 //            Kiểm tra văn bản và lưu các lỗi phát hiện được vào danh sách matches.
             List<RuleMatch> matches = langTool.check(text);
 
 //            Tạo danh sách để lưu các đoạn văn bản và lỗi.
             // Create segments with error highlighting
             List<Map<String, Object>> segments = new ArrayList<>();
-            
+
 //            Vòng lặp for duyệt qua từng lỗi trong matches
             int lastPos = 0;
-            
+
             for (RuleMatch match : matches) {
 //            
                 if (match.getFromPos() > lastPos) {
@@ -99,7 +98,7 @@ public class GrammarChecker extends HttpServlet {
                     segment.put("error", false);
                     segments.add(segment);
                 }
-                   
+
                 Map<String, Object> errorSegment = new HashMap<>();
                 errorSegment.put("text", text.substring(match.getFromPos(), match.getToPos()));
                 errorSegment.put("error", true);
@@ -129,8 +128,8 @@ public class GrammarChecker extends HttpServlet {
             e.printStackTrace();
         }
     }
-    
-     private void savePost(HttpServletRequest request, HttpServletResponse response) {
+
+    private void savePost(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession(false);
             String title = request.getParameter("title");
@@ -153,6 +152,7 @@ public class GrammarChecker extends HttpServlet {
             e.printStackTrace();
         }
     }
+
     @Override
     public String getServletInfo() {
         return "Short description";
