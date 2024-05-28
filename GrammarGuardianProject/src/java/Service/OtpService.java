@@ -4,7 +4,6 @@
  */
 package Service;
 
-
 public class OtpService {
 
     public static String genarateOtp() {

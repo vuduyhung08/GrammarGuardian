@@ -7,13 +7,12 @@ package Controller;
 import DAO.GrammarCheckerDAO;
 import Model.Post;
 import Model.User;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,59 +23,53 @@ import org.languagetool.rules.RuleMatch;
 
 public class GrammarChecker extends HttpServlet {
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    }
+
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet GrammarChecker</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet GrammarChecker at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");
-        switch (action) {
-            case "get-results":
-                getResult(request, response);
-                break;
-            case "save-post":
-                savePost(request, response);
-                break;
+        if (session != null && session.getAttribute("USER") != null) {
+            switch (action) {
+                case "get-result":
+                    getResult(request, response);
+                    break;
+                case "save-post":
+                    savePost(request, response);
+                    break;
+            }
+        } else {
+            response.sendRedirect("views/common/sign-in.jsp");
         }
-
     }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
     private void getResult(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession(false);
             String text = request.getParameter("text");
             JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
-            
             List<RuleMatch> matches = langTool.check(text);
 
             // Create segments with error highlighting
@@ -89,7 +82,6 @@ public class GrammarChecker extends HttpServlet {
                     segment.put("error", false);
                     segments.add(segment);
                 }
-
                 Map<String, Object> errorSegment = new HashMap<>();
                 errorSegment.put("text", text.substring(match.getFromPos(), match.getToPos()));
                 errorSegment.put("error", true);
@@ -127,27 +119,21 @@ public class GrammarChecker extends HttpServlet {
             List<RuleMatch> matches = (List<RuleMatch>) session.getAttribute("CHECK_RESULT");
             String textInput = (String) session.getAttribute("ESSAY_INPUT");
             User userLogedIn = (User) session.getAttribute("USER");
-            if (userLogedIn != null) {
-                Post post = new Post();
-                post.setTitle(title);
-                post.setDescription(textInput);
-                GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
-                boolean result = grammarCheckerDAO.SavePost(userLogedIn.getId(), post);
-                List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
-                request.setAttribute("LIST_POST", listPost);
-            } else {
-                request.getRequestDispatcher("views/common/sign-in.jsp").forward(request, response);
-            }
+
+            Post post = new Post();
+            post.setTitle(title);
+            post.setDescription(textInput);
+            GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
+            boolean result = grammarCheckerDAO.SavePost(userLogedIn.getId(), post);
+
+            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
+            request.setAttribute("LIST_POST", listPost);
+
             request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

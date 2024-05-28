@@ -13,12 +13,12 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import java.util.Properties;
 
-
 public class MailService {
+//        final String username = "dat.nt271102@gmail.com";
+//        final String password = "jjdicrlyxhlfutqg";
 
-
-    public static final String username = "bnvqm1721@gmail.com";
-    public static final String password = "tgqwyawkaytmqvka";
+    public static final String username = "huysugar123@gmail.com";
+    public static final String password = "dpmtgtmguxwknswr";
 
     public static void sendOtpToMail(String email, String otp) {
 
@@ -40,7 +40,7 @@ public class MailService {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-            message.setSubject("Verify your account from GrammarGuardian"); // Email subject
+            message.setSubject("Verify your account from GrammarChecker"); // Email subject
 
             // Email content with enhanced design
             String htmlBody = "<html><head><style>"
@@ -51,10 +51,10 @@ public class MailService {
                     + ".content { color: #343a40; }"
                     + "</style></head>"
                     + "<body>"
-                    + "<h1 class='header'>Verify your account from GrammarGuardian</h1>"
+                    + "<h1 class='header'>Verify your account from GrammarChecker</h1>"
                     + "<p class='content'>Your OTP is: <strong class='otp'>" + otp + "</strong></p>"
                     + "<p class='content'>Please enter this code on the website to complete the verification process.</p>"
-                    + "<p class='footer'>Thank you from GrammarGuardian</p>"
+                    + "<p class='footer'>Thank you from GrammarChecker</p>"
                     + "</body></html>";
 
             message.setContent(htmlBody, "text/html");
@@ -86,7 +86,7 @@ public class MailService {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-            message.setSubject("Verify your account from GrammarGuardian"); // Email subject
+            message.setSubject("Verify your account from GrammarChecker"); // Email subject
 
             // Email content with enhanced design
             String htmlBody = "<html><head><style>"
@@ -97,10 +97,10 @@ public class MailService {
                     + ".content { color: #343a40; }"
                     + "</style></head>"
                     + "<body>"
-                    + "<h1 class='header'>Verify your account from GrammarGuardian</h1>"
+                    + "<h1 class='header'>Verify your account from GrammarChecker</h1>"
                     + "<p class='content'>Confirm herer <a class='otp' href='" + link + "'>Click here</a></p>"
                     + "<p class='content'>Please click this link to complete the verification process.</p>"
-                    + "<p class='footer'>Verify your account from GrammarGuardian.</p>"
+                    + "<p class='footer'>Verify your account from GrammarChecker.</p>"
                     + "</body></html>";
 
             message.setContent(htmlBody, "text/html");
