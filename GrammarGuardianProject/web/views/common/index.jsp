@@ -1,7 +1,14 @@
 
 <<<<<<< HEAD
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+=======
+<<<<<<< HEAD
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+>>>>>>> 0c6458de128b475fdd6e45055966c6466d5f9936
 
 <!DOCTYPE html>
 <html lang="en">
@@ -220,7 +227,7 @@
             </div>
             <div class="row">
                 <form action="${pageContext.request.contextPath}/grammar-checker" method="POST">
-                    <input type="hidden" name="action" value="get-result"/>
+                    <input type="hidden" name="action" value="get-results"/>
                     <div class="col d-flex">
                         <div class="main-content">
                             <c:choose>
@@ -242,8 +249,13 @@
                                                 <li>
                                                     ${match.message} at position ${match.fromPos}-${match.toPos}
                                                     <br>
-                                                    Suggested correction: <c:forEach var="suggestion" items="${match.suggestedReplacements}">
-                                                        <c:out value="${suggestion}" />&nbsp;
+                                                    Suggested correction: 
+                                                    <c:set var="counter" value="0" />
+                                                    <c:forEach var="suggestion" items="${match.suggestedReplacements}">
+                                                        <c:if test="${counter < 3}">
+                                                            <c:out value="${suggestion}" />&nbsp;
+                                                            <c:set var="counter" value="${counter + 1}" />
+                                                        </c:if>
                                                     </c:forEach>
                                                 </li>
                                             </c:forEach>
@@ -257,6 +269,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </div>
+
                         <div class="sidebar">
                             <div class="suggestions">
                                 <h2>Suggestions</h2>
@@ -292,8 +305,8 @@
                             </div>
                         </div>
                     </div>
-
             </div>
+
         </form>
         <!-- Modal -->
         <div class="modal fade" id="save-post" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -330,7 +343,6 @@
                 <c:forEach var="post" items="${LIST_POST}">
                     <div class="col-md-3">
                         <div class="card shadow-sm">
-                            <img src="${pageContext.request.contextPath}/images/csd.jpg" alt="">
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <div class="btn-group">
@@ -485,6 +497,9 @@
         crossorigin="anonymous"
     ></script>
 </body>
+<<<<<<< HEAD
+
+=======
 =======
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -530,3 +545,4 @@
     </body>
 >>>>>>> a40837fe3337e1e76bb532cef8193d3c4bd035c5
 </html>
+>>>>>>> 0c6458de128b475fdd6e45055966c6466d5f9936

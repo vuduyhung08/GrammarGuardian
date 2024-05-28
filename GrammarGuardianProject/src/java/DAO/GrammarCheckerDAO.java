@@ -13,21 +13,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ *
+ * @author admin
+ */
 public class GrammarCheckerDAO extends DBContext {
 
     private Connection con;
     PreparedStatement ps;
     ResultSet rs;
-
-    public GrammarCheckerDAO() {
-        try {
-            con = new DBContext().getConnection();
-            System.out.println("Connect success");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    
 
     public List<Post> getAllUserPost(int userId) {
         List<Post> listPosts = new ArrayList();
@@ -48,7 +43,9 @@ public class GrammarCheckerDAO extends DBContext {
             e.printStackTrace();
         }
         return listPosts;
-    }
+    };
+    
+
 
     ;
      public List<Post> getAllPostAvailable() {
@@ -71,9 +68,7 @@ public class GrammarCheckerDAO extends DBContext {
             e.printStackTrace();
         }
         return listPosts;
-    }
-
-    ;
+    };
 
     
 
@@ -98,6 +93,7 @@ public class GrammarCheckerDAO extends DBContext {
         return false;
     }
 
+
     public boolean SaveError(Post postCM, String error) {
         try {
             String sql = "INSERT INTO [Error] (PostId, Description, SolutionId)"
@@ -117,3 +113,4 @@ public class GrammarCheckerDAO extends DBContext {
         return false;
     }
 }
+
