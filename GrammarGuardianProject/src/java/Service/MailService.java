@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Service;
 
 import jakarta.mail.Message;
@@ -13,6 +9,10 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import java.util.Properties;
 
+/**
+ *
+ * @author Admin
+ */
 public class MailService {
 //        final String username = "dat.nt271102@gmail.com";
 //        final String password = "jjdicrlyxhlfutqg";

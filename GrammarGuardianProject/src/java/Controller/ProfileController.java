@@ -1,89 +1,82 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
-import DAO.AuthenticationDAO;
 import DAO.ProfileDAO;
 import Model.User;
-import Service.MailService;
-import Service.OtpService;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-import java.io.IOException;
 
 /**
  *
- * @author Datnt
+ * @author Admin
  */
-@MultipartConfig
 public class ProfileController extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ProfileController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ProfileController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String url = "";
-            HttpSession session = request.getSession(false);
-            // Get session ra neu khong co session account tuc la chua login thi response ve trang login.
-            String action = request.getParameter("action") == null ? "" : request.getParameter("action");
-            if (session != null && session.getAttribute("USER") != null) {
-                User user = (User) session.getAttribute("USER");
-                switch (action) {
-                    case "view": {
-                        // set thong tin cua user vao bien requestScope user
-                        request.setAttribute("USER", user);
-                        url = "views/user/profile.jsp";
-                        break;
-                    }
-                    case "changePassword": {
-                        url = "views/user/change-password.jsp";
-                        break;
-                    }
-                    case "forgotPassword":
-                        forgotPassword(request, response);
-                        url = "views/user/send-mail-noti.jsp";
-                        break;
-
-                }
-            } else {
-                // trang login
-                url = "views/common/sign-in.jsp";
-            }
-            request.getRequestDispatcher(url).forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        processRequest(request, response);
     }
 
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        String action = request.getParameter("action") == null ? "" : request.getParameter("action");
-        if (session != null && session.getAttribute("USER") != null) {
-            switch (action) {
-                case "updateProfile":
-                    updateProfile(request, response);
-                    break;
-                case "changePassword":
-                    changePassword(request, response);
-                    break;
-//                case "setNewPassword":
-//                    setNewPassword(request, response);
-//                    break;
-            }
-        } else {
-            response.sendRedirect("views/common/sign-in.jsp");
-        }
+        processRequest(request, response);
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";
@@ -122,71 +115,4 @@ public class ProfileController extends HttpServlet {
 
     }
 
-    private void changePassword(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            HttpSession session = request.getSession(false);
-            String oldPassword = request.getParameter("oldpassword");
-            String newPassword = request.getParameter("newPassword");
-            User userLogin = (User) session.getAttribute("USER");
-            ProfileDAO profileDAO = new ProfileDAO();
-            User user = new User();
-            user.setId(userLogin.getId());
-            user.setPassword(oldPassword);
-            user.setUserName(userLogin.getUserName());
-
-            boolean result = profileDAO.changePassword(user, newPassword);
-            if (result) {
-                request.setAttribute("MESSAGE", "Cập nhật mật khẩu thành công");
-            } else {
-                request.setAttribute("ERRORMESSAGE", "Cập nhật mật khẩu không thành công");
-            }
-            System.out.println("Change password " + result);
-            request.getRequestDispatcher("views/user/profile.jsp").forward(request, response);
-        } catch (Exception e) {
-            System.out.println("UpdateProfile Cannot update");
-            e.printStackTrace();
-        }
-    }
-
-    private void forgotPassword(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            HttpSession session = request.getSession();
-            User userLogin = (User) session.getAttribute("USER");
-            OtpService optService = new OtpService();
-            String otp = OtpService.genarateOtp();
-            session.setAttribute("otp", otp);
-            String email = userLogin.getEmail().trim();
-            MailService mailService = new MailService();
-            mailService.sendOtpToMail(email, otp);
-        } catch (Exception e) {
-            System.out.println("ForgotPassword Get cannot found");
-            e.printStackTrace();
-        }
-
-    }
-
-    private void setNewPassword(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            String url = "views/user/confirm-success.jsp";
-            HttpSession session = request.getSession();
-            String newPassword = request.getParameter("newPassword");
-            User userLogin = (User) session.getAttribute("USER");
-            String email = userLogin.getEmail().trim();
-            AuthenticationDAO authDAO = new AuthenticationDAO();
-            boolean result = authDAO.ForgotPassWord(newPassword, email);
-            if (result) {
-                url = "views/common/sign-in.jsp";
-                request.setAttribute("MESSAGE", "Reset password thành công hãy đăng nhập!");
-            } else {
-                request.setAttribute("ERRROR", "ERROR in reset password");
-            }
-            request.getRequestDispatcher(url).forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void confirmOTP(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
