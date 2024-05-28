@@ -4,22 +4,72 @@
  */
 package Controller;
 
+<<<<<<< HEAD
 import DAO.AuthenticationDAO;
 import Model.CreateModel.UserSignUp;
 import Model.Post;
 import Model.User;
 import Service.MailService;
+=======
+import java.io.IOException;
+import java.io.PrintWriter;
+>>>>>>> a40837fe3337e1e76bb532cef8193d3c4bd035c5
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+<<<<<<< HEAD
 import java.io.IOException;
 import java.util.List;
 
 
 public class AuthenticationController extends HttpServlet {
 
+=======
+
+/**
+ *
+ * @author Admin
+ */
+public class AuthenticationController extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AuthenticationController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AuthenticationController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
+    // <editoWr-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+>>>>>>> a40837fe3337e1e76bb532cef8193d3c4bd035c5
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -28,7 +78,11 @@ public class AuthenticationController extends HttpServlet {
         String url = "views/common/index.jsp";
         switch (action) {
             case "":
+<<<<<<< HEAD
                 
+=======
+                home(request, response);
+>>>>>>> a40837fe3337e1e76bb532cef8193d3c4bd035c5
                 break;
             case "login":
                 url = "views/common/sign-in.jsp";
@@ -43,7 +97,24 @@ public class AuthenticationController extends HttpServlet {
 
     }
 
+<<<<<<< HEAD
     
+=======
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+>>>>>>> a40837fe3337e1e76bb532cef8193d3c4bd035c5
 
     /**
      * Returns a short description of the servlet.
@@ -55,6 +126,7 @@ public class AuthenticationController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+<<<<<<< HEAD
     
 
     private void ConfirmEmail(HttpServletRequest request, HttpServletResponse response) {
@@ -71,4 +143,14 @@ public class AuthenticationController extends HttpServlet {
     }
 
     
+=======
+    private void ConfirmEmail(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void home(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+>>>>>>> a40837fe3337e1e76bb532cef8193d3c4bd035c5
 }

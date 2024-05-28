@@ -10,6 +10,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+<<<<<<< HEAD
+=======
+@Setter
+>>>>>>> a40837fe3337e1e76bb532cef8193d3c4bd035c5
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

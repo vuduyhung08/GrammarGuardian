@@ -12,7 +12,11 @@ import lombok.Setter;
 
 /**
  *
+<<<<<<< HEAD
  * @author Datnt
+=======
+ * @author 
+>>>>>>> a40837fe3337e1e76bb532cef8193d3c4bd035c5
  */
 @Setter
 @Getter
@@ -28,4 +32,8 @@ public class UserSignUp {
     public String Email;
     public boolean IsActive;
     public Date CreateAt;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> a40837fe3337e1e76bb532cef8193d3c4bd035c5

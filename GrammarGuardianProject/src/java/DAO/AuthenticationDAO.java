@@ -4,6 +4,7 @@
  */
 package DAO;
 
+<<<<<<< HEAD
 import DAL.DBContext;
 import Model.CreateModel.UserSignUp;
 import Model.Role;
@@ -97,4 +98,12 @@ public class AuthenticationDAO extends DBContext {
         }
         return false;
     }
+=======
+/**
+ *
+ * @author Admin
+ */
+public class AuthenticationDAO {
+    
+>>>>>>> a40837fe3337e1e76bb532cef8193d3c4bd035c5
 }
