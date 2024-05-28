@@ -8,6 +8,10 @@
         <servlet-name>ProfileController</servlet-name>
         <servlet-class>Controller.ProfileController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AuthenticationController</servlet-name>
+        <servlet-class>Controller.AuthenticationController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GrammarChecker</servlet-name>
         <url-pattern>/grammar-checker</url-pattern>
@@ -15,5 +19,9 @@
     <servlet-mapping>
         <servlet-name>ProfileController</servlet-name>
         <url-pattern>/controller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AuthenticationController</servlet-name>
+        <url-pattern>/auth</url-pattern>
     </servlet-mapping>
 </web-app>
