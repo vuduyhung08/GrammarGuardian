@@ -333,7 +333,6 @@
                 <c:forEach var="post" items="${LIST_POST}">
                     <div class="col-md-3">
                         <div class="card shadow-sm">
-                            <img src="${pageContext.request.contextPath}/images/csd.jpg" alt="">
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <div class="btn-group">
