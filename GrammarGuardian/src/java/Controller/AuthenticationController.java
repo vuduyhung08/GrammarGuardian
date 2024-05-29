@@ -18,10 +18,6 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-/**
- *
- * @author Datnt Source
- */
 public class AuthenticationController extends HttpServlet {
 
     @Override
@@ -90,6 +86,9 @@ public class AuthenticationController extends HttpServlet {
                     session.setAttribute("EMAIL", userLogedIn.getEmail());
                     // User 
                     if (userLogedIn.getRoleId() == 1) {
+                        GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
+                        List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
+                        request.setAttribute("LIST_POST", listPost);
 //                        home(request, response);
                         url = "views/common/index.jsp";
                         // Admin
@@ -104,6 +103,7 @@ public class AuthenticationController extends HttpServlet {
             } else {
                 request.setAttribute("ERRORMESSAGE", "Sai tên đăng nhập hoặc tài khoản, vui lòng thử lại!");
             }
+
             request.getRequestDispatcher(url).forward(request, response);
 
         } catch (Exception e) {
@@ -131,7 +131,7 @@ public class AuthenticationController extends HttpServlet {
             userSignUp.setLastName(lastName);
             userSignUp.setPhone(phone);
             session.setAttribute("email", email);
-            String link = "http://localhost:8080/GrammarGuardian/auth?action=confirm-email";
+            String link = "http://localhost:9999/GrammarGuardian/auth?action=confirm-email";
             AuthenticationDAO authDAO = new AuthenticationDAO();
             int result = authDAO.Register(userSignUp);
 

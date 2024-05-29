@@ -13,15 +13,12 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import java.util.Properties;
 
-/**
- *
- * @author Datnt
- */
+
 public class MailService {
 
 
-    public static final String username = "huysugar123@gmail.com";
-    public static final String password = "dpmtgtmguxwknswr";
+    public static final String username = "bnvqm1721@gmail.com";
+    public static final String password = "tgqwyawkaytmqvka";
 
     public static void sendOtpToMail(String email, String otp) {
 
@@ -100,7 +97,7 @@ public class MailService {
                     + ".content { color: #343a40; }"
                     + "</style></head>"
                     + "<body>"
-                    + "<h1 class='header'>Verify your account from GrammarChecker</h1>"
+                    + "<h1 class='header'>Verify your account from GrammarGuardian</h1>"
                     + "<p class='content'>Confirm herer <a class='otp' href='" + link + "'>Click here</a></p>"
                     + "<p class='content'>Please click this link to complete the verification process.</p>"
                     + "<p class='footer'>Verify your account from GrammarGuardian.</p>"

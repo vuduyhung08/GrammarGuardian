@@ -254,8 +254,11 @@
                                 </c:when>
                                 <c:otherwise>
                                     <textarea required id="text" name="text" class="check-essay" placeholder="Start writing here."></textarea>
+<!--                                    <label><input type="checkbox" name="checkSpelling" value="true"> Check Spelling</label><br>
+                                    <label><input type="checkbox" name="checkPunctuation" value="true"> Check Punctuation</label><br>
+                                    <label><input type="checkbox" name="checkGrammar" value="true"> Check Grammar</label><br>-->
                                 </c:otherwise>
-                            </c:choose>
+                                </c:choose>
                         </div>
                         <div class="sidebar">
                             <div class="suggestions">
@@ -357,26 +360,6 @@
         <h2 class="text-body-emphasis text-center py-3">Top Post in 2024</h2>
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <!-- Iterate over courses -->
-                <c:forEach var="courses" items="${courses}">
-                    <div class="col-md-3">
-                        <div class="card shadow-sm">
-                            <img src="${pageContext.request.contextPath}/images/c++.jpg" alt="">
-                            <div class="card-body">
-                                <p class="card-text"><strong>${courses.name}</strong></p>
-                                <p>Jame Smith</p>
-                                <p class="d-inline text-decoration-line-through">${courses.price}</p>
-                                <p class="d-inline">${courses.getPriceDiscount()}$</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a href="course-detail?id=${courses.id}" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"><a href="cart.jsp" style="text-decoration: none; color: black">Add to cart</a> </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach> <!-- End of forEach -->
             </div>
         </div>
     </div>
@@ -390,24 +373,6 @@
         </h2>
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-                <c:forEach var="lectures" items="${lectures}">
-                    <div class="col-md-2">
-                        <div class="card shadow-sm">
-                            <img src="${pageContext.request.contextPath}/images/instructor.jpg" alt="">
-                            <div class="card-body">
-                                <div class="btn-group d-flex flex-column-reverse justify-content-center align-items-center">
-                                    <a href="viewinstuctor?id=${lectures.id}">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">
-                                            ${lectures.fullName}
-                                        </button>
-                                    </a>
-                                    <p>Software engineer</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
             </div>
         </div>
     </div>

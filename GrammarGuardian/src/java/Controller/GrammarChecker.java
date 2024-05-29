@@ -21,25 +21,18 @@ import org.languagetool.JLanguageTool;
 import org.languagetool.language.AmericanEnglish;
 import org.languagetool.rules.RuleMatch;
 
-/**
- *
- * @author Datnt
- */
 public class GrammarChecker extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
+        List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
+        request.setAttribute("LIST_POST", listPost);
+        request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -115,6 +108,74 @@ public class GrammarChecker extends HttpServlet {
             e.printStackTrace();
         }
     }
+//    private void getResult(HttpServletRequest request, HttpServletResponse response) {
+//        try {
+//            HttpSession session = request.getSession(false);
+//            String text = request.getParameter("text");
+//            JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
+//
+//            // Khai báo các biến để xác định loại lỗi cần kiểm tra
+//            boolean checkSpelling = Boolean.parseBoolean(request.getParameter("checkSpelling"));
+//            boolean checkPunctuation = Boolean.parseBoolean(request.getParameter("checkPunctuation"));
+//            boolean checkGrammar = Boolean.parseBoolean(request.getParameter("checkGrammar"));
+//
+//            List<RuleMatch> matches = new ArrayList<>();
+//
+//            // Kiểm tra lỗi chính tả nếu được chọn
+//            if (checkSpelling) {
+//                matches.addAll(langTool.check(text));
+//            }
+//
+//            // Kiểm tra lỗi dấu câu nếu được chọn
+//            if (checkPunctuation) {
+//                langTool.disableRule("MORFOLOGIK_RULE_EN_US");
+//                matches.addAll(langTool.check(text));
+//            }
+//
+//            // Kiểm tra lỗi ngữ pháp nếu được chọn
+//            if (checkGrammar) {
+//                langTool.enableRule("MORFOLOGIK_RULE_EN_US");
+//                matches.addAll(langTool.check(text));
+//            }
+//
+//            // Tạo segments với việc làm nổi bật lỗi
+//            List<Map<String, Object>> segments = new ArrayList<>();
+//            int lastPos = 0;
+//            for (RuleMatch match : matches) {
+//                if (match.getFromPos() > lastPos) {
+//                    Map<String, Object> segment = new HashMap<>();
+//                    segment.put("text", text.substring(lastPos, match.getFromPos()));
+//                    segment.put("error", false);
+//                    segments.add(segment);
+//                }
+//                Map<String, Object> errorSegment = new HashMap<>();
+//                errorSegment.put("text", text.substring(match.getFromPos(), match.getToPos()));
+//                errorSegment.put("error", true);
+//                segments.add(errorSegment);
+//                lastPos = match.getToPos();
+//            }
+//            if (lastPos < text.length()) {
+//                Map<String, Object> segment = new HashMap<>();
+//                segment.put("text", text.substring(lastPos));
+//                segment.put("error", false);
+//                segments.add(segment);
+//            }
+//
+//            request.setAttribute("segments", segments);
+//            request.setAttribute("matches", matches);
+//            request.setAttribute("text", text);
+//
+//            session.setAttribute("ESSAY_INPUT", text);
+//            session.setAttribute("CHECK_RESULT", matches);
+//
+//            GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
+//            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
+//            request.setAttribute("LIST_POST", listPost);
+//            request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private void savePost(HttpServletRequest request, HttpServletResponse response) {
         try {
