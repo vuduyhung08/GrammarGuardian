@@ -131,7 +131,7 @@ public class AuthenticationController extends HttpServlet {
             userSignUp.setLastName(lastName);
             userSignUp.setPhone(phone);
             session.setAttribute("email", email);
-            String link = "http://localhost:8080/GrammarGuardian/auth?action=confirm-email";
+            String link = "http://localhost:9999/GrammarGuardian/auth?action=confirm-email";
             AuthenticationDAO authDAO = new AuthenticationDAO();
             int result = authDAO.Register(userSignUp);
 
