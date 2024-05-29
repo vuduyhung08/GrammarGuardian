@@ -64,7 +64,7 @@
                             <button type="submit" class="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800 border border-gray-300 py-2 px-4 rounded hover:border-gray-500 focus:outline-none focus:border-gray-500" type="button" >
                                 Lưu
                             </button>
-                            <a href="profile1">
+                            <a href="profile?action=view">
                                 <button class="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800 border border-gray-300 py-2 px-4 rounded hover:border-gray-500 focus:outline-none focus:border-gray-500" type="button" >
                                     Hủy
                                 </button>
@@ -79,11 +79,11 @@
             <div class="w-full md:w-1/2 p-5">
                 <div class="flex items-center mb-5">
                     <i class="fas fa-shield-alt text-lg text-gray-500" style="color: rgb(229, 69, 10);"></i>
-                    <h2 class="text-xl font-bold pl-3" style="color: #cf6203;">Xác Thực Hai Yếu Tố</h2>
+                    <h2 class="text-xl font-bold pl-3" style="color: #cf6203;">Mật khẩu</h2>
                 </div>
                 <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
-                    <p class="font-bold">Xác thực hai yếu tố chưa được kích hoạt.</p>
-                    <p>Xác thực hai yếu tố bổ sung thêm một lớp bảo mật cho tài khoản của bạn bằng cách yêu cầu nhiều hơn chỉ mật khẩu đăng nhập. Tìm hiểu thêm.</p>
+                    <p class="font-bold">Xác thực.</p>
+                    <p>Xác thực cho tài khoản của bạn bằng cách yêu cầu mật khẩu đăng nhập.</p>
                 </div>
             </div>
         </div>
