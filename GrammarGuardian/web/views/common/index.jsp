@@ -40,7 +40,7 @@
                     <ul
                         class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
                         >
-                        <li><a href="index.html" class="nav-link px-2 text-white">Home</a></li>
+                        <li><a href="./index.jsp" class="nav-link px-2 text-white">Home</a></li>
                         <li class="nav-item dropdown"></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle px-2 text-white" href="#" id="featuresDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,13 +75,13 @@
                             </svg>
                             Cart
                         </a>
-                        <a class="btn btn-outline-light me-2" href="signup.html">Sign up</a>
+                        
                         <c:if test="${sessionScope.USER == null}">
-                            <a href="${pageContext.request.contextPath}/auth?action=login" class="btn btn-outline-light me-2">Login!</a>
+                            <a href="${pageContext.request.contextPath}/auth?action=login" class="btn btn-outline-light me-2">Login | Register</a>
                         </c:if>  
                         <c:if test="${sessionScope.USER != null }">
                             <div class="dropdown">
-                                <button type="button" id="dropdownMenuButton1" class="btn dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false"style="color: #06A3DA;
+                                <button type="button" id="dropdownMenuButton1" class="btn dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false"style="color: white;
                                         font-size: 20px;">
                                     ${sessionScope.USER.firstName} ${sessionScope.USER.lastName}
                                 </button>

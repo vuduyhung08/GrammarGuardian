@@ -4,10 +4,6 @@
  */
 package DAL;
 
-/**
- *
- * @author ADMIN
- */
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,10 +17,10 @@ public class DBContext {
     public static Connection getConnection() throws ClassNotFoundException   {
         /*Change/update information of your database connection, DO NOT change name of instance variables in this class*/
         String serverName = "localhost";
-        String dbName = "GrammarChecker";
+        String dbName = "GrammarGuardian";
         String portNumber = "1433";
         String userID = "sa";
-        String password = "12345";
+        String password = "sa";
 
         String url = "jdbc:sqlserver://" + serverName + ":" + portNumber
                 + ";databaseName=" + dbName +";";
