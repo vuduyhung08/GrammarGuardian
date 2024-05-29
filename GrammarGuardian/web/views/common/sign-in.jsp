@@ -287,10 +287,17 @@
                 <div id="password-message" style="color:red;font-size:11px"></div>
                 <input type="password" placeholder="Confirm password" name="repass" id="confirmpassword" required/>
 
-                
+                <!--                <select name="gender" style="width: 100%; padding: 12px 15px; margin: 8px 0; background-color: #eee; border: none;">
+                                    <option value="" selected="true" disabled="true">Giới tính</option>
+                                    <option value="1">Nam</option>
+                                    <option value="0">Nữ</option>
+                                </select>-->
                 <button type="submit" disabled="true">Đăng ký</button>
             </form>
         </div>
+        
+        
+        
         <div class="form-container sign-in-container">
             <form action="${pageContext.request.contextPath}/auth" method="post">
 
@@ -310,9 +317,10 @@
                        color: white;
                        "><i class="fab fa-google-plus-g"></i></a>
                 </div>
-                <input type="hidden" placeholder="UserName" name="action" value="login"/>
+                
                 <span>Sử dụng tài khoản mạng xã hội</span>-->
 
+                <input type="hidden" placeholder="UserName" name="action" value="login"/>
 
                 <input type="UserName" placeholder="UserName" name="userName" required/>
 
