@@ -32,4 +32,9 @@
         <servlet-name>AuthenticationController</servlet-name>
         <url-pattern>/auth</url-pattern>
     </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>
+            auth
+        </welcome-file>
+    </welcome-file-list>
 </web-app>
