@@ -287,11 +287,7 @@
                 <div id="password-message" style="color:red;font-size:11px"></div>
                 <input type="password" placeholder="Confirm password" name="repass" id="confirmpassword" required/>
 
-                <!--                <select name="gender" style="width: 100%; padding: 12px 15px; margin: 8px 0; background-color: #eee; border: none;">
-                                    <option value="" selected="true" disabled="true">Giới tính</option>
-                                    <option value="1">Nam</option>
-                                    <option value="0">Nữ</option>
-                                </select>-->
+                
                 <button type="submit" disabled="true">Đăng ký</button>
             </form>
         </div>
@@ -303,7 +299,7 @@
                 </c:if>
                 <h1>Đăng nhập</h1>
 
-                <div class="social-container">
+<!--                <div class="social-container">
                     <a href="https://www.facebook.com/dialog/oauth?client_id=1509092289871952&redirect_uri=http://localhost:8080/FBK74/login-facebook" class="social"
                        style="
                        background-color: navy;
@@ -315,7 +311,9 @@
                        "><i class="fab fa-google-plus-g"></i></a>
                 </div>
                 <input type="hidden" placeholder="UserName" name="action" value="login"/>
-                <span>Sử dụng tài khoản mạng xã hội</span>
+                <span>Sử dụng tài khoản mạng xã hội</span>-->
+
+
                 <input type="UserName" placeholder="UserName" name="userName" required/>
 
                 <input type="password" placeholder="Password" name="password" required/>

@@ -18,8 +18,9 @@ public class MailService {
 //        final String username = "dat.nt271102@gmail.com";
 //        final String password = "jjdicrlyxhlfutqg";
 
-    public static final String username = "huysugar123@gmail.com";
-    public static final String password = "dpmtgtmguxwknswr";
+    public static final String username = "bnvqm1721@gmail.com";
+    public static final String password = "tgqwyawkaytmqvka";
+
 
     public static void sendOtpToMail(String email, String otp) {
 
@@ -41,7 +42,7 @@ public class MailService {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-            message.setSubject("Verify your account from GrammarChecker"); // Email subject
+            message.setSubject("Verify your account from Grammar Guardian"); // Email subject
 
             // Email content with enhanced design
             String htmlBody = "<html><head><style>"
