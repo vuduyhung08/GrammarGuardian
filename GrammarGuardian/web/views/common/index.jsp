@@ -16,6 +16,12 @@
             />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/homepage.css" />
         <style>
+            header{
+                background: #56CCF2;  /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #2F80ED, #56CCF2);  /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #2F80ED, #56CCF2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+            }
             .category{
                 justify-content: space-between;
             }
@@ -25,22 +31,15 @@
     </head>
     <body>
 
-        <header class="p-3 text-bg-primary ">
+        <header class="p-3">
             <div class="container">
                 <div
                     class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
-                    >
-                    <a
-                        href="#"
-                        class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
-                        >
-                        <img src="${pageContext.request.contextPath}/images/logo.png" alt="" width="70" height="32" />
-                    </a>
-
+                    >   
                     <ul
                         class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
                         >
-                        <li><a href="index.html" class="nav-link px-2 text-white">Home</a></li>
+                        <li><a href="#" class="nav-link px-2 text-white">Home</a></li>
                         <li class="nav-item dropdown"></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle px-2 text-white" href="#" id="featuresDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -48,8 +47,6 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="featuresDropdown">
                                 <li><a class="dropdown-item" href="#">Software engineer</a></li>
-
-
                                 <li><a class="dropdown-item" href="#">Marketing</a></li>
                                 <li><a class="dropdown-item" href="#">Business</a></li>
                                 <li><a class="dropdown-item" href="#">Design</a></li>
@@ -66,9 +63,6 @@
                     </form>
 
                     <div class="text-end button-header">
-
-
-
                         <a href="cart.html" class="btn btn-outline-light">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                             <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"></path>
@@ -101,44 +95,9 @@
                 </div>
             </div>
         </header>
-        <!-- banner -->
-        <div id="carouselExample" class="carousel slide">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="${pageContext.request.contextPath}/images/1.jpg" class="d-block w-100" alt="..." />
-                </div>
-                <div class="carousel-item ">
-                    <img src="${pageContext.request.contextPath}/images/1.jpg" class="d-block w-100" alt="..." />
-                </div>
-                <div class="carousel-item">
-                    <img src="${pageContext.request.contextPath}/images/1.jpg" class="d-block w-100" alt="..." />
-                </div>
-            </div>
-            <button
-                class="carousel-control-prev btn btn-light"
-                type="button"
-                data-bs-target="#carouselExample"
-                data-bs-slide="prev"
-                >
-                <span class="carousel-control-prev-icon " aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button
-                class="carousel-control-next btn btn-light"
-                type="button"
-                data-bs-target="#carouselExample"
-                data-bs-slide="next"
-                >
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-
-
         <!-- Slogan -->
-
+        
         <div class="container px-4 py-5" id="hanging-icons">
-            <h2 class="pb-2 border-bottom">Hanging icons</h2> 
             <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
                 <div class="col d-flex align-items-start">
                     <div
@@ -254,11 +213,11 @@
                                 </c:when>
                                 <c:otherwise>
                                     <textarea required id="text" name="text" class="check-essay" placeholder="Start writing here."></textarea>
-<!--                                    <label><input type="checkbox" name="checkSpelling" value="true"> Check Spelling</label><br>
-                                    <label><input type="checkbox" name="checkPunctuation" value="true"> Check Punctuation</label><br>
-                                    <label><input type="checkbox" name="checkGrammar" value="true"> Check Grammar</label><br>-->
+                                    <!--                                    <label><input type="checkbox" name="checkSpelling" value="true"> Check Spelling</label><br>
+                                                                        <label><input type="checkbox" name="checkPunctuation" value="true"> Check Punctuation</label><br>
+                                                                        <label><input type="checkbox" name="checkGrammar" value="true"> Check Grammar</label><br>-->
                                 </c:otherwise>
-                                </c:choose>
+                            </c:choose>
                         </div>
                         <div class="sidebar">
                             <div class="suggestions">
@@ -333,7 +292,7 @@
                 <c:forEach var="post" items="${LIST_POST}">
                     <div class="col-md-3">
                         <div class="card shadow-sm">
-                            <img src="${pageContext.request.contextPath}/images/csd.jpg" alt="">
+                            <!--<img src="${pageContext.request.contextPath}/images/csd.jpg" alt="">-->
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <div class="btn-group">
@@ -365,7 +324,6 @@
     </div>
 
 
-
     <!-- news -->
     <div class="album py-3 bg-light">
         <h2 class="text-body-emphasis text-center py-3">
@@ -379,18 +337,17 @@
 
 
 
-
     <!-- footer -->
 
-    <footer class="bg-dark text-white">
+<!--    <footer class="text-white">
         <div class="container ">
-            <!-- Grid row -->
+             Grid row 
             <div class="row mt-3 py-5">
-                <!-- Grid column -->
+                 Grid column 
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                    <!-- Content -->
+                     Content 
                     <h6 class="text-uppercase fw-bold mb-4">
-                        <i class="fas fa-gem me-3"></i>FLearn
+                        <i class="fas fa-gem me-3"></i>GrammarGuardian
                     </h6>
                     <p>
                         High quality education maintained by an open source community.
@@ -400,7 +357,7 @@
                 </div>
 
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <!-- Links -->
+                     Links 
                     <h6 class="text-uppercase fw-bold mb-4">
                         About us
                     </h6>
@@ -432,7 +389,7 @@
                     </p>
                 </div>
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                    <!-- Links -->
+                     Links 
                     <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
                     <p><i class="fas fa-home me-3"></i>Hoa Lac Hi-tech Park, km 29, Đại lộ, Thăng Long, Hà Nội, Vietnam</p>
                     <p>
@@ -443,7 +400,7 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </footer>-->
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

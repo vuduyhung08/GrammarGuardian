@@ -14,7 +14,9 @@
         }
 
         body {
-            background: #f6f5f7;
+            background: #36D1DC;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #5B86E5, #36D1DC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -22,6 +24,7 @@
             font-family: 'Montserrat', sans-serif;
             height: 100vh;
             margin: -20px 0 50px;
+            overflow: hidden;
         }
 
         h1 {
@@ -54,9 +57,7 @@
 
         button {
             border-radius: 20px;
-            border: 1px solid #039a21;
-            background-color: #039a21;
-            color: #FFFFFF;
+            border: none;
             font-size: 12px;
             font-weight: bold;
             padding: 12px 45px;
@@ -74,8 +75,7 @@
         }
 
         button.ghost {
-            background-color: #039a21;
-            border-color: #FFFFFF;
+            
         }
 
         form {
@@ -171,9 +171,10 @@
         }
 
         .overlay {
-            background: #027513;
-            background: -webkit-linear-gradient(to right, #027513, #2eef1d);
-            background: linear-gradient(to right, #026010, #3bbe27);
+            background: #36D1DC;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #5B86E5, #36D1DC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
             background-repeat: no-repeat;
             background-size: cover;
             background-position: 0 0;
@@ -209,6 +210,9 @@
             transform: translateX(-20%);
         }
 
+        .right-panel-active button{
+            color: #333;
+        }
         .container.right-panel-active .overlay-left {
             transform: translateX(0);
         }
@@ -304,7 +308,7 @@
                 <h1>Đăng nhập</h1>
 
                 <div class="social-container">
-                    <a href="https://www.facebook.com/dialog/oauth?client_id=1509092289871952&redirect_uri=http://localhost:8080/FBK74/login-facebook" class="social"
+<!--                    <a href="https://www.facebook.com/dialog/oauth?client_id=1509092289871952&redirect_uri=http://localhost:8080/FBK74/login-facebook" class="social"
                        style="
                        background-color: navy;
                        color: white;
@@ -312,10 +316,10 @@
                     <a href="#" class="social"  style="
                        background-color: red;
                        color: white;
-                       "><i class="fab fa-google-plus-g"></i></a>
+                       "><i class="fab fa-google-plus-g"></i></a>-->
                 </div>
                 <input type="hidden" placeholder="UserName" name="action" value="login"/>
-                <span>Sử dụng tài khoản mạng xã hội</span>
+<!--                <span>Sử dụng tài khoản mạng xã hội</span>-->
                 <input type="UserName" placeholder="UserName" name="userName" required/>
 
                 <input type="password" placeholder="Password" name="password" required/>
@@ -326,7 +330,7 @@
                     <h5 style="green">${SUCCESSMESSAGE}</h5>
                 </c:if>
                 <c:if test="${not empty EMAIL_URL}">
-                   <a href="${EMAIL_URL}">Go to your mail</a>
+                    <a href="${EMAIL_URL}">Go to your mail</a>
                 </c:if>
                 <a href="verify">Quên Mật Khẩu?</a>
                 <button type="submit">Đăng nhập</button>
@@ -383,9 +387,9 @@
 
         submitButton.disabled = !isValid;
     });
-    
-    
-     passwordConfirm.addEventListener('keyup', (event) => {
+
+
+    passwordConfirm.addEventListener('keyup', (event) => {
         const password = event.target.value;
         let isValid = true;
         passwordMessage.textContent = '';
@@ -397,7 +401,7 @@
 
         submitButton.disabled = !isValid;
     });
-    
+
 
 //
     document.addEventListener('DOMContentLoaded', function () {
