@@ -273,7 +273,7 @@
     <div class="container" id="container">
         <div class="form-container sign-up-container">
 
-            <form action="auth" style="" method="post">
+            <form action="auth"  method="post">
                 <input type="hidden" name="action" value="register"/>
                 <div style="display: flex" class="form-control">
                     <input class="form-control" type="text" placeholder="FirstName" name="firstName" required/>
@@ -348,7 +348,7 @@
                 <div class="overlay-panel overlay-right">
                     <h1>Grammar Guardian</h1>
                     <p>Nhập thông tin cá nhân của bạn và bắt đầu hành trình với chúng tôi</p>
-                    <button class="ghost" id="signUp">Đăng Ký</button>
+                    <button  class="ghost" id="signUp">Đăng Ký</button>
                 </div>
             </div>
         </div>
@@ -360,18 +360,17 @@
     const signUpButton = document.getElementById('signUp');
     const signInButton = document.getElementById('signIn');
     const container = document.getElementById('container');
-
     signUpButton.addEventListener('click', () => {
-        container.classList.add('right-panel-active');
+        container.classList.add('right-panel-active'); // add thêm 1 cái class cho container
     });
 
     signInButton.addEventListener('click', () => {
         container.classList.remove('right-panel-active');
     });
     const passwordInput = document.getElementById('password');
-    const passwordConfirm = document.getElementById('confirmpassword');
-    const passwordMessage = document.getElementById('password-message');
-    const submitButton = document.querySelector('form button');
+    const passwordConfirm = document.getElementById('confirmpassword'); // của đăng kí 
+    const passwordMessage = document.getElementById('password-message');  // để hiển thị thông tin lỗi
+    const submitButton = document.querySelector('form button'); // form được submit
 
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'*+,-\./:;<=>?@\[\]^_`{|}~])[^\s]{8,}$/;
 

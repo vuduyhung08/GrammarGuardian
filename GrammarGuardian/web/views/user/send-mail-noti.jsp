@@ -1,8 +1,4 @@
-<%-- 
-    Document   : message
-    Created on : Mar 12, 2024, 6:53:18 PM
-    Author     : nhatk
---%>
+
 
 <%@ page import="java.net.URLEncoder" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset = UTF-8" %>
@@ -19,12 +15,12 @@
 
             <span class="text-orange-500 font-bold text-2xl" style="color: green;">Grammar Guardian</span>
         </div>
-        <c:if test="${not empty error}">
-            <h2 class="text-center text-lg font-bold mb-2" style="color:red">${error}</h2>
+        <c:if test="${not empty ERROR}">
+            <h2 class="text-center text-lg font-bold mb-2" style="color:red">${ERROR}</h2>
             <p class="text-center text-sm text-gray-600 mb-4">Vui lòng kiểm tra lại hộp thư điện tử ${USER.email}!</p>
         </c:if>
 
-        <c:if test="${empty error}">
+        <c:if test="${empty ERROR}">
             <h2 class="text-center text-lg font-bold mb-2">Đã gửi mã xác minh đến ${USER.email}!</h2>
             <p class="text-center text-sm text-gray-600 mb-4">Vui lòng kiểm tra hộp thư điện tử</p>
         </c:if>

@@ -23,10 +23,10 @@ public class MailService {
     public static void sendOtpToMail(String email, String otp) {
 
         Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true"); // Yêu cầu xác thực SMTP, đảm bảo rằng chỉ những người dùng được xác thực mới có thể gửi email.
+        props.put("mail.smtp.starttls.enable", "true");// Kích hoạt TLS, đảm bảo rằng kết nối đến máy chủ SMTP được mã hóa và bảo mật.
+        props.put("mail.smtp.host", "smtp.gmail.com");// Xác định địa chỉ máy chủ SMTP của Gmail để gửi email.
+        props.put("mail.smtp.port", "587"); // Xác định cổng 587, hỗ trợ STARTTLS, để kết nối đến máy chủ SMTP.
 
         Session session = Session.getInstance(props,
                 new jakarta.mail.Authenticator() {
@@ -67,12 +67,13 @@ public class MailService {
     }
 
     public static void sendMailWithConfirmLink(String email, String link) {
-
+        
+        // cấu hình smtp để gửi mail
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.port", "587"); // bảo mật
 
         Session session = Session.getInstance(props,
                 new jakarta.mail.Authenticator() {
@@ -81,12 +82,12 @@ public class MailService {
                 return new PasswordAuthentication(username, password);
             }
         });
-
+        
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-            message.setSubject("Verify your account from GrammarGuardian"); // Email subject
+            message.setFrom(new InternetAddress(username)); // đặt địa chỉ người gửi
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email)); // đặt địa chỉ người nhận
+            message.setSubject("Verify your account from GrammarGuardian"); // Email subject chủ đề
 
             // Email content with enhanced design
             String htmlBody = "<html><head><style>"
@@ -105,7 +106,7 @@ public class MailService {
 
             message.setContent(htmlBody, "text/html");
 
-            Transport.send(message);
+            Transport.send(message); // cấu hình gửi mail
             System.out.println("Email sent successfully.");
         } catch (MessagingException e) {
             throw new RuntimeException(e);

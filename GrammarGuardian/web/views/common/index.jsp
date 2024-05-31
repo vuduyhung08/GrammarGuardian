@@ -49,7 +49,7 @@
                                 <li><a class="dropdown-item" href="#">Software engineer</a></li>
                                 <li><a class="dropdown-item" href="#">Marketing</a></li>
                                 <li><a class="dropdown-item" href="#">Business</a></li>
-                                <li><a class="dropdown-item" href="#">Design</a></li>
+                                <li><a class="dropdown-item" href="#">Learn</a></li>
                             </ul>
                         </li>
                         <li><a href="#" class="nav-link px-2 text-white">About Us</a></li>
@@ -69,14 +69,14 @@
                             </svg>
                             Cart
                         </a>
-                        <a class="btn btn-outline-light me-2" href="signup.html">Sign up</a>
+                        <!--<a class="btn btn-outline-light me-2" href="signup.html">Sign up</a>-->
                         <c:if test="${sessionScope.USER == null}">
                             <a href="${pageContext.request.contextPath}/auth?action=login" class="btn btn-outline-light me-2">Login!</a>
                         </c:if>  
                         <c:if test="${sessionScope.USER != null }">
                             <div class="dropdown">
                                 <button type="button" id="dropdownMenuButton1" class="btn dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false"style="color: #06A3DA;
-                                        font-size: 20px;">
+                                        font-size: 20px; color: #fff">
                                     ${sessionScope.USER.firstName} ${sessionScope.USER.lastName}
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -185,7 +185,7 @@
                             <c:choose>
                                 <c:when test="${segments != null}">
                                     <div class="check-essay">
-                                        <c:forEach var="segment" items="${segments}">
+                                        <c:forEach var="segment" items="${segments}"> 
                                             <c:choose>
                                                 <c:when test="${segment.error}">
                                                     <span class="error" style="color: red">${segment.text}</span>
@@ -228,7 +228,7 @@
                                     <li>Step 2: Check your text onemore time submit.</li>
                                     <li>Step 3: Click a button bellow.</li>
                                 </ul>
-                                <button class="save-button" type="submit">
+                                <button style="background: #56CCF2; " class="save-button" type="submit">
                                     <c:choose>
                                         <c:when test="${USER != null}">
                                             Get Result

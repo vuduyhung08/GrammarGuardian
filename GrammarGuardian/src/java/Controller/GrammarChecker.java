@@ -64,19 +64,26 @@ public class GrammarChecker extends HttpServlet {
 
     private void getResult(HttpServletRequest request, HttpServletResponse response) {
         try {
+            // Lấy session hiện tại, nếu không tồn tại session thì trả về null
             HttpSession session = request.getSession(false);
+            // Lấy tham số "text" từ request
             String text = request.getParameter("text");
+            // Khởi tạo JLanguageTool với ngôn ngữ tiếng Anh Mỹ
             JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
+            
+             // Kiểm tra lỗi trong văn bản "text" và lưu kết quả vào danh sách "matches"
             List<RuleMatch> matches = langTool.check(text);
-
+            
             // Create segments with error highlighting
-            List<Map<String, Object>> segments = new ArrayList<>();
-            int lastPos = 0;
+             // Tạo danh sách các đoạn văn bản có và không có lỗi
+            List<Map<String, Object>> segments = new ArrayList<>();//{[text, erraor = 0 lỗi ], hfilter = đỏ  [lỗi, error = true]}
+            // heloo hai i, chec cyec => out
+            int lastPos = 0; // Vị trí cuối cùng đã được xử lý // đặt cờ hiệu
             for (RuleMatch match : matches) {
-                if (match.getFromPos() > lastPos) {
+                if (match.getFromPos() > lastPos) { 
                     Map<String, Object> segment = new HashMap<>();
                     segment.put("text", text.substring(lastPos, match.getFromPos()));
-                    segment.put("error", false);
+                    segment.put("error", false); // koi lỗi 
                     segments.add(segment);
                 }
                 Map<String, Object> errorSegment = new HashMap<>();
@@ -108,7 +115,7 @@ public class GrammarChecker extends HttpServlet {
             e.printStackTrace();
         }
     }
-//    private void getResult(HttpServletRequest request, HttpServletResponse response) {
+//    private void getResultImprove(HttpServletRequest request, HttpServletResponse response) {
 //        try {
 //            HttpSession session = request.getSession(false);
 //            String text = request.getParameter("text");
@@ -193,7 +200,6 @@ public class GrammarChecker extends HttpServlet {
 
             List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
             request.setAttribute("LIST_POST", listPost);
-
             request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
 
         } catch (Exception e) {

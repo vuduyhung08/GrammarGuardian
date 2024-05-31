@@ -46,7 +46,6 @@ public class ProfileDAO extends DBContext {
                 ps.setString(2, user.getLastName());
                 ps.setString(3, user.getPhone());
                 ps.setString(4, user.getEmail());
-
                 LocalDateTime now = LocalDateTime.now();
                 ps.setString(5, now.toString());
                 InputStream fileContent = image.getInputStream();

@@ -35,6 +35,7 @@ public class AuthenticationController extends HttpServlet {
                 break;
             case "confirm-email":
                 ConfirmEmail(request, response);
+                request.setAttribute("message", "Đăng kí thành công vui lòng đăng nhập!");
                 break;
             case "logout":
                 session.removeAttribute("USER");

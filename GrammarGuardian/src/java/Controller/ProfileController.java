@@ -104,7 +104,6 @@ public class ProfileController extends HttpServlet {
             user.setPhone(phone);
 
             User userUpdate = profileDAO.updateProfile(user, image);
-
             if (userUpdate != null) {
                 session.setAttribute("USER", userUpdate);
                 request.setAttribute("MESSAGE", "Cập nhật hồ sơ thành công");
@@ -130,7 +129,32 @@ public class ProfileController extends HttpServlet {
             user.setId(userLogin.getId());
             user.setPassword(oldPassword);
             user.setUserName(userLogin.getUserName());
-
+            
+            boolean result = profileDAO.changePassword(user, newPassword);
+            if (result) {
+                request.setAttribute("MESSAGE", "Cập nhật mật khẩu thành công");
+            } else {
+                request.setAttribute("ERRORMESSAGE", "Cập nhật mật khẩu không thành công");
+            }
+            System.out.println("Change password " + result);
+            request.getRequestDispatcher("views/user/profile.jsp").forward(request, response);
+        } catch (Exception e) {
+            System.out.println("UpdateProfile Cannot update");
+            e.printStackTrace();
+        }
+    }
+    private void changePassword2(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            HttpSession session = request.getSession(false);
+            String oldPassword = request.getParameter("oldpassword");
+            String newPassword = request.getParameter("newPassword");
+            User userLogin = (User) session.getAttribute("USER");
+            ProfileDAO profileDAO = new ProfileDAO();
+            User user = new User();
+            user.setId(userLogin.getId());
+            user.setPassword(oldPassword);
+            user.setUserName(userLogin.getUserName());
+            
             boolean result = profileDAO.changePassword(user, newPassword);
             if (result) {
                 request.setAttribute("MESSAGE", "Cập nhật mật khẩu thành công");

@@ -43,28 +43,28 @@
                     <h3 class="text-xl font-bold pl-3" style="color: green;">${successMessage}</h2>
                         <div class="mb-4 relative">
                             <label for="old-password" class="block text-gray-700 text-sm font-bold mb-2">Mật khẩu hiện tại</label>
-                            <input name="oldpassword" type="password" id="old-password" placeholder="Mật khẩu hiện tại" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <input required name="oldpassword" type="password" id="old-password" placeholder="Mật khẩu hiện tại" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             <i class="fas fa-eye-slash password-toggle cursor-pointer absolute right-3 top-9" id="toggle-old-password" data-input="old-password"></i>
                         </div>
                         <div class="mb-4 relative">
                             <label for="new-password" class="block text-gray-700 text-sm font-bold mb-2">Mật khẩu mới</label>
-                            <input name="newPassword" type="password" id="new-password" placeholder="Mật khẩu mới" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <input required name="newPassword" type="password" id="new-password" placeholder="Mật khẩu mới" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             <div id="password-message" style="color:red;font-size:11px"></div>
                             <i class="fas fa-eye-slash password-toggle cursor-pointer absolute right-3 top-9" id="toggle-new-password" data-input="new-password"></i>
                         </div>
                         <div class="mb-6 relative">
                             <label for="confirm-password" class="block text-gray-700 text-sm font-bold mb-2">Xác nhận mật khẩu mới</label>
-                            <input name="confirmPassword" type="password" id="confirm-password" placeholder="Xác nhận mật khẩu mới" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <input required name="confirmPassword" type="password" id="confirm-password" placeholder="Xác nhận mật khẩu mới" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             <i class="fas fa-eye-slash password-toggle cursor-pointer absolute right-3 top-9" id="toggle-confirm-password" data-input="confirm-password"></i>
                             <input name="email" value="${sessionScope.account.IDEmail}" hidden>
                         </div>
                         <h5 style="color:red">${errorMessage}</h5>
 
                         <div class="flex items-center justify-between">
-                            <button type="submit" class="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800 border border-gray-300 py-2 px-4 rounded hover:border-gray-500 focus:outline-none focus:border-gray-500" type="button" >
+                            <button id="btn-submit" type="submit" class="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800 border border-gray-300 py-2 px-4 rounded hover:border-gray-500 focus:outline-none focus:border-gray-500" type="button" >
                                 Lưu
                             </button>
-                            <a href="profile1">
+                            <a href="auth">
                                 <button class="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800 border border-gray-300 py-2 px-4 rounded hover:border-gray-500 focus:outline-none focus:border-gray-500" type="button" >
                                     Hủy
                                 </button>
@@ -110,8 +110,8 @@
         }
         submitButton.disabled = !isValid;
     });
-    
-     passwordConfirmInput.addEventListener('keyup', (event) => {
+
+    passwordConfirmInput.addEventListener('keyup', (event) => {
         const password = event.target.value;
         let isValid = true;
         passwordMessage.textContent = '';

@@ -50,10 +50,7 @@
         }
         body {
             font-family: 'Inter', sans-serif;
-        }
-        .radio-button:checked + .radio-label {
-            background-color: #f97316;
-            border-color: #f97316;
+            background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
         }
 
 
@@ -68,7 +65,7 @@
 
 
         <!-- Topbar Start -->
-        <div class="container-fluid bg-dark px-5 d-none d-lg-block">
+        <div class="container-fluid px-5 d-none d-lg-block">
             <div class="row gx-0">
                 <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
                 </div>
@@ -87,7 +84,7 @@
 
 
 
-        <div class="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+        <div class="min-h-screen flex items-center justify-center px-4">
             <div class="bg-white shadow-lg rounded-lg p-8 max-w-4xl w-full">
                 <div class="flex flex-col md:flex-row justify-between items-start">
                     <div class="flex flex-col items-center text-center md:text-left md:items-start">
@@ -97,29 +94,29 @@
 
                         <c:choose>
                             <c:when test="${USER.image != null}">
-                                <img src="data:image/png;base64,${USER.image}" alt="Profile picture" id="profile-picture" class=" border-3 border-green-500 p-1 mb-3" style="width: 170px; cursor: pointer; margin: 10px auto;border-radius:50%;border: 2px solid #1b730d">
+                                <img src="data:image/png;base64,${USER.image}" alt="Profile picture" id="profile-picture" class=" border-3 p-1 mb-3" style="width: 170px; cursor: pointer; margin: 10px auto;border-radius:50%; border: 1px solid grey">
                             </c:when>
                             <c:otherwise>
-                                <img src="https://placehold.co/100x100" alt="Profile picture" id="profile-picture" class=" border-3 border-green-500 p-1 mb-3" style="width: 170px; cursor: pointer; margin: 10px auto;border-radius:50%;border: 2px solid #1b730d">
+                                <img src="https://placehold.co/100x100" alt="Profile picture" id="profile-picture" class=" border-3 p-1 mb-3" style="width: 170px; cursor: pointer; margin: 10px auto;border-radius:50%;border: 2px solid #1b730d">
                             </c:otherwise>
                         </c:choose>
 
 
                         <p class="text-gray-700 mb-1" style="margin: 0 auto">${sessionScope.account.userName}</p>
                         <a href="profile?action=changePassword">
-                            <button class="bg-green-500 text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="background-image: linear-gradient(to right top,#45af2a,#3ba023,#30901c,#268215,#1b730d,#1b730d,#1b730d,#1b730d,#268215,#30901c,#3ba023,#45af2a); margin:10px auto">
+                            <button class="text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="background-image: linear-gradient( 89.5deg,  rgba(131,204,255,1) 0.4%, rgba(66,144,251,1) 100.3% ); margin:10px auto">
                                 Nhấn để đổi mật khẩu
                             </button>
                         </a>
 
                         <a href="profile?action=forgotPassword">
-                            <button class="bg-green-500 text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="background-image: linear-gradient(to right top,#45af2a,#3ba023,#30901c,#268215,#1b730d,#1b730d,#1b730d,#1b730d,#268215,#30901c,#3ba023,#45af2a); margin:10px auto">
+                            <button class="text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style=" background-image: linear-gradient( 89.5deg,  rgba(131,204,255,1) 0.4%, rgba(66,144,251,1) 100.3% );margin:10px auto">
                                 Quên mật khẩu
                             </button>
                         </a>
 
                         <a href="auth">
-                            <button class="bg-green-500 text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="background-image: linear-gradient(to right top,#45af2a,#3ba023,#30901c,#268215,#1b730d,#1b730d,#1b730d,#1b730d,#268215,#30901c,#3ba023,#45af2a); ">
+                            <button class="bg-green-500 text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="background-image: linear-gradient( 89.5deg,  rgba(131,204,255,1) 0.4%, rgba(66,144,251,1) 100.3% );margin:10px auto ">
                                 Trở về trang chủ 
                             </button>
                         </a>    
@@ -147,7 +144,7 @@
                                 <label for="Email" class="text-gray-700">Email</label>
                                 <input readonly name="email" value="${USER.email}" type="email" id="Email" placeholder="Email" class="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Email phải chứa ký tự '@' và không được chứa các ký tự đặc biệt không hợp lệ." required>
                             </div>
-                            <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded shadow peer-checked:bg-green-500 transition-colors" style="background-image: linear-gradient(to right top,#45af2a,#3ba023,#30901c,#268215,#1b730d,#1b730d,#1b730d,#1b730d,#268215,#30901c,#3ba023,#45af2a);">Lưu</button>
+                            <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded shadow peer-checked:bg-green-500 transition-colors" style="background-image: linear-gradient( 89.5deg,  rgba(131,204,255,1) 0.4%, rgba(66,144,251,1) 100.3% );">Lưu</button>
                         </form>
                     </div>
 
@@ -237,8 +234,8 @@
                             <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved. 
 
                                 <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                                Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
-                            <br>Distributed By: <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                                Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">Team GrammarGuardian</a></p>
+                            <br>Distributed By: <a class="border-bottom" href="https://themewagon.com" target="_blank">GG1839</a>
                         </div>
                     </div>
                 </div>
