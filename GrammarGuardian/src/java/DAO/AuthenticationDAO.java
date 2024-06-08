@@ -153,7 +153,7 @@ public class AuthenticationDAO extends DBContext {
 
     public boolean CheckEmail(String email) {
         String sql = "SELECT * FROM [User] WHERE [Email] = ? ";
-        User user = null;
+        User user1 = null;
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, email);

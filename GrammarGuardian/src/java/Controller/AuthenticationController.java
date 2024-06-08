@@ -167,7 +167,6 @@ public class AuthenticationController extends HttpServlet {
             authDAO.ConfirmEmail(userName);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Confirm Email Error");
         }
     }
 

@@ -44,7 +44,7 @@ public class ProfileController extends HttpServlet {
                         break;
                     }
                     case "forgotPassword":
-                        forgotPassword(request, response);
+                        forgotPassword(request);
                         url = "views/user/send-mail-noti.jsp";
                         break;
 
@@ -169,7 +169,7 @@ public class ProfileController extends HttpServlet {
         }
     }
 
-    private void forgotPassword(HttpServletRequest request, HttpServletResponse response) {
+    private void forgotPassword(HttpServletRequest request) {
         try {
             HttpSession session = request.getSession();
             User userLogin = (User) session.getAttribute("USER");

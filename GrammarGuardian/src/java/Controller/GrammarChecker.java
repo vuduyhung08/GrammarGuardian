@@ -17,9 +17,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.languagetool.JLanguageTool;
 import org.languagetool.language.AmericanEnglish;
+import org.languagetool.rules.Rule;
 import org.languagetool.rules.RuleMatch;
+import org.languagetool.rules.spelling.SpellingCheckRule;
 
 public class GrammarChecker extends HttpServlet {
 
@@ -31,7 +34,6 @@ public class GrammarChecker extends HttpServlet {
         request.setAttribute("LIST_POST", listPost);
         request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
     }
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -70,20 +72,22 @@ public class GrammarChecker extends HttpServlet {
             String text = request.getParameter("text");
             // Khởi tạo JLanguageTool với ngôn ngữ tiếng Anh Mỹ
             JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
-            
-             // Kiểm tra lỗi trong văn bản "text" và lưu kết quả vào danh sách "matches"
+            for (Rule rule : langTool.getAllRules()) {
+                if (rule.isDictionaryBasedSpellingRule()) {
+                    langTool.disableRule(rule.getId());
+                }
+            }
+            // Kiểm tra lỗi trong văn bản "text" và lưu kết quả vào danh sách "matches"
             List<RuleMatch> matches = langTool.check(text);
-            
+
             // Create segments with error highlighting
-             // Tạo danh sách các đoạn văn bản có và không có lỗi
-            List<Map<String, Object>> segments = new ArrayList<>();//{[text, erraor = 0 lỗi ], hfilter = đỏ  [lỗi, error = true]}
-            // heloo hai i, chec cyec => out
-            int lastPos = 0; // Vị trí cuối cùng đã được xử lý // đặt cờ hiệu
+            List<Map<String, Object>> segments = new ArrayList<>();
+            int lastPos = 0;
             for (RuleMatch match : matches) {
-                if (match.getFromPos() > lastPos) { 
+                if (match.getFromPos() > lastPos) {
                     Map<String, Object> segment = new HashMap<>();
                     segment.put("text", text.substring(lastPos, match.getFromPos()));
-                    segment.put("error", false); // koi lỗi 
+                    segment.put("error", false);
                     segments.add(segment);
                 }
                 Map<String, Object> errorSegment = new HashMap<>();
@@ -94,15 +98,16 @@ public class GrammarChecker extends HttpServlet {
             }
             if (lastPos < text.length()) {
                 Map<String, Object> segment = new HashMap<>();
-                segment.put("text", text.substring(lastPos));
+                segment.put("text", text.substring(lastPos));   
                 segment.put("error", false);
                 segments.add(segment);
             }
 
+            // Đặt các danh sách lỗi vào request
             request.setAttribute("segments", segments);
             request.setAttribute("matches", matches);
             request.setAttribute("text", text);
-
+            // Lưu vào session nếu cần
             session.setAttribute("ESSAY_INPUT", text);
             session.setAttribute("CHECK_RESULT", matches);
 
@@ -110,11 +115,13 @@ public class GrammarChecker extends HttpServlet {
             List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
             request.setAttribute("LIST_POST", listPost);
 
+            // Chuyển tiếp đến trang index.jsp
             request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 //    private void getResultImprove(HttpServletRequest request, HttpServletResponse response) {
 //        try {
 //            HttpSession session = request.getSession(false);
@@ -183,7 +190,6 @@ public class GrammarChecker extends HttpServlet {
 //            e.printStackTrace();
 //        }
 //    }
-
     private void savePost(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession(false);

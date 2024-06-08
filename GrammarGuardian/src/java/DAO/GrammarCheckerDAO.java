@@ -52,7 +52,7 @@ public class GrammarCheckerDAO extends DBContext {
 
     ;
      public List<Post> getAllPostAvailable() {
-        List<Post> listPosts = new ArrayList();
+        List<Post> listPosts = new ArrayList<>();
         try {
             // status = 3 was post manager approval
             String sql = "SELECT * FROM [Post] WHERE Status = 3 ";

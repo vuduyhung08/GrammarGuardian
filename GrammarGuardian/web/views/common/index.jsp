@@ -96,7 +96,7 @@
             </div>
         </header>
         <!-- Slogan -->
-        
+
         <div class="container px-4 py-5" id="hanging-icons">
             <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
                 <div class="col d-flex align-items-start">
@@ -213,9 +213,6 @@
                                 </c:when>
                                 <c:otherwise>
                                     <textarea required id="text" name="text" class="check-essay" placeholder="Start writing here."></textarea>
-                                    <!--                                    <label><input type="checkbox" name="checkSpelling" value="true"> Check Spelling</label><br>
-                                                                        <label><input type="checkbox" name="checkPunctuation" value="true"> Check Punctuation</label><br>
-                                                                        <label><input type="checkbox" name="checkGrammar" value="true"> Check Grammar</label><br>-->
                                 </c:otherwise>
                             </c:choose>
                         </div>
@@ -250,161 +247,159 @@
                                         </p>
                                     </c:otherwise>
                                 </c:choose>
-
                             </div>
                         </div>
                     </div>
-
-            </div>
-        </form>
-        <!-- Modal -->
-        <div class="modal fade" id="save-post" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <form class="modal-content" action="${pageContext.request.contextPath}/grammar-checker" method="POST">
-                    <input type="hidden" name="action" value="save-post"/>
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Save your essay</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Please enter your essay's title:
-                        <input name="title" type="text"/>
-                        </br>
-                        This action will store your essay in your post history.
-                        You can view it in your user profile at "Post History".
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save it</button>
-                    </div>
                 </form>
-            </div>
-        </div>
-    </div>
 
-    <!-- Category -->
-    <div class="album  bg-light">
-        <h2 class="text-body-emphasis text-center py-3">
-            You ready to learn new things ?
-        </h2>
-        <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <c:forEach var="post" items="${LIST_POST}">
-                    <div class="col-md-3">
-                        <div class="card shadow-sm">
-                            <!--<img src="${pageContext.request.contextPath}/images/csd.jpg" alt="">-->
-                            <div class="card-body">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <div class="btn-group">
-                                        <a href="#">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                ${post.title}
-                                            </button>
-                                        </a>
+                <!-- Modal -->
+                <div class="modal fade" id="save-post" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form class="modal-content" action="${pageContext.request.contextPath}/grammar-checker" method="POST">
+                            <input type="hidden" name="action" value="save-post"/>
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Save your essay</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Please enter your essay's title:
+                                <input name="title" type="text"/>
+                                </br>
+                                This action will store your essay in your post history.
+                                You can view it in your user profile at "Post History".
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save it</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category -->
+            <div class="album  bg-light">
+                <h2 class="text-body-emphasis text-center py-3">
+                    You ready to learn new things ?
+                </h2>
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        <c:forEach var="post" items="${LIST_POST}">
+                            <div class="col-md-3">
+                                <div class="card shadow-sm">
+                                    <!--<img src="${pageContext.request.contextPath}/images/csd.jpg" alt="">-->
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <div class="btn-group">
+                                                <a href="#">
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                        ${post.title}
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </c:forEach>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!-- Top courses 2024 -->
+            <div class="album py-3 bg-light">
+                <h2 class="text-body-emphasis text-center py-3">Top Post in 2024</h2>
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- news -->
+            <div class="album py-3 bg-light">
+                <h2 class="text-body-emphasis text-center py-3">
+                    Top Contribuitor
+                </h2>
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- footer -->
+
+            <!--    <footer class="text-white">
+                    <div class="container ">
+                         Grid row 
+                        <div class="row mt-3 py-5">
+                             Grid column 
+                            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                                 Content 
+                                <h6 class="text-uppercase fw-bold mb-4">
+                                    <i class="fas fa-gem me-3"></i>GrammarGuardian
+                                </h6>
+                                <p>
+                                    High quality education maintained by an open source community.
+                                </p>
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.5062169040193!2d105.52271427476879!3d21.012421688340503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abc60e7d3f19%3A0x2be9d7d0b5abcbf4!2sFPT%20University!5e0!3m2!1sen!2s!4v1715670647321!5m2!1sen!2s" width=300" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            
+                            </div>
+            
+                            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                                 Links 
+                                <h6 class="text-uppercase fw-bold mb-4">
+                                    About us
+                                </h6>
+                                <p>
+                                    <a href="#!" class="text-reset">About</a>
+                                </p>
+                                <p>
+                                    <a href="#!" class="text-reset">Team</a>
+                                </p>
+                                <p>
+                                    <a href="#!" class="text-reset">Blog</a>
+                                </p>
+                                <p>
+                                    <a href="#!" class="text-reset">Success Stories</a>
+                                </p>
+                            </div>
+                            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                                <h6 class="text-uppercase fw-bold mb-4">
+                                    Support
+                                </h6>
+                                <p>
+                                    <a href="#!" class="text-reset">FAQ</a>
+                                </p>
+                                <p>
+                                    <a href="#!" class="text-reset">Contribute</a>
+                                </p>
+                                <p>
+                                    <a href="#!" class="text-reset">Contact us</a>
+                                </p>
+                            </div>
+                            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                                 Links 
+                                <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                                <p><i class="fas fa-home me-3"></i>Hoa Lac Hi-tech Park, km 29, Đại lộ, Thăng Long, Hà Nội, Vietnam</p>
+                                <p>
+                                    <i class="fas fa-envelope me-3"></i>
+                                    FLearn@gmail.com
+                                </p>
+                                <p><i class="fas fa-phone me-3"></i>+1900 9090</p>
+                            </div>
                         </div>
                     </div>
-                </c:forEach>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <!-- Top courses 2024 -->
-    <div class="album py-3 bg-light">
-        <h2 class="text-body-emphasis text-center py-3">Top Post in 2024</h2>
-        <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            </div>
-        </div>
-    </div>
-
-
-    <!-- news -->
-    <div class="album py-3 bg-light">
-        <h2 class="text-body-emphasis text-center py-3">
-            Top Contribuitor
-        </h2>
-        <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            </div>
-        </div>
-    </div>
-
-
-
-    <!-- footer -->
-
-<!--    <footer class="text-white">
-        <div class="container ">
-             Grid row 
-            <div class="row mt-3 py-5">
-                 Grid column 
-                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                     Content 
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        <i class="fas fa-gem me-3"></i>GrammarGuardian
-                    </h6>
-                    <p>
-                        High quality education maintained by an open source community.
-                    </p>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.5062169040193!2d105.52271427476879!3d21.012421688340503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abc60e7d3f19%3A0x2be9d7d0b5abcbf4!2sFPT%20University!5e0!3m2!1sen!2s!4v1715670647321!5m2!1sen!2s" width=300" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
-                </div>
-
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                     Links 
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        About us
-                    </h6>
-                    <p>
-                        <a href="#!" class="text-reset">About</a>
-                    </p>
-                    <p>
-                        <a href="#!" class="text-reset">Team</a>
-                    </p>
-                    <p>
-                        <a href="#!" class="text-reset">Blog</a>
-                    </p>
-                    <p>
-                        <a href="#!" class="text-reset">Success Stories</a>
-                    </p>
-                </div>
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        Support
-                    </h6>
-                    <p>
-                        <a href="#!" class="text-reset">FAQ</a>
-                    </p>
-                    <p>
-                        <a href="#!" class="text-reset">Contribute</a>
-                    </p>
-                    <p>
-                        <a href="#!" class="text-reset">Contact us</a>
-                    </p>
-                </div>
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                     Links 
-                    <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-                    <p><i class="fas fa-home me-3"></i>Hoa Lac Hi-tech Park, km 29, Đại lộ, Thăng Long, Hà Nội, Vietnam</p>
-                    <p>
-                        <i class="fas fa-envelope me-3"></i>
-                        FLearn@gmail.com
-                    </p>
-                    <p><i class="fas fa-phone me-3"></i>+1900 9090</p>
-                </div>
-            </div>
-        </div>
-    </footer>-->
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"
-    ></script>
-</body>
+                </footer>-->
+            <script
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"
+            ></script>
+    </body>
 </html>

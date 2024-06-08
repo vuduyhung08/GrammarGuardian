@@ -19,7 +19,7 @@ public class MailService {
 
     public static final String username = "bnvqm1721@gmail.com";
     public static final String password = "tgqwyawkaytmqvka";
-
+    
     public static void sendOtpToMail(String email, String otp) {
 
         Properties props = new Properties();
