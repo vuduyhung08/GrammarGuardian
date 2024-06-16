@@ -21,7 +21,7 @@ public class MailService {
     public static final String password = "tgqwyawkaytmqvka";
     
     public static void sendOtpToMail(String email, String otp) {
-
+        
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true"); // Yêu cầu xác thực SMTP, đảm bảo rằng chỉ những người dùng được xác thực mới có thể gửi email.
         props.put("mail.smtp.starttls.enable", "true");// Kích hoạt TLS, đảm bảo rằng kết nối đến máy chủ SMTP được mã hóa và bảo mật.
@@ -56,9 +56,7 @@ public class MailService {
                     + "<p class='content'>Please enter this code on the website to complete the verification process.</p>"
                     + "<p class='footer'>Thank you from GrammarGuardian</p>"
                     + "</body></html>";
-
             message.setContent(htmlBody, "text/html");
-
             Transport.send(message);
             System.out.println("Email sent successfully.");
         } catch (MessagingException e) {
