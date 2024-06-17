@@ -59,45 +59,14 @@
 
     </style>
     <body>
-
-        <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner"></div>
-        </div>
-        <!-- Spinner End -->
-
-
-        <!-- Topbar Start -->
-        <div class="container-fluid bg-dark px-5 d-none d-lg-block">
-            <div class="row gx-0">
-                <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
-                    <div class="d-inline-flex align-items-center" style="height: 45px;">
-                        <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>78 Bình Kỳ, Ngũ Hành Sơn, Đà Nẵng</small>
-                        <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small>
-                        <small class="text-light"><i class="fa fa-envelope-open me-2"></i>fbk74@gmail.com</small>
-                    </div>
-                </div>
-                <div class="col-lg-4 text-center text-lg-end">
-                    <div class="d-inline-flex align-items-center" style="height: 45px;">
-                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Topbar End -->
-
-
-
-        <div class="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+        <jsp:include page="header.jsp"/>
+        <input type="hidden" id="success" name="MESSAGE" value="${MESSAGE}"/>
+        <div class="min-h-screen  flex items-center justify-center px-4" style="background: linear-gradient(to right, #2F80ED, #56CCF2);">
             <div class="bg-white shadow-lg rounded-lg p-8 max-w-4xl w-full">
                 <div class="flex flex-col md:flex-row justify-between items-start">
                     <div class="flex flex-col items-center text-center md:text-left md:items-start">
                         <h2 class="text-2xl text-gray-800 font-semibold mb-4">
-                            <i class="fas fa-user-circle mr-2"></i>Thông tin tài khoản
+                            <i class="fas fa-user-circle mr-2"></i>User profile
                         </h2>
 
                         <c:choose>
@@ -112,23 +81,26 @@
 
                         <p class="text-gray-700 mb-1" style="margin: 0 auto">${sessionScope.account.userName}</p>
                         <a href="profile?action=changePassword">
-                            <button class="bg-green-500 text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="background-image: linear-gradient(to right top,#45af2a,#3ba023,#30901c,#268215,#1b730d,#1b730d,#1b730d,#1b730d,#268215,#30901c,#3ba023,#45af2a); margin:10px auto">
-                                Nhấn để đổi mật khẩu
+                            <button class="bg-green-500 text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="      background: linear-gradient(to right, #2F80ED, #56CCF2); margin:10px auto">
+                                Change password
                             </button>
                         </a>
 
-                        <a href="profile?action=forgotPassword">
-                            <button class="bg-green-500 text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="background-image: linear-gradient(to right top,#45af2a,#3ba023,#30901c,#268215,#1b730d,#1b730d,#1b730d,#1b730d,#268215,#30901c,#3ba023,#45af2a); margin:10px auto">
-                                Quên mật khẩu
-                            </button>
-                        </a>
+                        <!--                        <a href="profile?action=forgotPassword">
+                                                    <button class="bg-green-500 text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="background-image: linear-gradient(to right top,#45af2a,#3ba023,#30901c,#268215,#1b730d,#1b730d,#1b730d,#1b730d,#268215,#30901c,#3ba023,#45af2a); margin:10px auto">
+                                                        Forgot password
+                                                    </button>
+                                                </a>-->
 
                         <a href="auth">
-                            <button class="bg-green-500 text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="background-image: linear-gradient(to right top,#45af2a,#3ba023,#30901c,#268215,#1b730d,#1b730d,#1b730d,#1b730d,#268215,#30901c,#3ba023,#45af2a); ">
-                                Trở về trang chủ 
+                            <button class="bg-green-500 text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="  background: linear-gradient(to right, #2F80ED, #56CCF2);">
+                                Back to homepage
                             </button>
                         </a>    
+
                         <div style="color: green; margin-top: 10px">${MESSAGE}</div>
+
+
                     </div>
                     <div class="mt-8 md:mt-0 md:ml-10 w-full max-w-lg">
                         <form class="space-y-4" action="profile" method="POST" enctype="multipart/form-data">
@@ -137,123 +109,175 @@
                             <input type="hidden" name="accountId" value="${user.IDAccount}" />
 
                             <div>
-                                <label for="surname" class="text-gray-700">Họ</label>
-                                <input name="firstName" value="${USER.firstName}" type="text" id="surname" placeholder="Họ" class="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" >
+                                <label for="surname" class="text-gray-700">FirstName</label>
+                                <input name="firstName" value="${USER.firstName}" type="text" id="surname" placeholder="FirstName" class="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" >
                             </div>
                             <div>
-                                <label for="surname" class="text-gray-700">Tên</label>
-                                <input name="lastName" value="${USER.lastName}" type="text" id="surname" placeholder="Họ" class="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" >
+                                <label for="surname" class="text-gray-700">LastName</label>
+                                <input name="lastName" value="${USER.lastName}" type="text" id="surname" placeholder="LastName" class="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" >
                             </div>
                             <div>
-                                <label for="Phone" class="text-gray-700">Số Điện Thoại</label>
-                                <input name="phone" value="${USER.phone}" type="text" id="Phone" placeholder="Số điện thoại" class="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" pattern="^\d{1,10}$" title="Số điện thoại phải gồm 10 chữ số và không chứa ký tự đặc biệt." required>
+                                <label for="Phone" class="text-gray-700">Tel</label>
+                                <input name="phone" value="${USER.phone}" type="text" id="Phone" placeholder="Tel" class="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" pattern="^\d{1,10}$" title="Phone number required number only" required>
                             </div>
                             <div>
                                 <label for="Email" class="text-gray-700">Email</label>
-                                <input readonly name="email" value="${USER.email}" type="email" id="Email" placeholder="Email" class="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Email phải chứa ký tự '@' và không được chứa các ký tự đặc biệt không hợp lệ." required>
+                                <input readonly name="email" value="${USER.email}" type="email" id="Email" placeholder="Email" class="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Your email not validate" required>
                             </div>
-                            <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded shadow peer-checked:bg-green-500 transition-colors" style="background-image: linear-gradient(to right top,#45af2a,#3ba023,#30901c,#268215,#1b730d,#1b730d,#1b730d,#1b730d,#268215,#30901c,#3ba023,#45af2a);">Lưu</button>
+                            <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded shadow peer-checked:bg-green-500 transition-colors" style="background: linear-gradient(to right, #2F80ED, #56CCF2);">Save</button>
                         </form>
                     </div>
 
+
+                </div>
+                <div class="album  bg-light">
+                    <h2 class="text-body-emphasis text-center py-3">
+                        Your document history
+                    </h2>
+                    <div class="post-type" style="margin: 0 0 30px 15px">
+                        <a href="profile?action=view" class="btn btn-primary">All Post</a>     
+                        <a href="profile?action=view&type=pending-post" class="btn btn-primary">Pending Post</a>     
+                        <a href="profile?action=view&type=confirm-post" class="btn btn-success">Confirmed Post</a>
+                        <a href="profile?action=view&type=reject-post" class="btn btn-secondary">Rejected Post</a>  
+                        <a href="profile?action=view&type=delete-post" class="btn btn-danger">Deleted Post</a>    
+                        <a href="profile?action=view&type=favourite-post" class="btn btn-danger">Favourtie Post</a>
+
+                    </div>
+                    <div class="container">
+                        <form action="auth" class="d-flex" style="margin-bottom: 15px;">
+                            <!--<input type="hidden" name="action" />-->
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" value="${search}">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                            <c:if test="${LIST_POST ==  null}">
+                                <h3>You did not have any saved post!!</h3>
+                            </c:if>
+                            <c:forEach var="post" items="${LIST_POST}">
+                                <div class="col-md-3">
+                                    <div class="card shadow-sm">
+                                        <img src="${pageContext.request.contextPath}/images/csd.jpg" alt="">
+                                        <div class="card-body" style="display: flex; justify-content: space-between">
+                                            <div class="d-flex justify-content-center align-items-center" style="flex-direction: column">
+                                                <div>
+                                                    <b>Title</b>: ${post.title}
+                                                </div>
+                                                <div>
+                                                    ${post.createAt}
+                                                </div>
+                                                <div class="btn-group">
+                                                    <a  data-bs-toggle="modal" data-bs-target="#post-detail-${post.postId}">
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                            Details
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="post-detail-${post.postId}" tabindex="-1" aria-labelledby="post-detail-${post.postId}" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Post details</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div>
+                                                                    <b>Title: </b> ${post.title}
+                                                                </div>
+                                                                <div>
+                                                                    <b>Description: </b>${post.description}
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <c:if test="${status != 5}">
+                                                                    <c:if test="${post.status == 0}">
+                                                                        <a class="btn btn-primary" href="profile?action=send-post&postId=${post.postId}">Submit Post</a>
+                                                                    </c:if>
+                                                                    <c:if test="${post.status == 1}">
+                                                                        <a class="btn btn-danger" href="profile?action=cancle-post&postId=${post.postId}">Cancle pending</a>
+                                                                    </c:if>
+                                                                    <c:if test="${post.status == 2}">
+                                                                        <a class="btn btn-danger" href="profile?action=send-post&postId=${post.postId}">Resend Post</a>
+                                                                    </c:if>
+                                                                    <c:if test="${post.status == 3}">
+                                                                        <a class="btn btn-danger" href="profile?action=delete-post&postId=${post.postId}">Delete Post</a>  
+                                                                        <!--<a class="btn btn-danger" onclick="">Delete Post</a>-->
+                                                                    </c:if>
+                                                                    <c:if test="${post.status == 4}">
+                                                                        <a class="btn btn-danger" href="profile?action=restore-post&postId=${post.postId}">Restore Post</a>
+                                                                    </c:if>
+                                                                </c:if>
+                                                                <c:if test="${status == 5}">
+                                                                    <a class="btn btn-danger" href="profile?action=remove-favour&postId=${post.postId}">Remove from favourite</a>
+                                                                </c:if>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <c:if test="${post.status == 0}">
+                                                    <span style="color: blue">Saved</span>
+                                                </c:if>
+                                                <c:if test="${post.status == 1}">
+                                                    <span style="color: #cccccc">Pending</span>
+                                                </c:if>
+                                                <c:if test="${post.status == 2}">
+                                                    <span style="color: red">Rejected</span>
+                                                </c:if>
+                                                <c:if test="${post.status == 3}">
+                                                    <span style="color: green">Confirmed</span>
+                                                </c:if>
+                                                <c:if test="${post.status == 4}">
+                                                    <span style="color: #f97316">Deleted</span>
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </div>
+
+
+
+                        <nav aria-label="Page navigation example" style="display: flex; justify-content:center;margin-top: 15px;">
+                            <ul class="pagination">
+
+                                <c:choose>
+                                    <c:when test ="${selectedPage - 1 < 1}">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#">«</a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item"><a class="page-link" href="profile?action=view&type=${type}&search=${search}&index=${selectedPage-1}">«</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:forEach var="i" begin="1" end="${endP}">
+                                    <li class="page-item ${i == selectedPage ? "active" : "" }"> <a class="page-link" href="profile?action=view&type=${type}search=${search}&index=${i}">${i}</a> <li>
+                                    </c:forEach>
+                                    <c:choose>
+                                        <c:when test ="${selectedPage >= endP}">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#">»</a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item"><a class="page-link" href="profile?action=view&type=${type}search=${search}&index=${selectedPage+1}">»</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                            </ul>
+                        </nav>
+                    </div>
+
                 </div>
             </div>
         </div>
 
-        <!--footer start-->
-        <div class="container-fluid bg-dark text-light wow fadeInUp" data-wow-delay="0.1s">
-            <div class="container">
-                <div class="row gx-5">
-                    <div class="col-lg-4 col-md-6 footer-about">
-                        <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-primary p-4">
-                            <a href="index.html" class="navbar-brand">
-                                <h1 class="m-0 text-white"><i class="fa fa-user-tie me-2"></i>FBK74</h1>
-                            </a>
-                            <p class="mt-3 mb-4">Địa chỉ chuyên nghiệp dành cho mọi lứa tuổi, hãy cùng nhau trải nghiệm sân chơi đẳng cấp của chúng tôi ngay nhé.</p>
-                            <form action="">
-                                <div class="input-group">
-                                    <input type="text" class="form-control border-white p-3" placeholder="Your Email">
-                                    <button class="btn btn-dark">Sign Up</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 col-md-6">
-                        <div class="row gx-5">
-                            <div class="col-lg-4 col-md-12 pt-5 mb-5">
-                                <div class="section-title section-title-sm position-relative pb-3 mb-4">
-                                    <h3 class="text-light mb-0">Get In Touch</h3>
-                                </div>
-                                <div class="d-flex mb-2">
-                                    <i class="bi bi-geo-alt text-primary me-2"></i>
-                                    <p class="mb-0">78 Bình Kỳ, Ngũ Hành Sơn, Đà Nẵng</p>
-                                </div>
-                                <div class="d-flex mb-2">
-                                    <i class="bi bi-envelope-open text-primary me-2"></i>
-                                    <p class="mb-0">fbk74@gmail.com</p>
-                                </div>
-                                <div class="d-flex mb-2">
-                                    <i class="bi bi-telephone text-primary me-2"></i>
-                                    <p class="mb-0">+012 345 67890</p>
-                                </div>
-                                <div class="d-flex mt-4">
-                                    <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
-                                    <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
-                                    <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
-                                    <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram fw-normal"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-                                <div class="section-title section-title-sm position-relative pb-3 mb-4">
-                                    <h3 class="text-light mb-0">Quick Links</h3>
-                                </div>
-                                <div class="link-animated d-flex flex-column justify-content-start">
-                                    <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Trang Chủ</a>
-                                    <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Tìm Sân</a>
-                                    <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Tìm Đối Thủ</a>
-                                    <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Giải Đấu</a>
-                                    <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Khóa Học Bóng Đá</a>
-                                    <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Liên Hệ</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-                                <div class="section-title section-title-sm position-relative pb-3 mb-4">
-                                    <h3 class="text-light mb-0">Popular Links</h3>
-                                </div>
-                                <div class="link-animated d-flex flex-column justify-content-start">
-                                    <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Trang Chủ</a>
-                                    <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Tìm Sân</a>
-                                    <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Tìm Đối Thủ</a>
-                                    <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Giải Đấu</a>
-                                    <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Khóa Học Bóng Đá</a>
-                                    <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Liên Hệ</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid text-white" style="background: #061429;">
-            <div class="container text-center">
-                <div class="row justify-content-end">
-                    <div class="col-lg-8 col-md-6">
-                        <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
-                            <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Your Site Name</a>. All Rights Reserved. 
-
-                                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                                Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
-                            <br>Distributed By: <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer End -->
 
 
-        <!-- Back to Top -->
-        <a href="timsan_nhat.jsp" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <jsp:include page="footer.jsp"/>
 
     </body>
 
@@ -269,9 +293,33 @@
 
     <!-- Template Javascript -->
     <script src="${pageContext.request.contextPath}/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const profilePicture = document.getElementById('profile-picture');
         const imageInput = document.getElementById('image-input');
+        var message = document.getElementById('success');
+        if (message.value) {
+            Swal.fire({
+                title: message.value,
+                icon: "success",
+                showCancelButton: true,
+                confirmButtonText: "Confirm",
+            });
+        }
+        function deletePost() {
+            Swal.fire({
+                title: errorTeam.value,
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonText: "Are your sure to remove this post",
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    window.location.href = 'profile?action=delete-post&postId=${post.postId}';
+                }
+            });
+        }
+
 
         profilePicture.addEventListener('click', () => {
             imageInput.disabled = false;
@@ -301,7 +349,7 @@
                 const regex = /^\d{0,10}$/;
                 if (!regex.test(phoneInput.value)) {
                     // If validation fails, show a custom error message
-                    phoneInput.setCustomValidity("Số điện thoại phải gồm 10 chữ số và không chứa ký tự đặc biệt.");
+                    phoneInput.setCustomValidity("Phone required 10 number");
                 } else {
                     // Clear custom error message
                     phoneInput.setCustomValidity("");
