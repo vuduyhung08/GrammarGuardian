@@ -5,6 +5,7 @@
 package Controller;
 
 import DAO.GrammarCheckerDAO;
+import DAO.PostDAO;
 import Model.Post;
 import Model.User;
 import jakarta.servlet.ServletException;
@@ -64,6 +65,40 @@ public class GrammarChecker extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private void loadHomePage(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
+            PostDAO postDAO = new PostDAO();
+            String indexS = request.getParameter("index");
+            String searchS = request.getParameter("search");
+            if (indexS == null) {
+                indexS = "1";
+            }
+            if (searchS == null) {
+                searchS = "";
+            }
+            int index = Integer.parseInt(indexS);
+
+            int total = grammarCheckerDAO.getAllPostAvailableTotal();
+            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable(index);
+            if (searchS != null) {
+                total = postDAO.searchPostByTitleTotal(searchS);
+                listPost = postDAO.searchPostByTitle(searchS, index);
+                request.setAttribute("search", searchS);
+            }
+            int lastPage = total / 8;
+            if (total % 8 != 0) {
+                lastPage++;
+            }
+            request.setAttribute("LIST_POST", listPost);
+            request.setAttribute("endP", lastPage);
+            request.setAttribute("selectedPage", index);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    
     private void getResult(HttpServletRequest request, HttpServletResponse response) {
         try {
             // Lấy session hiện tại, nếu không tồn tại session thì trả về null
@@ -114,7 +149,7 @@ public class GrammarChecker extends HttpServlet {
             GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
             List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
             request.setAttribute("LIST_POST", listPost);
-
+            loadHomePage(request, response);
             // Chuyển tiếp đến trang index.jsp
             request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
         } catch (Exception e) {
@@ -206,6 +241,7 @@ public class GrammarChecker extends HttpServlet {
 
             List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
             request.setAttribute("LIST_POST", listPost);
+            loadHomePage(request, response);
             request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
 
         } catch (Exception e) {

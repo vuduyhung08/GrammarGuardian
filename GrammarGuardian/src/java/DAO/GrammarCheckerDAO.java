@@ -49,8 +49,46 @@ public class GrammarCheckerDAO extends DBContext {
         }
         return listPosts;
     }
-
-    ;
+     public int getAllPostAvailableTotal() {
+        List<Post> listPosts = new ArrayList();
+        try {
+            // status = 3 was post manager approval
+            String sql = "SELECT COUNT(*) FROM [Post] WHERE Status = 3 ";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    };
+       // list user manager approve
+    public List<Post> getAllPostAvailable(int index) {
+        List<Post> listPosts = new ArrayList();
+        try {
+            // status = 3 was post manager approval
+            String sql = "SELECT * FROM [Post] WHERE Status = 3 ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, (index - 1) * 12);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Post post = new Post();
+                post.setPostId(rs.getInt("PostId"));
+                post.setTitle(rs.getString("Title"));
+                post.setDescription(rs.getString("Description"));
+                post.setStatus(rs.getInt("Status"));
+                post.setCreateAt(rs.getDate("CreateAt").toString());
+                post.setUserId(rs.getInt("UserId"));
+                listPosts.add(post);
+            }
+            return listPosts;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listPosts;
+    }
      public List<Post> getAllPostAvailable() {
         List<Post> listPosts = new ArrayList<>();
         try {

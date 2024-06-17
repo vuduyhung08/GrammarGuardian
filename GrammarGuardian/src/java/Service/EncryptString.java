@@ -27,17 +27,23 @@ public class EncryptString {
 // Thêm vào trước password 1 đoạn chuỗi nào đó để nó phức tạp hơn
 // Có hacker xây dựng trước bộ database đã mã hóa sẵn nó sẽ tấn cống được
     private static String SALT = "123456";
-
+    
 // A password hashing method.
     public static String hashPassword(String in) {
         try {
+           // Khởi tạo đối tượng MessageDigest với thuật toán SHA-256.
             MessageDigest md = MessageDigest
                     .getInstance("SHA-256");
-            md.update(SALT.getBytes());        // <-- Prepend SALT.
+            //Cập nhật đối tượng MessageDigest với SALT.
+            md.update(SALT.getBytes());        // <-- Đặt trước
+            //Cập nhật đối tượng MessageDigest với chuỗi đầu vào.
             md.update(in.getBytes());
-            // md.update(SALT.getBytes());     // <-- Or, append SALT.
-
+            // md.update(SALT.getBytes());     // <-- Hoặc, đặt sau 
+            
+            // Thực hiện hàm băm để lấy kết quả dưới dạng mảng byte.
             byte[] out = md.digest();
+            
+            //Chuyển đổi mảng byte thành chuỗi hexa.
             return bytesToHex(out);            // <-- Return the Hex Hash.
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
