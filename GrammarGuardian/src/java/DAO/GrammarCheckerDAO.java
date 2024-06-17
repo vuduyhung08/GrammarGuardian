@@ -52,6 +52,21 @@ public class GrammarCheckerDAO extends DBContext {
         }
         return listPosts;
     }
+    public int getAllPostAvailableTotal() {
+        List<Post> listPosts = new ArrayList();
+        try {
+            // status = 3 was post manager approval
+            String sql = "SELECT COUNT(*) FROM [Post] WHERE Status = 3 ";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
     ;
      public List<Post> getAllPostAvailable() {
