@@ -79,7 +79,7 @@
                 text-align: left;
             }
             .styled-table thead tr {
-                background-color: #009879;
+                background-color: blue;
                 color: #ffffff;
                 text-align: left;
             }
@@ -125,6 +125,13 @@
                                 <textarea required id="text" name="text" class="check-essay" placeholder="Start writing here." >${text != null ? text : ''}</textarea>
                             </div>
                             <div>
+                                <div>
+                                    <label for="check-type">Select Check Type:</label>
+                                    <select id="check-type" name="check-type">
+                                        <option value="spell">Check Spelling</option>
+                                        <option value="grammar">Check Grammar</option>
+                                    </select>
+                                </div>
                                 <div>
                                     <button class="save-button" type="submit">
                                         <c:choose>
