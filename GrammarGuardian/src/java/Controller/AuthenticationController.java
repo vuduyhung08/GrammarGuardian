@@ -180,4 +180,36 @@ public class AuthenticationController extends HttpServlet {
         }
 
     }
+     private void LoadHomePage(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
+            String indexS = request.getParameter("index");
+            String searchS = request.getParameter("search");
+            if (indexS == null) {
+                indexS = "1";
+            }
+            if (searchS == null) {
+                searchS = "";
+            }
+            int index = Integer.parseInt(indexS);
+
+            int total = grammarCheckerDAO.getAllPostAvailableTotal();
+            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable(index);
+            if (searchS != "") {
+                total = grammarCheckerDAO.searchPostHomePageByTitleTotal(searchS);
+                listPost = grammarCheckerDAO.searchPostHomePageByTitle(searchS, index);
+                request.setAttribute("search", searchS);
+            }
+            int lastPage = total / 12;
+            if (total % 12 != 0) {
+                lastPage++;
+            }
+            request.setAttribute("LIST_POST", listPost);
+            request.setAttribute("endP", lastPage);
+            request.setAttribute("selectedPage", index);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }
