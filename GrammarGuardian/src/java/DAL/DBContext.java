@@ -21,7 +21,7 @@ public class DBContext {
     public static Connection getConnection() throws ClassNotFoundException   {
         /*Change/update information of your database connection, DO NOT change name of instance variables in this class*/
         String serverName = "localhost";
-        String dbName = "GrammarChecker";
+        String dbName = "GrammarGuardian";
         String portNumber = "1433";
         String userID = "sa";
         String password = "12345";
