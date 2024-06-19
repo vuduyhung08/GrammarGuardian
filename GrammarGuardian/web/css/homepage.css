@@ -1,0 +1,89 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+
+.header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+}
+
+.main-content, .sidebar {
+    padding: 20px;
+}
+
+.main-content {
+    width: 70%;
+}
+
+.check-essay{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    resize: none;
+}
+
+.sidebar {
+    width: 30%;
+    border-left: 1px solid #ccc;
+}
+
+.suggestions {
+    background: #e8f0fe;
+    padding: 20px;
+    height: 100%;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+p {
+    color: #666;
+    font-size: 14px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.save-button {
+    background: linear-gradient(to right, #2F80ED, #56CCF2);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.edit-button {
+    background-color: #ebe700;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.login a {
+    color: #0073e6;
+    text-decoration: none;
+}
