@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
     body {
+     background: linear-gradient(to right, #2F80ED, #56CCF2);
         font-family: 'Inter', sans-serif;
     }
     .form-container {
@@ -21,23 +22,21 @@
 <body>
     <div class="max-w-lg mx-auto mt-10">
         <div class="form-container">
-            <form action="verify" method="post">
+            <form action="verify" method="post" style="background: white">
                 <input type="hidden" name="action" value="sendOtpToMail"/>
-                <div class="bg-green-600 text-white text-center py-4" style="background-image: linear-gradient(to right top,#45af2a,#3ba023,#30901c,#268215,#1b730d,#1b730d,#1b730d,#1b730d,#268215,#30901c,#3ba023,#45af2a);">
+                <div class="bg-green-600 text-white text-center py-4" style="background: linear-gradient(to right, #2F80ED, #56CCF2);">
                     <h1 class="text-xl font-semibold" >FORGOT PASSWORD</h1>
                 </div>
                 <div class="p-6">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-                        Email:
+                        Email Address:
                     </label>
                     <input name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="Email">
+                    <span>We will send OTP code to your email input!</span>
                 </div>
                 <div class="px-6 py-4"  >
-                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" type="button" >
+                    <button type="submit" style="background: linear-gradient(to right, #2F80ED, #56CCF2);" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" type="button" >
                         Send
-                    </button>
-                    <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" type="button" style="margin-top: 10px">
-                    <a href="auth?action=login" class="btn btn-outline-light me-2">Login | Register</a>
                     </button>
                 </div>
             </form>
