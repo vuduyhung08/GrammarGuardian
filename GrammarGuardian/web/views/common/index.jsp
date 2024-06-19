@@ -75,13 +75,12 @@
                             </svg>
                             Cart
                         </a>
-                        <a class="btn btn-outline-light me-2" href="signup.html">Sign up</a>
                         <c:if test="${sessionScope.USER == null}">
-                            <a href="${pageContext.request.contextPath}/auth?action=login" class="btn btn-outline-light me-2">Login!</a>
+                            <a href="${pageContext.request.contextPath}/auth?action=login" class="btn btn-outline-light me-2">Login | Sign up</a>
                         </c:if>  
                         <c:if test="${sessionScope.USER != null }">
                             <div class="dropdown">
-                                <button type="button" id="dropdownMenuButton1" class="btn dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false"style="color: #06A3DA;
+                                <button type="button" id="dropdownMenuButton1" class="btn dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false"style="color: white;
                                         font-size: 20px;">
                                     ${sessionScope.USER.firstName} ${sessionScope.USER.lastName}
                                 </button>

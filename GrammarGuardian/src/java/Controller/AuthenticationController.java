@@ -19,6 +19,10 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 87e237852d9ac19fdef830cd07d2194999c29e4b
 public class AuthenticationController extends HttpServlet {
 
     @Override
@@ -132,7 +136,10 @@ public class AuthenticationController extends HttpServlet {
             userSignUp.setLastName(lastName);
             userSignUp.setPhone(phone);
             session.setAttribute("email", email);
+<<<<<<< HEAD
             // B1 gui mail truoc
+=======
+>>>>>>> 87e237852d9ac19fdef830cd07d2194999c29e4b
             String link = "http://localhost:9999/GrammarGuardian/auth?action=confirm-email";
             AuthenticationDAO authDAO = new AuthenticationDAO();
             // tao tai khoan.

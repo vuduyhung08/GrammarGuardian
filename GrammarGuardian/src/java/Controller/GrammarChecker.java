@@ -23,10 +23,7 @@ import org.languagetool.language.AmericanEnglish;
 import org.languagetool.rules.Rule;
 import org.languagetool.rules.RuleMatch;
 
-/**
- *
- * @author Datnt
- */
+
 public class GrammarChecker extends HttpServlet {
 
     @Override

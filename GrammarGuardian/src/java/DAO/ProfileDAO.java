@@ -16,6 +16,10 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 87e237852d9ac19fdef830cd07d2194999c29e4b
 public class ProfileDAO extends DBContext {
 
     private Connection con;
