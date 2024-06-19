@@ -7,50 +7,48 @@ package Service;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ *
+ * @author dangnqhe181760
+ */
 public class EncryptString {
-    
-    // định nghĩa biến hexArray -> chuyển đổi các byte thành dạng chuỗi hexa
+
     final protected static char[] hexArray = "0123456789ABCDEF"
             .toCharArray();
-    
+
     private static String bytesToHex(byte[] bytes) {
+        // Tạo một mảng char để lưu trữ chuỗi hex, độ dài gấp đôi độ dài của mảng byte.
         char[] hexChars = new char[bytes.length * 2];
         int v;
+        // Duyệt qua từng byte trong mảng byte đầu vào.
         for (int j = 0; j < bytes.length; j++) {
+           // Lấy giá trị byte thứ j và thực hiện AND với 0xFF để đảm bảo giá trị dương.
             v = bytes[j] & 0xFF;
+           // Lấy phần cao 4 bit của v và lấy index tương ứng trong mảng hexArray để lưu vào hexChars.
             hexChars[j * 2] = hexArray[v >>> 4];
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];
         }
         return new String(hexChars);
     }
 
-// Thêm vào trước password 1 đoạn chuỗi nào đó để nó phức tạp hơn
-// Có hacker xây dựng trước bộ database đã mã hóa sẵn nó sẽ tấn cống được
+// Change this to something else.
     private static String SALT = "123456";
-    
+
 // A password hashing method.
     public static String hashPassword(String in) {
         try {
-           // Khởi tạo đối tượng MessageDigest với thuật toán SHA-256.
+            //khởi tạo một đối tượng MessageDigest với thuật toán băm SHA-256.
             MessageDigest md = MessageDigest
                     .getInstance("SHA-256");
-            //Cập nhật đối tượng MessageDigest với SALT.
-            md.update(SALT.getBytes());        // <-- Đặt trước
-            //Cập nhật đối tượng MessageDigest với chuỗi đầu vào.
+            md.update(SALT.getBytes());        // <-- Prepend SALT.
             md.update(in.getBytes());
-            // md.update(SALT.getBytes());     // <-- Hoặc, đặt sau 
-            
-            // Thực hiện hàm băm để lấy kết quả dưới dạng mảng byte.
+            // md.update(SALT.getBytes());     // <-- Or, append SALT.
+
             byte[] out = md.digest();
-            
-            //Chuyển đổi mảng byte thành chuỗi hexa.
             return bytesToHex(out);            // <-- Return the Hex Hash.
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return "";
-    }
-    public static void main(String[] args) {
-        System.out.println(hexArray);
     }
 }

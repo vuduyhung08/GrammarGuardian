@@ -33,10 +33,53 @@ public class PostDAO extends DBContext {
         }
     }
 
-    public int searchPostByTitleTotal(String title) {
+    public int getAllPostSpendingTotal() {
         List<Post> listPosts = new ArrayList();
         try {
-            String sql = "SELECT COUNT(*) FROM [Post] WHERE Title LIKE ?";
+            // status = 3 was post manager approval
+            String sql = "SELECT COUNT(*) FROM [Post] WHERE Status = 1";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // list user manager approve
+    public List<Post> getAllPostSpending(int index) {
+        List<Post> listPosts = new ArrayList();
+        try {
+            // status = 3 was post manager approval
+            String sql = "SELECT * FROM [Post] WHERE Status = 1 ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, (index - 1) * 8);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Post post = new Post();
+                post.setPostId(rs.getInt("PostId"));
+                post.setTitle(rs.getString("Title"));
+                post.setDescription(rs.getString("Description"));
+                post.setStatus(rs.getInt("Status"));
+                post.setCreateAt(rs.getDate("CreateAt").toString());
+                post.setUserId(rs.getInt("UserId"));
+                listPosts.add(post);
+            }
+            return listPosts;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listPosts;
+    }
+
+    public int searchPostHomePageByTitleTotal(String title) {
+        List<Post> listPosts = new ArrayList();
+        try {
+            String sql = "SELECT COUNT(*) FROM [Post] WHERE Title LIKE ? AND Status = 0";
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" + title + "%");
             rs = ps.executeQuery();
@@ -49,13 +92,13 @@ public class PostDAO extends DBContext {
         return 0;
     }
 
-    public List<Post> searchPostByTitle(String title, int index) {
+    public List<Post> searchPostHomePageByTitle(String title, int index) {
         List<Post> listPosts = new ArrayList();
         try {
-            String sql = "SELECT * FROM [Post] WHERE Title LIKE ? ORDER BY PostId DESC OFFSET ? ROW FETCH NEXT 4 ROWS ONLY";
+            String sql = "SELECT * FROM [Post] WHERE Title LIKE ? AND Status = 0 ORDER BY PostId DESC OFFSET ? ROW FETCH NEXT 12 ROWS ONLY";
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" + title + "%");
-            ps.setInt(2, (index - 1) * 4);
+            ps.setInt(2, (index - 1) * 12);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Post post = new Post();
@@ -75,8 +118,74 @@ public class PostDAO extends DBContext {
         return listPosts;
     }
 
+    
+      public int searchPostManagePageTitleTotal(String title) {
+        List<Post> listPosts = new ArrayList();
+        try {
+            String sql = "SELECT COUNT(*) FROM [Post] WHERE Title LIKE ? AND Status = 1";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + title + "%");
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List<Post> searchPostManagePageByTitle(String title, int index) {
+        List<Post> listPosts = new ArrayList();
+        try {
+            String sql = "SELECT * FROM [Post] WHERE Title LIKE ? AND Status = 1 ORDER BY PostId DESC OFFSET ? ROW FETCH NEXT 8 ROWS ONLY";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + title + "%");
+            ps.setInt(2, (index - 1) * 8);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Post post = new Post();
+                post.setPostId(rs.getInt("PostId"));
+                post.setTitle(rs.getString("Title"));
+                post.setDescription(rs.getString("Description"));
+                post.setStatus(rs.getInt("Status"));
+                post.setCreateAt(rs.getString("CreateAt"));
+//                post.setCreateAt(rs.getString("UpdateAt"));
+//                post.setCreateAt(rs.getString("DeleteAt"));
+                listPosts.add(post);
+            }
+            return listPosts;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listPosts;
+    }
+    
+    public Post getPostById(int postId) {
+        try {
+            String sql = "SELECT * FROM [Post] WHERE PostId = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, postId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Post post = new Post();
+                post.setPostId(rs.getInt("PostId"));
+                post.setTitle(rs.getString("Title"));
+                post.setDescription(rs.getString("Description"));
+                post.setStatus(rs.getInt("Status"));
+                post.setCreateAt(rs.getString("CreateAt"));
+//                post.setCreateAt(rs.getString("UpdateAt"));
+//                post.setCreateAt(rs.getString("DeleteAt"));
+                return post;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     // Comment
-    public boolean CommentPost(int postId, String Content, int UserId) {
+    public boolean commentPost(int postId, String Content, int UserId) {
         try {
             String sql = "INSERT INTO [Comment] (PostId, Content, UserId, CreateAt)"
                     + " VALUES (?, ?, ?, ?)";
@@ -99,12 +208,30 @@ public class PostDAO extends DBContext {
     }
 
     // get lisst comment
-    public List<CommentViewModel> getListUserCommentInPost(int postId) {
+    public int getListUserCommentInPostTotal(int postId) {
         try {
-            
-             List<CommentViewModel> listComment = new ArrayList();
-            String sql = "SELECT * FROM [Comment] WHERE PostId = ? ";
+            String sql = "SELECT COUNT(*) FROM [Comment] WHERE PostId = ? ";
+            ps = con.prepareStatement(sql);
             ps.setInt(1, postId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // get lisst comment
+    public List<CommentViewModel> getListUserCommentInPost(int postId, int index) {
+        try {
+            int userId = 0;
+            List<CommentViewModel> listComment = new ArrayList<>();
+            String sql = "SELECT * FROM [Comment] WHERE PostId = ? ORDER BY Id DESC OFFSET ? ROW FETCH NEXT 12 ROWS ONLY";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, postId);
+            ps.setInt(2, (index - 1) * 12);
             rs = ps.executeQuery();
             while (rs.next()) {
                 CommentViewModel commentVM = new CommentViewModel();
@@ -112,18 +239,20 @@ public class PostDAO extends DBContext {
                 commentVM.setPostId(rs.getInt("PostId"));
                 commentVM.setContent(rs.getString("Content"));
                 commentVM.setUserId(rs.getInt("UserId"));
-                commentVM.setCreateAt(rs.getString("Content"));
-
+                commentVM.setCreateAt(rs.getString("CreateAt"));
+                // luu cai userId cua nguoi comment
+                userId = rs.getInt("UserId");
                 sql = "SELECT * FROM [User] WHERE UserId = ?";
-                ps.setInt(1, commentVM.getUserId());
-                rs = ps.executeQuery();
-                if (rs.next()) {
-                    String firstName = rs.getString("FirstName");
-                    String lastName = rs.getString("LastName");
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, userId);
+                ResultSet rs1 = ps.executeQuery();
+                while (rs1.next()) {
+                    String firstName = rs1.getString("FirstName");
+                    String lastName = rs1.getString("LastName");
                     String fullName = firstName + " " + lastName;
                     commentVM.setUserName(fullName);
                     String base64Image = null;
-                    byte[] imgData = rs.getBytes("Image");
+                    byte[] imgData = rs1.getBytes("Image");
                     if (imgData != null) {
                         base64Image = Base64.getEncoder().encodeToString(imgData);
                     }
@@ -138,9 +267,39 @@ public class PostDAO extends DBContext {
         return null;
     }
 
+    public boolean ConfirmPostByPostId(int postId) {
+        try {
+            String sql = "UPDATE POST SET Status = 3 WHERE PostId = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, postId);
+            int affectedRow = ps.executeUpdate();
+            return affectedRow > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean RejectPostByPostId(int postId) {
+        try {
+            String sql = "UPDATE POST SET Status = 2 WHERE PostId = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, postId);
+            int affectedRow = ps.executeUpdate();
+            return affectedRow > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         PostDAO postDAO = new PostDAO();
-        int result = postDAO.searchPostByTitleTotal("Tech");
-        System.out.println(result);
+        List<CommentViewModel> list = postDAO.getListUserCommentInPost(23, 1);
+        for (CommentViewModel commentViewModel : list) {
+            System.out.println(commentViewModel.toString());
+
+        }
     }
+
 }

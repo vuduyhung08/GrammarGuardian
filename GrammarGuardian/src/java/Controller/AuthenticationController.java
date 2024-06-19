@@ -6,6 +6,7 @@ package Controller;
 
 import DAO.AuthenticationDAO;
 import DAO.GrammarCheckerDAO;
+import DAO.PostDAO;
 import Model.CreateModel.UserSignUp;
 import Model.Post;
 import Model.User;
@@ -24,21 +25,24 @@ public class AuthenticationController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
+
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");
         String url = "views/common/index.jsp";
+        loadHomePage(request, response);
         switch (action) {
-            case "":
-                home(request, response);
-                break;
+//            case "":
+////                LoadHomePage(request, response);
+//                break;
             case "login":
                 url = "views/common/sign-in.jsp";
                 break;
             case "confirm-email":
                 ConfirmEmail(request, response);
-                request.setAttribute("message", "Đăng kí thành công vui lòng đăng nhập!");
+                url = "views/common/sign-in.jsp";
                 break;
             case "logout":
                 session.removeAttribute("USER");
+                break;
         }
         request.getRequestDispatcher(url).forward(request, response);
 
@@ -54,9 +58,6 @@ public class AuthenticationController extends HttpServlet {
                 Login(request, response);
                 break;
             case "register":
-                Register(request, response);
-                break;
-            case "verify-otp":
                 Register(request, response);
                 break;
         }
@@ -87,24 +88,23 @@ public class AuthenticationController extends HttpServlet {
                     session.setAttribute("EMAIL", userLogedIn.getEmail());
                     // User 
                     if (userLogedIn.getRoleId() == 1) {
-                        GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
-                        List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
-                        request.setAttribute("LIST_POST", listPost);
 //                        home(request, response);
                         url = "views/common/index.jsp";
                         // Admin
                     } else if (userLogedIn.getRoleId() == 2) {
-                        url = "admin/dashboard.jsp";
+                        url = "admin/GetAllUserController";
+                        response.sendRedirect(url);
+                        return;
                     }
                 } else if (!userLogedIn.isIsActive()) {
-                    request.setAttribute("ERRORMESSAGE", "Tài khoản của bạn bị vô hiệu hóa. Vui lòng liên hệ quản trị viên!");
+                    request.setAttribute("ERRORMESSAGE", "Your account not active please contact administration");
                 } else if (!userLogedIn.isIsCofirm()) {
-                    request.setAttribute("ERRORMESSAGE", "Tài khoản của bạn chưa được xác thực vui lòng xác thông qua email của bạn!");
+                    request.setAttribute("ERRORMESSAGE", "Your account not confirm! Please check your email");
                 }
             } else {
-                request.setAttribute("ERRORMESSAGE", "Sai tên đăng nhập hoặc tài khoản, vui lòng thử lại!");
+                request.setAttribute("ERRORMESSAGE", "Wrong usename or password");
             }
-
+            loadHomePage(request, response);
             request.getRequestDispatcher(url).forward(request, response);
 
         } catch (Exception e) {
@@ -132,22 +132,24 @@ public class AuthenticationController extends HttpServlet {
             userSignUp.setLastName(lastName);
             userSignUp.setPhone(phone);
             session.setAttribute("email", email);
+            // B1 gui mail truoc
             String link = "http://localhost:9999/GrammarGuardian/auth?action=confirm-email";
             AuthenticationDAO authDAO = new AuthenticationDAO();
+            // tao tai khoan.
             int result = authDAO.Register(userSignUp);
 
             if (result == 1) {
                 url = "views/common/sign-in.jsp";
-                request.setAttribute("SUCCESSMESSAGE", "Đăng kí thành công vui lòng xác thực email của bạn");
+                request.setAttribute("SUCCESSMESSAGE", "Sign up sucessfully! Please check your email");
                 request.setAttribute("EMAIL_URL", "https://mail.google.com/");
                 session.setAttribute("USERNAME", userName);
                 // mail service
                 MailService mailService = new MailService();
                 mailService.sendMailWithConfirmLink(email, link);
             } else if (result == 2) {
-                request.setAttribute("ERRORMESSAGE", "UserName đã có người sử dụng hãy thử một tên khác ");
+                request.setAttribute("ERRORMESSAGE", "UserName already exsit please try others. ");
             } else if (result == 3) {
-                request.setAttribute("ERRORMESSAGE", "Email này đã được sử dụng trên hệ thống vui lòng lựa chọn một email khác");
+                request.setAttribute("ERRORMESSAGE", "Email already exsit please try others.");
             } else {
                 request.setAttribute("ERRORMESSAGE", "Cannot regitser");
             }
@@ -167,17 +169,47 @@ public class AuthenticationController extends HttpServlet {
             authDAO.ConfirmEmail(userName);
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Confirm Email Error");
         }
     }
 
-    private void home(HttpServletRequest request, HttpServletResponse response) {
+    private void loadHomePage(HttpServletRequest request, HttpServletResponse response) {
         try {
             GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
-            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
+            String indexS = request.getParameter("index");
+            String searchS = request.getParameter("search");
+
+            if (indexS == null) {
+                indexS = "1";
+            }
+            if (searchS == null) {
+                searchS = "";
+            } else {
+                searchS = searchS.trim();
+            }
+
+            int index = Integer.parseInt(indexS);
+
+            int total = grammarCheckerDAO.getAllPostAvailableTotal();
+            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable(index);
+
+            if (!searchS.isEmpty()) {
+                total = grammarCheckerDAO.searchPostHomePageByTitleTotal(searchS);
+                listPost = grammarCheckerDAO.searchPostHomePageByTitle(searchS, index);
+                request.setAttribute("search", searchS);
+            }
+
+            int lastPage = total / 12;
+            if (total % 12 != 0) {
+                lastPage++;
+            }
+
             request.setAttribute("LIST_POST", listPost);
+            request.setAttribute("endP", lastPage);
+            request.setAttribute("selectedPage", index);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
 }

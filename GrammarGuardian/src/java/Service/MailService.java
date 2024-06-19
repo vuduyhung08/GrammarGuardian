@@ -13,20 +13,24 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import java.util.Properties;
 
-
+/**
+ *
+ * @author Datnt
+ */
 public class MailService {
+//        final String username = "dat.nt271102@gmail.com";
+//        final String password = "jjdicrlyxhlfutqg";
 
+    public static final String username = "huysugar123@gmail.com";
+    public static final String password = "dpmtgtmguxwknswr";
 
-    public static final String username = "bnvqm1721@gmail.com";
-    public static final String password = "tgqwyawkaytmqvka";
-    
     public static void sendOtpToMail(String email, String otp) {
-        
+
         Properties props = new Properties();
-        props.put("mail.smtp.auth", "true"); // Yêu cầu xác thực SMTP, đảm bảo rằng chỉ những người dùng được xác thực mới có thể gửi email.
-        props.put("mail.smtp.starttls.enable", "true");// Kích hoạt TLS, đảm bảo rằng kết nối đến máy chủ SMTP được mã hóa và bảo mật.
-        props.put("mail.smtp.host", "smtp.gmail.com");// Xác định địa chỉ máy chủ SMTP của Gmail để gửi email.
-        props.put("mail.smtp.port", "587"); // Xác định cổng 587, hỗ trợ STARTTLS, để kết nối đến máy chủ SMTP.
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(props,
                 new jakarta.mail.Authenticator() {
@@ -40,7 +44,7 @@ public class MailService {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-            message.setSubject("Verify your account from GrammarGuardian"); // Email subject
+            message.setSubject("Verify your account from GrammarChecker"); // Email subject
 
             // Email content with enhanced design
             String htmlBody = "<html><head><style>"
@@ -51,12 +55,14 @@ public class MailService {
                     + ".content { color: #343a40; }"
                     + "</style></head>"
                     + "<body>"
-                    + "<h1 class='header'>Verify your account from GrammarGuardian</h1>"
+                    + "<h1 class='header'>Verify your account from GrammarChecker</h1>"
                     + "<p class='content'>Your OTP is: <strong class='otp'>" + otp + "</strong></p>"
                     + "<p class='content'>Please enter this code on the website to complete the verification process.</p>"
-                    + "<p class='footer'>Thank you from GrammarGuardian</p>"
+                    + "<p class='footer'>Thank you from GrammarChecker</p>"
                     + "</body></html>";
+
             message.setContent(htmlBody, "text/html");
+
             Transport.send(message);
             System.out.println("Email sent successfully.");
         } catch (MessagingException e) {
@@ -65,13 +71,12 @@ public class MailService {
     }
 
     public static void sendMailWithConfirmLink(String email, String link) {
-        
-        // cấu hình smtp để gửi mail
+
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587"); // bảo mật
+        props.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(props,
                 new jakarta.mail.Authenticator() {
@@ -80,12 +85,12 @@ public class MailService {
                 return new PasswordAuthentication(username, password);
             }
         });
-        
+
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username)); // đặt địa chỉ người gửi
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email)); // đặt địa chỉ người nhận
-            message.setSubject("Verify your account from GrammarGuardian"); // Email subject chủ đề
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+            message.setSubject("Verify your account from GrammarChecker"); // Email subject
 
             // Email content with enhanced design
             String htmlBody = "<html><head><style>"
@@ -96,15 +101,15 @@ public class MailService {
                     + ".content { color: #343a40; }"
                     + "</style></head>"
                     + "<body>"
-                    + "<h1 class='header'>Verify your account from GrammarGuardian</h1>"
+                    + "<h1 class='header'>Verify your account from GrammarChecker</h1>"
                     + "<p class='content'>Confirm herer <a class='otp' href='" + link + "'>Click here</a></p>"
                     + "<p class='content'>Please click this link to complete the verification process.</p>"
-                    + "<p class='footer'>Verify your account from GrammarGuardian.</p>"
+                    + "<p class='footer'>Verify your account from GrammarChecker.</p>"
                     + "</body></html>";
 
             message.setContent(htmlBody, "text/html");
 
-            Transport.send(message); // cấu hình gửi mail
+            Transport.send(message);
             System.out.println("Email sent successfully.");
         } catch (MessagingException e) {
             throw new RuntimeException(e);

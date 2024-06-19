@@ -8,6 +8,7 @@ import DAL.DBContext;
 import Model.CreateModel.UserSignUp;
 import Model.Role;
 import Model.User;
+import Service.EncryptString;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,12 +34,11 @@ public class AuthenticationDAO extends DBContext {
     }
 
     public User Login(String username, String password) {
-        String sql = "SELECT * FROM [User] WHERE [UserName] = ? AND [Password] = ?";
+        String sql = "SELECT * FROM [User] WHERE [UserName] = ?";
         User user = null;
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, username);
-            ps.setString(2, password);
             rs = ps.executeQuery();
             if (rs.next()) {
                 user = new User();
@@ -50,8 +50,8 @@ public class AuthenticationDAO extends DBContext {
                 String email = rs.getString("Email");
                 boolean isActive = rs.getBoolean("IsActive");
                 boolean IsConfirm = rs.getBoolean("IsConfirm");
+                String _password = rs.getString("Password");
                 int roleId = rs.getInt("RoleId");
-
                 byte[] imgData = rs.getBytes("Image");
                 String base64Image = null;
                 if (imgData != null) {
@@ -68,7 +68,12 @@ public class AuthenticationDAO extends DBContext {
                 user.setIsCofirm(IsConfirm);
                 user.setImage(base64Image);
                 user.setRoleId(roleId);
-                return user;
+                String passwordHashed = EncryptString.hashPassword(password);
+                if (_password.equals(passwordHashed)) {
+                    return user;
+                } else {
+                    return null;
+                }
             }
 
         } catch (Exception e) {
@@ -93,8 +98,9 @@ public class AuthenticationDAO extends DBContext {
             String sql = "INSERT INTO [User] (UserName, Password, Email, FirstName, LastName, Phone, IsActive, RoleId, IsConfirm, CreateAt)"
                     + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             ps = con.prepareStatement(sql);
+            String userPassword = EncryptString.hashPassword(userSignUp.getPassword());
             ps.setString(1, userSignUp.getUserName());
-            ps.setString(2, userSignUp.getPassword());
+            ps.setString(2, userPassword);
             ps.setString(3, userSignUp.getEmail());
             ps.setString(4, userSignUp.getFirstName());
             ps.setString(5, userSignUp.getLastName());
@@ -153,7 +159,7 @@ public class AuthenticationDAO extends DBContext {
 
     public boolean CheckEmail(String email) {
         String sql = "SELECT * FROM [User] WHERE [Email] = ? ";
-        User user1 = null;
+        User user = null;
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, email);
@@ -191,11 +197,12 @@ public class AuthenticationDAO extends DBContext {
     }
 
     public boolean ForgotPassWord(String password, String email) {
+        String userPassword = EncryptString.hashPassword(password);
         String sql = "UPDATE [User] SET Password = ? WHERE Email = ?";
         User user = null;
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, password);
+            ps.setString(1, userPassword);
             ps.setString(2, email);
 
             int affectedRow = ps.executeUpdate();
