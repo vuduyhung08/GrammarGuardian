@@ -5,7 +5,9 @@
 package Controller;
 
 import DAO.AuthenticationDAO;
+import DAO.GrammarCheckerDAO;
 import DAO.ProfileDAO;
+import Model.Post;
 import Model.User;
 import Service.MailService;
 import Service.OtpService;
@@ -17,6 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.IOException;
+import java.util.List;
 
 /**
  *
@@ -189,4 +192,75 @@ public class ProfileController extends HttpServlet {
     private void confirmOTP(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    private void LoadUserPost(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            HttpSession session = request.getSession();
+            User userLogin = (User) session.getAttribute("USER");
+            GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
+            String indexS = request.getParameter("index");
+            String searchS = request.getParameter("search");
+            String type = request.getParameter("type");
+            if (indexS == null) {
+                indexS = "1";
+            }
+            if (searchS == null) {
+                searchS = "";
+            }
+            int index = Integer.parseInt(indexS);
+
+            // chua cau hinh kip search theo tung loai bai post.
+            int total = grammarCheckerDAO.getAllUserPostTotal(userLogin.getId());
+            List<Post> listPost = grammarCheckerDAO.getAllUserPost(userLogin.getId(), index);
+            int status = 0;
+            if (type != null) {
+                switch (type) {
+                    case "pending-post": {
+                        total = grammarCheckerDAO.getAllPostSendToConfirmTotal(userLogin.getId());
+                        listPost = grammarCheckerDAO.getAllPostSendToConfirm(userLogin.getId(), index);
+                        break;
+                    }
+                    case "confirm-post": {
+                        total = grammarCheckerDAO.getAllPostConfirmTotal(userLogin.getId());
+                        listPost = grammarCheckerDAO.getAllPostConfirm(userLogin.getId(), index);
+                        break;
+                    }
+                    case "reject-post": {
+                        total = grammarCheckerDAO.getAllPostRejectTotal(userLogin.getId());
+                        listPost = grammarCheckerDAO.getAllPostReject(userLogin.getId(), index);
+                        break;
+                    }
+                    case "delete-post": {
+                        total = grammarCheckerDAO.getAllPostDeleteTotal(userLogin.getId());
+                        listPost = grammarCheckerDAO.getAllPostDelete(userLogin.getId(), index);
+                        break;
+                    }
+                    case "favourite-post": {
+                        total = grammarCheckerDAO.getAllFavourtePostTotal(userLogin.getId());
+                        listPost = grammarCheckerDAO.getAllFavourtePost(userLogin.getId(), index);
+                        status = 5;
+                        break;
+                    }
+                }
+            }
+            if (searchS != "") {
+                total = grammarCheckerDAO.searchPostHomePageByTitleTotal(searchS);
+                listPost = grammarCheckerDAO.searchPostHomePageByTitle(searchS, index);
+                request.setAttribute("search", searchS);
+            }
+            int lastPage = total / 12;
+            if (total % 12 != 0) {
+                lastPage++;
+            }
+            request.setAttribute("status", status);
+            request.setAttribute("type", type);
+            request.setAttribute("LIST_POST", listPost);
+            request.setAttribute("endP", lastPage);
+            request.setAttribute("selectedPage", index);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    
 }
