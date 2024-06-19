@@ -67,6 +67,30 @@ public class GrammarCheckerDAO extends DBContext {
         }
         return 0;
     }
+    public List<Post> getAllUserPost(int userId, int index) {
+        List<Post> listPosts = new ArrayList();
+        try {
+            String sql = "SELECT * FROM [Post] WHERE UserId = ? ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setInt(2, (index - 1) * 12);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Post post = new Post();
+                post.setPostId(rs.getInt("PostId"));
+                post.setTitle(rs.getString("Title"));
+                post.setDescription(rs.getString("Description"));
+                post.setStatus(rs.getInt("Status"));
+                post.setUserId(rs.getInt("UserId"));
+                listPosts.add(post);
+            }
+            return listPosts;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listPosts;
+    }
 
     ;
      public List<Post> getAllPostAvailable() {
