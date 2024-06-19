@@ -58,7 +58,7 @@ li {
 }
 
 .save-button {
-    background-color: #4CAF50;
+    background: linear-gradient(to right, #2F80ED, #56CCF2);
     color: white;
     border: none;
     padding: 10px 20px;

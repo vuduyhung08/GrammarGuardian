@@ -29,20 +29,18 @@
                     </h1>
                 </div>
                 <nav class="space-y-2">
-
-                    <a
-                        href="GetAllUserController"
-                        class="block py-2 px-4 rounded text-sm flex items-center hover:bg-gray-700"
-                        >
-                        <i class="fas fa-user mr-2"></i>User Management
-                    </a>
                     <a
                         href="GetAllPostConfirmController"
                         class="block py-2 px-4 rounded text-sm text-white flex items-center bg-blue-600"
                         >
                         <i class="fas fa-clipboard mr-2"></i>Post Management
                     </a>
-
+                    <a
+                        href="GetAllUserController"
+                        class="block py-2 px-4 rounded text-sm flex items-center hover:bg-gray-700"
+                        >
+                        <i class="fas fa-user mr-2"></i>User Management
+                    </a>
                     <a
                         href="${pageContext.request.contextPath}/auth?action=logout"
                         class="block py-2 px-4 rounded text-sm hover:bg-gray-700 flex items-center"
@@ -83,15 +81,77 @@
                                 </p>
                             </div>
                             <div class="flex justify-between p-4">
-                                <a href="ChangeStatusPostController?action=accept&postId=${post.postId}" class="text-green-500">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#accepte-${post.postId}" aria-hidden="true"
+                                   class="text-green-500">
                                     <i class="fas fa-check-circle text-2xl"></i>
                                 </a>
-                                <a  href="ChangeStatusPostController?action=reject&postId=${post.postId}" class="text-red-500">
+                                <!-- accpet form-->
+                                <!-- Modal -->
+                                <div class="modal fade" id="accepte-${post.postId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" >Are you sure to allow this post appear in homepage</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                This action will allow PostId - ${post.postId} render in homepage.
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <a class="btn btn-success"   href="ChangeStatusPostController?action=accept&postId=${post.postId}">Confirm</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <a  href="#" class="text-red-500" data-bs-toggle="modal" data-bs-target="#reject-${post.postId}" aria-hidden="true">
                                     <i class="fas fa-times-circle text-2xl"></i>
                                 </a>
+
+                                <!-- REJECT -->
+                                <!-- Modal -->
+                                <div class="modal fade" id="reject-${post.postId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" >Reject this post</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                This action will reject PostId - ${post.postId} and change this post to reject status
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <a class="btn btn-danger"   href="ChangeStatusPostController?action=reject&postId=${post.postId}">Confirm</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <a class="text-blue-500">
                                     <i class="fas fa-info-circle text-2xl"></i>
                                 </a>
+
+                                <!-- Description -->
+                                <div class="modal fade" id="disableModal-${user.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" >Are you sure to disable this user</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                This action will avoid userName : ${user.userName} to accesss your system.
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <a class="btn btn-primary" href="ChangeUserStatusController?userId=${user.id}">Save changes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </c:forEach>
@@ -129,4 +189,9 @@
             </div>
         </div>
     </body>
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"
+    ></script>
 </html>

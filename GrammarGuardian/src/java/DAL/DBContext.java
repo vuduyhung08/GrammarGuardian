@@ -24,7 +24,7 @@ public class DBContext {
         String dbName = "GrammarGuardian";
         String portNumber = "1433";
         String userID = "sa";
-        String password = "12345";
+        String password = "sa";
 
         String url = "jdbc:sqlserver://" + serverName + ":" + portNumber
                 + ";databaseName=" + dbName +";";

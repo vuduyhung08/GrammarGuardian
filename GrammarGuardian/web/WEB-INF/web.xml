@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <filter>
+        <filter-name>RouteFilter</filter-name>
+        <filter-class>Filter.RouteFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RouteFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>ProfileController</servlet-name>
         <servlet-class>Controller.ProfileController</servlet-class>
@@ -16,6 +24,70 @@
         <servlet-name>AuthenticationController</servlet-name>
         <servlet-class>Controller.AuthenticationController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageUserController</servlet-name>
+        <servlet-class>Controller.Admin.ManageUserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManagePostController</servlet-name>
+        <servlet-class>Controller.Admin.ManagePostController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeUserStatusController</servlet-name>
+        <servlet-class>Controller.Admin.ChangeUserStatusController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetAllUserController</servlet-name>
+        <servlet-class>Controller.Admin.GetAllUserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetAllPostConfirmController</servlet-name>
+        <servlet-class>Controller.Admin.GetAllPostConfirmController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeStatusPostController</servlet-name>
+        <servlet-class>Controller.Admin.ChangeStatusPostController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CommentPostController</servlet-name>
+        <servlet-class>Controller.CommentPostController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostDetailController</servlet-name>
+        <servlet-class>Controller.PostDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostCommentController</servlet-name>
+        <servlet-class>Controller.PostCommentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchUserController</servlet-name>
+        <servlet-class>Controller.Admin.SearchUserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SendPostToConfirmController</servlet-name>
+        <servlet-class>Controller.SendPostToConfirmController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CanclePostToConfirmController</servlet-name>
+        <servlet-class>Controller.CanclePostToConfirmController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddToFavouriteListController</servlet-name>
+        <servlet-class>Controller.AddToFavouriteListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemovePostFromFavouriteController</servlet-name>
+        <servlet-class>Controller.RemovePostFromFavouriteController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeletePostController</servlet-name>
+        <servlet-class>Controller.DeletePostController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RestorePostController</servlet-name>
+        <servlet-class>Controller.RestorePostController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProfileController</servlet-name>
         <url-pattern>/profile</url-pattern>
@@ -31,5 +103,69 @@
     <servlet-mapping>
         <servlet-name>AuthenticationController</servlet-name>
         <url-pattern>/auth</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageUserController</servlet-name>
+        <url-pattern>/admin/manage-user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManagePostController</servlet-name>
+        <url-pattern>/admin/manage-post</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeUserStatusController</servlet-name>
+        <url-pattern>/admin/ChangeUserStatusController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetAllUserController</servlet-name>
+        <url-pattern>/admin/GetAllUserController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetAllPostConfirmController</servlet-name>
+        <url-pattern>/admin/GetAllPostConfirmController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeStatusPostController</servlet-name>
+        <url-pattern>/admin/ChangeStatusPostController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CommentPostController</servlet-name>
+        <url-pattern>/CommentPostController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostDetailController</servlet-name>
+        <url-pattern>/PostDetailController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostCommentController</servlet-name>
+        <url-pattern>/PostCommentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchUserController</servlet-name>
+        <url-pattern>/admin/SearchUserController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendPostToConfirmController</servlet-name>
+        <url-pattern>/SendPostToConfirm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CanclePostToConfirmController</servlet-name>
+        <url-pattern>/CanclePostToConfirm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddToFavouriteListController</servlet-name>
+        <url-pattern>/AddToFavouriteList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemovePostFromFavouriteController</servlet-name>
+        <url-pattern>/RemovePostFromFavourite</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeletePostController</servlet-name>
+        <url-pattern>/DeletePost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RestorePostController</servlet-name>
+        <url-pattern>/RestorePost</url-pattern>
     </servlet-mapping>
 </web-app>

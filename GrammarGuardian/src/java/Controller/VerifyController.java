@@ -17,7 +17,7 @@ import java.io.IOException;
 
 /**
  *
- * @author Datnt
+ * @author ADMIN
  */
 public class VerifyController extends HttpServlet {
 

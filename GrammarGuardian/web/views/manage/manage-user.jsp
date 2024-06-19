@@ -37,6 +37,14 @@
                     </div>
 
                     <div class="table-responsive">
+
+
+                        <form action="GetAllUserController" class="d-flex" style="margin-bottom: 15px;">
+                            <!--<input type="hidden" name="action" />-->
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" value="${search}">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+
                         <table class="table table-striped table-sm">
                             <thead>
                                 <tr>
@@ -57,11 +65,11 @@
                                         <td>${count.count}</td>
                                         <td>
                                             <c:choose>
-                                                <c:when test="${USER.image != null}">
-                                                    <img src="data:image/png;base64,${USER.image}" alt="Profile picture" id="profile-picture" class=" border-3 border-green-500 p-1 mb-3" >
+                                                <c:when test="${user.image != null}">
+                                                    <img src="data:image/png;base64,${user.image}" style="width: 100px"  alt="Profile picture" id="profile-picture" class=" border-3 border-green-500 p-1 mb-3" >
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <img src="https://placehold.co/100x100" alt="Profile picture" id="profile-picture" class=" border-3 border-green-500 p-1 mb-3" >
+                                                    <img src="https://placehold.co/100x100" style="width: 100px" alt="Profile picture" id="profile-picture" class=" border-3 border-green-500 p-1 mb-3" >
                                                 </c:otherwise>
                                             </c:choose></td>
                                         <td>${user.userName}</td>

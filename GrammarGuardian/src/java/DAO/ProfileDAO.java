@@ -6,6 +6,7 @@ package DAO;
 
 import DAL.DBContext;
 import Model.User;
+import Service.EncryptString;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -104,17 +105,20 @@ public class ProfileDAO extends DBContext {
     }
 
     public boolean changePassword(User user, String newPassword) {
+        String password = EncryptString.hashPassword(newPassword);     
+        String userPassword =   EncryptString.hashPassword(user.getPassword());
+
         String sql = "SELECT * FROM [User] WHERE [UserName] = ? AND [Password] = ?";
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, user.getUserName());
-            ps.setString(2, user.getPassword());
+            ps.setString(2, userPassword);
             rs = ps.executeQuery();
             if (rs.next()) {
                 sql = "UPDATE dbo.[User] SET [Password] = ? "
                         + "WHERE [UserName] = ? ";
                 ps = con.prepareStatement(sql);
-                ps.setString(1, newPassword);
+                ps.setString(1, password);
                 ps.setString(2, user.getUserName());
                 int affectedRow = ps.executeUpdate();
                 if (affectedRow > 0) {
