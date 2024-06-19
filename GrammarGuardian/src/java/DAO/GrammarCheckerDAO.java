@@ -53,7 +53,7 @@ public class GrammarCheckerDAO extends DBContext {
         return listPosts;
     }
 
-    ;
+    
      public List<Post> getAllPostAvailable() {
         List<Post> listPosts = new ArrayList();
         try {
@@ -76,7 +76,7 @@ public class GrammarCheckerDAO extends DBContext {
         return listPosts;
     }
 
-    ;
+    
 
     
 
@@ -119,4 +119,39 @@ public class GrammarCheckerDAO extends DBContext {
         }
         return false;
     }
+    
+    public boolean AddToFavouriteList(int postId, int userId) {
+        try {
+            boolean isExist = isExistFavouritePost(postId, userId);
+            if (isExist) {
+                return false;
+            }
+            String sql = "INSERT INTO [Post_Favourite] (PostId, UserId) VALUES (?, ?)";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, postId);
+            ps.setInt(2, userId);
+            int affectedRow = ps.executeUpdate();
+            return affectedRow > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public boolean isExistFavouritePost(int postId, int userId) {
+        try {
+            String sql = "SELECT * FROM [Post_Favourite] WHERE PostId = ? AND UserId = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, postId);
+            ps.setInt(2, userId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
 }
