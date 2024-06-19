@@ -22,14 +22,7 @@ import java.io.IOException;
 import java.util.List;
 import org.checkerframework.checker.units.qual.A;
 
-<<<<<<< HEAD
-/**
- *
- * @author ADMIN
- */
-=======
 
->>>>>>> 87e237852d9ac19fdef830cd07d2194999c29e4b
 @MultipartConfig
 public class ProfileController extends HttpServlet {
 
