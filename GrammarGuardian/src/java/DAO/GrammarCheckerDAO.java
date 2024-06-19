@@ -154,4 +154,18 @@ public class GrammarCheckerDAO extends DBContext {
         return false;
     }
     
+    public boolean RemovePostFavouriteList(int postId, int userId) {
+        try {
+            String sql = "DELETE FROM [Post_Favourite] WHERE PostId = ? AND UserId = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, postId);
+            ps.setInt(2, userId);
+            int affectedRow = ps.executeUpdate();
+            return affectedRow > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
 }
