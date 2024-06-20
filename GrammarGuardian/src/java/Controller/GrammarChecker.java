@@ -5,6 +5,7 @@
 package Controller;
 
 import DAO.GrammarCheckerDAO;
+import DAO.PostDAO;
 import Model.Post;
 import Model.User;
 import jakarta.servlet.ServletException;
@@ -66,6 +67,40 @@ public class GrammarChecker extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private void LoadHomePage(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
+            PostDAO postDAO = new PostDAO();
+            String indexS = request.getParameter("index");
+            String searchS = request.getParameter("search");
+            if (indexS == null) {
+                indexS = "1";
+            }
+            if (searchS == null) {
+                searchS = "";
+            }
+            int index = Integer.parseInt(indexS);
+
+            int total = grammarCheckerDAO.getAllPostAvailableTotal();
+            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable(index);
+            if (searchS != "") {
+                total = postDAO.searchPostHomePageByTitleTotal(searchS);
+                listPost = postDAO.searchPostHomePageByTitle(searchS, index);
+                request.setAttribute("search", searchS);
+            }
+            int lastPage = total / 12;
+            if (total % 12 != 0) {
+                lastPage++;
+            }
+            request.setAttribute("LIST_POST", listPost);
+            request.setAttribute("endP", lastPage);
+            request.setAttribute("selectedPage", index);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private void getResult(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession(false);
@@ -83,6 +118,15 @@ public class GrammarChecker extends HttpServlet {
                     segment.put("error", false);
                     segments.add(segment);
                 }
+
+                // Determine the type of error based on the rule category
+                String errorType = "unknown";  // Default, in case the category isn't clear
+                if (match.getRule().getCategory().getName().equals("Grammar")) {
+                    errorType = "grammar";
+                } else if (match.getRule().getCategory().getName().equals("Syntax")) {
+                    errorType = "syntax";
+                }
+
                 Map<String, Object> errorSegment = new HashMap<>();
                 errorSegment.put("text", text.substring(match.getFromPos(), match.getToPos()));
                 errorSegment.put("error", true);
@@ -102,11 +146,7 @@ public class GrammarChecker extends HttpServlet {
 
             session.setAttribute("ESSAY_INPUT", text);
             session.setAttribute("CHECK_RESULT", matches);
-
-            GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
-            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
-            request.setAttribute("LIST_POST", listPost);
-
+            LoadHomePage(request, response);
             request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,10 +166,8 @@ public class GrammarChecker extends HttpServlet {
             post.setDescription(textInput);
             GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
             boolean result = grammarCheckerDAO.SavePost(userLogedIn.getId(), post);
-
-            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable();
-            request.setAttribute("LIST_POST", listPost);
-
+            
+            LoadHomePage(request, response);
             request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
 
         } catch (Exception e) {
