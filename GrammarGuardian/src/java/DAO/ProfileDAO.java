@@ -5,6 +5,7 @@
 package DAO;
 
 import DAL.DBContext;
+import Model.Post;
 import Model.User;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
@@ -13,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -35,6 +37,31 @@ public class ProfileDAO extends DBContext {
             e.printStackTrace();
         }
     }
+     public List<Post> getAllUserPost(int userId, int index) {
+        List<Post> listPosts = new ArrayList();
+        try {
+            String sql = "SELECT * FROM [Post] WHERE UserId = ? ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setInt(2, (index - 1) * 12);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Post post = new Post();
+                post.setPostId(rs.getInt("PostId"));
+                post.setTitle(rs.getString("Title"));
+                post.setDescription(rs.getString("Description"));
+                post.setStatus(rs.getInt("Status"));
+                post.setUserId(rs.getInt("UserId"));
+                listPosts.add(post);
+            }
+            return listPosts;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listPosts;
+    }
+
 
     public User updateProfile(User user, Part image) {
         try {
