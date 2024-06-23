@@ -108,47 +108,47 @@ public class RouteFilter implements Filter {
         //Phương thức doBeforeProcessing được gọi để thực hiện các 
         // công việc chuẩn bị trước khi xử lý yêu cầu.
         // Chuyển đổi yêu cầu và phản hồi thành các đối tượng HTTP:
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        HttpSession session = httpRequest.getSession(false); // Sử dụng false để không tạo session mới nếu chưa tồn tại
-        String url = httpRequest.getServletPath();
-        String contextPath = httpRequest.getContextPath();
-        String homepageUrl = contextPath + "/auth";
+            HttpServletRequest httpRequest = (HttpServletRequest) request;
+            HttpServletResponse httpResponse = (HttpServletResponse) response;
+            HttpSession session = httpRequest.getSession(false); // Sử dụng false để không tạo session mới nếu chưa tồn tại
+            String url = httpRequest.getServletPath();
+            String contextPath = httpRequest.getContextPath();
+            String homepageUrl = contextPath + "/auth";
 
-        // Chuyển hướng đến /auth nếu context path là "/" và người dùng chưa đăng nhập
-        if (url.equals("/") && (session == null || session.getAttribute("USER") == null)) {
-            httpResponse.sendRedirect(homepageUrl);
-            return;
-        }
-
-        // Chuyển hướng nếu URL kết thúc bằng dấu "/"
-        if (url.endsWith("/")) {
-            httpResponse.sendRedirect(homepageUrl);
-            return;
-        }
-
-        // Chuyển hướng nếu URL chứa ".jsp"
-        if (url.contains(".jsp")) {
-            httpResponse.sendRedirect(homepageUrl);
-            return;
-        }
-
-        // Kiểm tra nếu người dùng đã đăng nhập
-        if (session != null && session.getAttribute("USER") != null) {
-            User userLogin = (User) session.getAttribute("USER");
-
-            // Chuyển hướng nếu người dùng là admin và cố gắng truy cập vào trang admin
-            if (userLogin.getRoleId() == 1 && url.contains("admin")) {
+            // Chuyển hướng đến /auth nếu context path là "/" và người dùng chưa đăng nhập
+            if (url.equals("/") && (session == null || session.getAttribute("USER") == null)) {
                 httpResponse.sendRedirect(homepageUrl);
                 return;
             }
-        } else {
-            // Chuyển hướng đến /auth nếu người dùng chưa đăng nhập và cố gắng truy cập vào trang admin
-            if (url.contains("admin")) {
+
+            // Chuyển hướng nếu URL kết thúc bằng dấu "/"
+            if (url.endsWith("/")) {
                 httpResponse.sendRedirect(homepageUrl);
                 return;
             }
-        }
+
+            // Chuyển hướng nếu URL chứa ".jsp"
+            if (url.contains(".jsp")) {
+                httpResponse.sendRedirect(homepageUrl);
+                return;
+            }
+
+            // Kiểm tra nếu người dùng đã đăng nhập
+            if (session != null && session.getAttribute("USER") != null) {
+                User userLogin = (User) session.getAttribute("USER");
+
+                // Chuyển hướng nếu người dùng là admin và cố gắng truy cập vào trang admin
+                if (userLogin.getRoleId() == 1 && url.contains("admin")) {
+                    httpResponse.sendRedirect(homepageUrl);
+                    return;
+                }
+            } else {
+                // Chuyển hướng đến /auth nếu người dùng chưa đăng nhập và cố gắng truy cập vào trang admin
+                if (url.contains("admin")) {
+                    httpResponse.sendRedirect(homepageUrl);
+                    return;
+                }
+            }
 
         Throwable problem = null;
         try {
