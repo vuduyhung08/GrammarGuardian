@@ -13,10 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Datnt
- */
+
 public class GrammarCheckerDAO extends DBContext {
 
     private Connection con;

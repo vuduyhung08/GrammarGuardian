@@ -14,10 +14,14 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Permission {
+public class PostPackage {
     private int Id;
-    private int UserId;
-    private int PackageId;
+    private String Description;
+    private String Title;
+    private float Price;
     private int LimitText;
     private int CheckTime;
+    private boolean Status;
+    private String CreateAt;
+    private String UpdateAt;
 }

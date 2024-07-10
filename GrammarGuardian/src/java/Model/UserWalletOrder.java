@@ -9,15 +9,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Permission {
+public class UserWalletOrder {
     private int Id;
-    private int UserId;
-    private int PackageId;
-    private int LimitText;
-    private int CheckTime;
+    private int UserWalletId;
+    private float Ammount;
+    private String CreateAt;
+    private int Status;
+
 }
