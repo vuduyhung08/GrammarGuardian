@@ -204,7 +204,7 @@ public class ProfileController extends HttpServlet {
             }
             int index = Integer.parseInt(indexS);
 
-            
+            // chua cau hinh kip search theo tung loai bai post.
             int total = grammarCheckerDAO.getAllUserPostTotal(userLogin.getId());
             List<Post> listPost = grammarCheckerDAO.getAllUserPost(userLogin.getId(), index);
             int status = 0;

@@ -4,33 +4,35 @@
  */
 package Controller;
 
-import DAO.AuthenticationDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
-public class AuthenticationController extends HttpServlet {
+public class SendWalletRequestPageController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String userName = (String) session.getAttribute("USERNAME");
-        AuthenticationDAO authDAO = new AuthenticationDAO();
-        authDAO.ConfirmEmail(userName);
-        request.getRequestDispatcher("HomeController").forward(request, response);
+        try {
+            request.getRequestDispatcher("views/user/send-order.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            doGet(request, response);
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";

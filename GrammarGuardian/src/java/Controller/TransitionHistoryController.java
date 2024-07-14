@@ -4,52 +4,51 @@
  */
 package Controller;
 
-import DAO.PostDAO;
-import Model.Post;
-import Model.ViewModel.CommentViewModel;
+import DAO.UserWalletDAO;
+import Model.TransitionHistory;
+import Model.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-public class PostDetailController extends HttpServlet {
 
+public class TransitionHistoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String postIdS = request.getParameter("postId");
-            int postId = Integer.parseInt(postIdS);
-            PostDAO postDAO = new PostDAO();
-            Post post = postDAO.getPostById(postId);
-            
+
             String indexS = request.getParameter("index");
+            String searchS = request.getParameter("search");
             if (indexS == null) {
                 indexS = "1";
             }
-            
             int index = Integer.parseInt(indexS);
-            int total = postDAO.getListUserCommentInPostTotal(postId);
-            List<CommentViewModel> listComment = postDAO.getListUserCommentInPost(postId, index);
-            int lastPage = total / 12;
-            if (total % 12 != 0) {
+            String url = "views/user/wallet-history.jsp";
+            HttpSession session = request.getSession(false);
+            User user = (User) session.getAttribute("USER");
+            request.setAttribute("USER", user);
+            UserWalletDAO userWalletDAO = new UserWalletDAO();
+            int walletId = userWalletDAO.getUserWalletByUserId(user.getId()).getWalletId();
+            int total = userWalletDAO.getWalletHistoryTotal(walletId);
+            List<TransitionHistory> listWalletHistory = userWalletDAO.getWalletHistory(walletId, index);
+            int lastPage = total / 8;
+            if (total % 8 != 0) {
                 lastPage++;
             }
             request.setAttribute("endP", lastPage);
             request.setAttribute("selectedPage", index);
-            request.setAttribute("POST", post);
-            request.setAttribute("COMMENTS", listComment);
-            request.getRequestDispatcher("views/common/post-details.jsp").forward(request, response);
+            if (listWalletHistory.size() > 0) {
+                request.setAttribute("WALLET_HISTORY", listWalletHistory);
+            }
+            request.getRequestDispatcher(url).forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
     }
 
     @Override

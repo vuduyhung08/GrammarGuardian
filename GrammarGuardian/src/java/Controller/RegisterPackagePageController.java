@@ -4,41 +4,27 @@
  */
 package Controller;
 
-import DAO.GrammarCheckerDAO;
+import DAO.PackageDAO;
+import Model.PostPackage;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
-public class DeletePostController extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+public class RegisterPackagePageController extends HttpServlet {
+
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String postIds = request.getParameter("postId");
-            if (postIds != null) {
-                int postId = Integer.parseInt(postIds);
-                GrammarCheckerDAO grammarCheckDAO = new GrammarCheckerDAO();
-                boolean result = grammarCheckDAO.DeletePost(postId);
-                if (result) {
-                    request.setAttribute("MESSAGE", "Your post was delete successfully!!");
-                } else {
-                    request.setAttribute("ERROR", "Cannot deleted post ");
-                    System.out.println("deletePost - Cannot deleted post");
-                }
-                request.getRequestDispatcher("profile?action=view").forward(request, response);
-            }
+            PackageDAO packageDAO = new PackageDAO();
+            List<PostPackage> list = packageDAO.getAllPackagesHomePage();
+            request.setAttribute("PACKAGE", list);
+            request.getRequestDispatcher("views/common/register-package.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
