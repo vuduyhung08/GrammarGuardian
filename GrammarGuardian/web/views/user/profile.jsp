@@ -240,27 +240,49 @@
                             <ul class="pagination">
 
                                 <c:choose>
+                                    
+                                    
                                     <c:when test ="${selectedPage - 1 < 1}">
                                         <li class="page-item disabled">
                                             <a class="page-link" href="#">«</a>
                                         </li>
                                     </c:when>
+                                        
+                                        
                                     <c:otherwise>
-                                        <li class="page-item"><a class="page-link" href="profile?action=view&type=${type}&search=${search}&index=${selectedPage-1}">«</a></li>
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <c:forEach var="i" begin="1" end="${endP}">
-                                    <li class="page-item ${i == selectedPage ? "active" : "" }"> <a class="page-link" href="profile?action=view&type=${type}search=${search}&index=${i}">${i}</a> <li>
-                                    </c:forEach>
-                                    <c:choose>
-                                        <c:when test ="${selectedPage >= endP}">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#">»</a>
+                                        <li class="page-item">
+                                            <a class="page-link" href="profile?action=view&type=${type}&search=${search}&index=${selectedPage-1}">«</a>
                                         </li>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li class="page-item"><a class="page-link" href="profile?action=view&type=${type}search=${search}&index=${selectedPage+1}">»</a></li>
+                                    </c:otherwise>
+                                        
+                                        
+                                    </c:choose>
+                                        
+                                        
+                                    <c:forEach var="i" begin="1" end="${endP}">
+                                        <li class="page-item ${i == selectedPage ? "active" : "" }"> 
+                                            <a class="page-link" href="profile?action=view&type=${type}search=${search}&index=${i}">${i}</a> 
+                                        <li>
+                                    </c:forEach>
+                                        
+                                        
+                                    <c:choose>
+                                        
+                                        
+                                        <c:when test ="${selectedPage >= endP}">
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="#">»</a>
+                                            </li>
+                                        </c:when>
+                                        
+                                        
+                                        <c:otherwise>
+                                            <li class="page-item">
+                                                <a class="page-link" href="profile?action=view&type=${type}search=${search}&index=${selectedPage+1}">»</a>
+                                            </li>
                                         </c:otherwise>
+                                        
+                                        
                                     </c:choose>
                             </ul>
                         </nav>
