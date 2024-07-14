@@ -28,4 +28,6 @@ public class Post {
     private String CreateAt;
     private String UpdateAt;
     private String DeleteAt;
+    private int UpdatePostId;
+    private String Image;
 }

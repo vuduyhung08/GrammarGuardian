@@ -9,17 +9,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- *
- * @author Datnt
- */
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Error {
+public class PostPackage {
     private int Id;
-    private int PostId;
     private String Description;
-    private int SolutionId;
+    private String Title;
+    private float Price;
+    private int LimitText;
+    private int CheckTime;
+    private boolean Status;
+    private String CreateAt;
+    private String UpdateAt;
 }

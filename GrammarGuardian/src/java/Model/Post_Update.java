@@ -9,16 +9,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserWallet {
-    private int WalletId;
-    private int UserId;
-    private float Ammount;
-    private String CreateAt;
-    private String UpdateAt;
-    private int Status;
+public class Post_Update {
+    private int Id;
+    private String Title;
+    private String Description;
 }
+

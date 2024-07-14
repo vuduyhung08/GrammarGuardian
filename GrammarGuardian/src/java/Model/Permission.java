@@ -20,6 +20,7 @@ import lombok.Setter;
 public class Permission {
     private int Id;
     private int UserId;
+    private int PackageId;
     private int LimitText;
     private int CheckTime;
 }

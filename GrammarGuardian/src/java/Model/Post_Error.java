@@ -8,17 +8,20 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserWallet {
-    private int WalletId;
-    private int UserId;
-    private float Ammount;
-    private String CreateAt;
-    private String UpdateAt;
-    private int Status;
+@ToString
+public class Post_Error {
+    private int Id;
+    private int PostId;
+    private String ErrorText;    
+    private String Explain;
+    private String Suggestion;
+    private int Start_Position;
+    private int End_Position;
 }
