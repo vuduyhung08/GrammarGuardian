@@ -6,6 +6,8 @@ package DAO;
 
 import DAL.DBContext;
 import Model.Post;
+import Model.Post_Error;
+import Model.Post_Update;
 import Model.ViewModel.CommentViewModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,6 +35,80 @@ public class PostDAO extends DBContext {
         }
     }
 
+    public int UpdatePostWithSuggestion(Post post) {
+        try {
+            int updatedPostId = 0;
+            // insert vao bang post_update va update Post with PostUpdate_Id la cai Id cua thang nay
+            String sql = "INSERT INTO [Post_Update] (Description, Title)"
+                    + " VALUES (?, ?)";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, post.getDescription());
+            ps.setString(2, post.getTitle());
+            int affectedRow = ps.executeUpdate();
+            if (affectedRow > 0) {
+                sql = "SELECT * FROM Post_Update ORDER BY Id DESC";
+                ps = con.prepareStatement(sql);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    updatedPostId = rs.getInt("Id");
+                    System.out.println("PostUpdate Id  " + updatedPostId);
+                    sql = "UPDATE [Post] SET UpdatePostId = ? WHERE PostId = ?";
+                    ps = con.prepareStatement(sql);
+                    ps.setInt(1, updatedPostId);
+                    ps.setInt(2, post.getPostId());
+                    affectedRow = ps.executeUpdate();
+                    if (affectedRow > 0) {
+                        return updatedPostId;
+                    }
+                }
+            }
+            return updatedPostId;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    public List<Post_Error> getErrorsByPostId(int postId) {
+        List<Post_Error> errors = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM Post_Error WHERE PostId = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, postId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Post_Error error = new Post_Error();
+                error.setId(rs.getInt("Id"));
+                error.setPostId(rs.getInt("PostId"));
+                error.setErrorText(rs.getString("ErrorText"));
+                error.setExplain(rs.getString("Explain"));
+                error.setSuggestion(rs.getString("Suggestion"));
+                error.setStart_Position(rs.getInt("Start_Position"));
+                error.setEnd_Position(rs.getInt("End_Position"));
+                errors.add(error);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return errors;
+    }
+    public Post_Update getPostUpdateById(int id) {
+        try {
+            Post_Update post_Update = new Post_Update();
+            String sql = "SELECT * FROM Post_Update WHERE Id = ? ";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                post_Update.setId(rs.getInt("Id"));
+                post_Update.setDescription(rs.getString("Description"));
+                post_Update.setTitle(rs.getString("Title"));
+            }
+            return post_Update;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public int getAllPostSpendingTotal() {
         List<Post> listPosts = new ArrayList();
         try {

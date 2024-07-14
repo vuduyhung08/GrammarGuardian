@@ -79,6 +79,25 @@ public class UserWalletDAO extends DBContext {
         }
         return null;
     }
+    
+    public boolean addTransitionHistory(String Content, int WalletId) {
+        try {
+            String sql = "INSERT INTO TransitionHistory (Content, CreateAt, WalletId) VALUES (?, ?, ?)";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, Content);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
+            String currentDate = dateFormat.format(date);
+            ps.setString(2, currentDate);
+            ps.setInt(3, WalletId);
+
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public boolean addWalletOrder(int userWalletId, int userId, float amount) {
         try {
@@ -165,7 +184,28 @@ public class UserWalletDAO extends DBContext {
         }
     }
 
-    private boolean updateUserWalletBalance(int userId, int userWalletId, float amount) {
+    public UserWallet getUserWalletById(int userId) {
+        try {
+            String sql = "SELECT * FROM UserWallet WHERE UserId = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                float ammount = rs.getFloat("Ammount");
+                UserWallet wallet = new UserWallet();
+                // convert từ điểm sang tiền.
+                wallet.setAmmount(ammount / 1000);
+                wallet.setCreateAt(rs.getString("CreateAt"));
+                wallet.setUserId(rs.getInt("UserId"));
+                wallet.setWalletId(rs.getInt("Id"));
+                return wallet;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public boolean updateUserWalletBalance(int userId, int userWalletId, float amount) {
         try {
             String sql = "UPDATE UserWallet SET Ammount = Ammount + ? WHERE UserId = ? AND Id = ?";
             ps = con.prepareStatement(sql);
@@ -186,22 +226,4 @@ public class UserWalletDAO extends DBContext {
 
     }
 
-    private boolean addTransitionHistory(String Content, int WalletId) {
-        try {
-            String sql = "INSERT INTO TransitionHistory (Content, CreateAt, WalletId) VALUES (?, ?, ?)";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, Content);
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Date date = new Date();
-            String currentDate = dateFormat.format(date);
-            ps.setString(2, currentDate);
-            ps.setInt(3, WalletId);
-
-            int affectedRows = ps.executeUpdate();
-            return affectedRows > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 }
