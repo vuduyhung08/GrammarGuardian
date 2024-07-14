@@ -31,20 +31,30 @@
             <div class="position-sticky pt-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/admin/DashboardController">
                             Dashboard
                         </a>
                     </li>
-                    
-                      <li class="nav-item">
-                        <a class="nav-link" href="GetAllUserController">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/admin/GetAllUserController">
                             User Management
                         </a>
                     </li>
-                    
-                       <li class="nav-item">
-                        <a class="nav-link" href="GetAllPostConfirmController">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/admin/GetAllPostInController">
                             Post Management
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/admin/UserWalletManageController">
+                            Wallet Management
+                        </a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/admin/GetAllPackageController">
+                            Package Management
                         </a>
                     </li>
                 </ul>

@@ -30,7 +30,7 @@
                 </div>
                 <nav class="space-y-2">
                     <a
-                        href="GetAllPostConfirmController"
+                        href="GetAllPostInController"
                         class="block py-2 px-4 rounded text-sm text-white flex items-center bg-blue-600"
                         >
                         <i class="fas fa-clipboard mr-2"></i>Post Management
@@ -42,7 +42,7 @@
                         <i class="fas fa-user mr-2"></i>User Management
                     </a>
                     <a
-                        href="${pageContext.request.contextPath}/auth?action=logout"
+                        href="${pageContext.request.contextPath}/LogoutController"
                         class="block py-2 px-4 rounded text-sm hover:bg-gray-700 flex items-center"
                         >
                         <i class="fas fa-sign-out-alt mr-2"></i>Logout
@@ -52,39 +52,50 @@
             <div class="w-9/12 p-8">
                 <div class="flex justify-between mb-4">
                     <h2 class="text-2xl font-bold">Post Management</h2>
-                    <form class="relative" action="GetAllPostConfirmController">
+                    <form class="relative" action="GetAllPostInController" id="postForm">
                         <input
-                            type="text" name="search"
+                            type="text"
+                            name="search"
                             class="border border-gray-300 rounded pl-8 pr-4 py-2"
-                            placeholder="Search with title..." value="${search}"
+                            placeholder="Search with title..."
+                            value="${search}"
                             />
                         <i
                             class="fas fa-search absolute top-1/2 transform -translate-y-1/2 left-2 text-gray-400"
                             ></i>
                         <button type="submit" class="btn btn-success">Search</button>
+                        Select post:
+                        <select id="postSelect" name="searchType" class="post-select">
+                            <option value="all" ${"all".equals(searchType) ? "selected" : ""}>All</option>
+                            <option value="0" ${"0".equals(searchType) ? "selected" : ""}>Save posts</option>
+                            <option value="1" ${"1".equals(searchType) ? "selected" : ""}>Pending posts</option>
+                            <option value="3" ${"3".equals(searchType) ? "selected" : ""}>Confirm posts</option>
+                        </select>
                     </form>
                 </div>
                 <div class="grid grid-cols-4 gap-4">
                     <!-- Card 1 -->
                     <c:forEach items="${LIST_POST}" var="post">
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                            <img
-                                src="https://placehold.co/100x100"
-                                alt="Image"
-                                class="w-full"
-                                />
+                        <div style="display: grid; justify-content: space-between" class="bg-white shadow-md overflow-hidden">
                             <div class="p-4">
-                                <h3 class="text-xl font-bold">${post.title}</h3>
+                                <h3>User: ${post.userName}</h3>
+                                <h3 class="text-xl font-bold">Title: ${post.title}</h3>
                                 <p class="text-gray-600" style="overflow: hidden;
                                    max-height: 50px; height: 50px">
                                     ${post.description}
                                 </p>
+                                <p class="text-gray-600" style="overflow: hidden;
+                                   max-height: 50px; height: 50px">
+                                    Create At: ${post.createAt}
+                                </p> 
                             </div>
-                            <div class="flex justify-between p-4">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#accepte-${post.postId}" aria-hidden="true"
-                                   class="text-green-500">
-                                    <i class="fas fa-check-circle text-2xl"></i>
-                                </a>
+                            <div style="flex: 1" class="flex justify-between p-4">
+                                <c:if test="${post.status == 1}">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#accepte-${post.postId}" aria-hidden="true"
+                                       class="text-green-500">
+                                        <i class="fas fa-check-circle text-2xl"></i>
+                                    </a>
+                                </c:if>
                                 <!-- accpet form-->
                                 <!-- Modal -->
                                 <div class="modal fade" id="accepte-${post.postId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -106,9 +117,11 @@
                                 </div>
 
 
-                                <a  href="#" class="text-red-500" data-bs-toggle="modal" data-bs-target="#reject-${post.postId}" aria-hidden="true">
-                                    <i class="fas fa-times-circle text-2xl"></i>
-                                </a>
+                                <c:if test="${post.status == 1}">
+                                    <a  href="#" class="text-red-500" data-bs-toggle="modal" data-bs-target="#reject-${post.postId}" aria-hidden="true">
+                                        <i class="fas fa-times-circle text-2xl"></i>
+                                    </a>
+                                </c:if>
 
                                 <!-- REJECT -->
                                 <!-- Modal -->
@@ -130,28 +143,42 @@
                                     </div>
                                 </div>
 
-                                <a class="text-blue-500">
-                                    <i class="fas fa-info-circle text-2xl"></i>
-                                </a>
+                                <c:if test="${post.status == 1}">
+                                    <a class="text-blue-500" data-bs-toggle="modal" data-bs-target="#post-detail-${post.postId}" aria-hidden="true">
+                                        <i class="fas fa-info-circle text-2xl"></i>
+                                    </a>
+                                </c:if>
 
-                                <!-- Description -->
-                                <div class="modal fade" id="disableModal-${user.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                                <div class="modal fade" id="post-detail-${post.postId}" tabindex="-1" aria-labelledby="post-detail-${post.postId}" aria-hidden="true">
                                     <div class="modal-dialog">
-                                        <div class="modal-content">
+                                        <div class="modal-content" style="width: 150%; transform: translateX(-100px)">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" >Are you sure to disable this user</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Post details</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                This action will avoid userName : ${user.userName} to accesss your system.
+                                                <div>
+                                                    <b>Title: </b> ${post.title}
+                                                </div>
+                                                <div>
+                                                    <b>Description: </b>
+                                                    <textarea readonly style="width: 100%; height: 350px; text-align: left">
+                                                        ${post.description}
+                                                    </textarea>
+                                                </div>
                                             </div>
-                                            <div class="modal-footer">
+                                            <div class="modal-footer" style="display: flex;">
+                                                <a class="btn btn-success"  href="ChangeStatusPostController?action=accept&postId=${post.postId}">Appove</a>        
+                                                <a class="btn btn-danger"  href="ChangeStatusPostController?action=reject&postId=${post.postId}">Reject</a>
+
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <a class="btn btn-primary" href="ChangeUserStatusController?userId=${user.id}">Save changes</a>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </c:forEach>
@@ -167,11 +194,11 @@
                                     </li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="page-item"><a class="page-link" href="GetAllPostConfirmController?search=${search}&index=${selectedPage-1}">«</a></li>
+                                    <li class="page-item"><a class="page-link" href="GetAllPostInController?search=${search}&index=${selectedPage-1}&searchType=${searchType}">«</a></li>
                                     </c:otherwise>
                                 </c:choose>
                                 <c:forEach var="i" begin="1" end="${endP}">
-                                <li class="page-item ${i == selectedPage ? "active" : "" }"> <a class="page-link" href="GetAllPostConfirmController?search=${search}&index=${i}">${i}</a> <li>
+                                <li class="page-item ${i == selectedPage ? "active" : "" }"> <a class="page-link" href="GetAllPostInController?search=${search}&index=${i}&searchType=${searchType}">${i}</a> <li>
                                 </c:forEach>
                                 <c:choose>
                                     <c:when test ="${selectedPage >= endP}">
@@ -180,7 +207,7 @@
                                     </li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="page-item"><a class="page-link" href="GetAllPostConfirmController?search=${search}&index=${selectedPage+1}">»</a></li>
+                                    <li class="page-item"><a class="page-link" href="GetAllPostInController?search=${search}&index=${selectedPage+1}&searchType=${searchType}">»</a></li>
                                     </c:otherwise>
                                 </c:choose>
                         </ul>
