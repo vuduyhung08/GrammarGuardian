@@ -32,8 +32,6 @@
         <!-- Template Stylesheet -->
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 
-        <!-- Customized Bootstrap Stylesheet -->
-        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Template Stylesheet -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -85,7 +83,18 @@
                                 Change password
                             </button>
                         </a>
-                        <a href="auth">
+                        <a href="TransitionHistoryController">
+                            <button class="bg-green-500 text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="background: linear-gradient(to right, #2F80ED, #56CCF2); margin-bottom: 10px">
+                                Transition history
+                            </button>
+                        </a>
+                          <a href="GetUserPermission">
+                            <button class="bg-green-500 text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="background: linear-gradient(to right, #2F80ED, #56CCF2); margin-bottom: 10px">
+                                User package
+                            </button>
+                        </a>
+                        </a>
+                        <a href="HomeController">
                             <button class="bg-green-500 text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="  background: linear-gradient(to right, #2F80ED, #56CCF2);">
                                 Back to homepage
                             </button>
@@ -127,18 +136,26 @@
                     <h2 class="text-body-emphasis text-center py-3">
                         Your document history
                     </h2>
-                    <div class="post-type" style="margin: 0 0 30px 15px">
-                        <a href="profile?action=view" class="btn  ${type == null || type == '' ? 'btn-primary' : ''}">All Post</a>     
-                        <a href="profile?action=view&type=pending-post" class="btn ${type == 'pending-post' ? 'btn-primary' : ''}">Pending Post</a>     
-                        <a href="profile?action=view&type=confirm-post" class="btn ${type == 'confirm-post' ? 'btn-primary' : ''}">Confirmed Post</a>
-                        <a href="profile?action=view&type=reject-post" class="btn ${type == 'reject-post' ? 'btn-primary' : ''}">Rejected Post</a>  
-                        <a href="profile?action=view&type=delete-post" class="btn ${type == 'delete-post' ? 'btn-primary' : ''}">Deleted Post</a>    
-                        <a href="profile?action=view&type=favourite-post" class="btn ${type == 'favourite-post' ? 'btn-primary' : ''}">Favourite Post</a>
-                    </div>
+                    
                     <div class="container">
-                        <form action="auth" class="d-flex" style="margin-bottom: 15px;">
+                        <form action="FilterPostController" class="d-flex" style="margin-bottom: 15px;">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" value="${search}">
                             <button class="btn btn-outline-success" type="submit">Search</button>
+                            <select name="status" class="form-select" aria-label="Default select example">
+                                <option  value="" selected>All</option>
+                                <option   ${status == 0 ? 'selected' : ''}  value="0">Save post</option>
+                                <option   ${status == 1 ? 'selected' : ''} value="1">Pending</option>
+                                <option   ${status == 3 ? 'selected' : ''} value="3">Confirmed</option>
+                                <option   ${status == 2 ? 'selected' : ''}  value="2">Rejected</option>
+                                <option   ${status == 4 ? 'selected' : ''}  value="4">Deleted</option>   
+                                <option   ${status == 5 ? 'selected' : ''}  value="5">Favourite</option>
+
+
+                            </select>
+                            <button style="margin-left: 15px" type="submit" class="btn btn-success">Filter</button>
+
+
+
                         </form>
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                             <c:if test="${LIST_POST ==  null}">
@@ -147,7 +164,6 @@
                             <c:forEach var="post" items="${LIST_POST}">
                                 <div class="col-md-3">
                                     <div class="card shadow-sm">
-                                        <img src="${pageContext.request.contextPath}/images/csd.jpg" alt="">
                                         <div class="card-body" style="display: flex; justify-content: space-between">
                                             <div class="d-flex justify-content-center align-items-center" style="flex-direction: column">
                                                 <div>
@@ -157,20 +173,16 @@
                                                     ${post.createAt}
                                                 </div>
                                                 <div class="btn-group">
-                                                                                                                                                         
-                                                    
                                                     <a  data-bs-toggle="modal" data-bs-target="#post-detail-${post.postId}">
                                                         <button type="button" class="btn btn-sm btn-outline-secondary">
                                                             Details
                                                         </button>
                                                     </a>
-                                                        
-                                                        
                                                 </div>
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="post-detail-${post.postId}" tabindex="-1" aria-labelledby="post-detail-${post.postId}" aria-hidden="true">
                                                     <div class="modal-dialog">
-                                                        <div class="modal-content">
+                                                        <div class="modal-content" style="width: 150%">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="exampleModalLabel">Post details</h5>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -182,30 +194,52 @@
                                                                 <div>
                                                                     <b>Description: </b>${post.description}
                                                                 </div>
+                                                                <c:choose>
+                                                                    <c:when test="${post.image != null}">
+                                                                        <img style="width: 100%; height:  350px;"
+                                                                             src="data:image/png;base64,${post.image}"
+                                                                             alt="Image"
+                                                                             class="w-full"
+                                                                             />
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <img style="width: 100%; height:  250px;"
+                                                                             src="https://placehold.co/100x100"
+                                                                             alt="Image"
+                                                                             class="w-full"
+                                                                             />
+                                                                    </c:otherwise>
+                                                                </c:choose>
+
                                                             </div>
-                                                            <div class="modal-footer">
-                                                                <c:if test="${status != 5}">
-                                                                    <c:if test="${post.status == 0}">
-                                                                        <a class="btn btn-primary" href="SendPostToConfirm?postId=${post.postId}">Submit Post</a>
+                                                            <div class="modal-footer" style="display: flex; justify-content: space-between">
+                                                                <div>
+                                                                    <a class="btn btn-warning" href="UpdatePostController?postId=${post.postId}">Update Post</a>
+                                                                </div>  
+                                                                <div>
+                                                                    <c:if test="${status != 5}">
+                                                                        <c:if test="${post.status == 0}">
+                                                                            <a class="btn btn-primary" href="SendPostToConfirm?postId=${post.postId}">Submit Post</a>
+                                                                        </c:if>
+                                                                        <c:if test="${post.status == 1}">
+                                                                            <a class="btn btn-danger" href="CanclePostToConfirm?postId=${post.postId}">Cancle pending</a>
+                                                                        </c:if>
+                                                                        <c:if test="${post.status == 2}">
+                                                                            <a class="btn btn-danger" href="SendPostToConfirm?postId=${post.postId}">Resend Post</a>
+                                                                        </c:if>
+                                                                        <c:if test="${post.status == 3}">
+                                                                            <a class="btn btn-danger" href="DeletePost?postId=${post.postId}">Delete Post</a>  
+                                                                        </c:if>
+                                                                        <c:if test="${post.status == 4}">
+                                                                            <a class="btn btn-danger" href="RestorePost?postId=${post.postId}">Restore Post</a>
+                                                                        </c:if>
                                                                     </c:if>
-                                                                    <c:if test="${post.status == 1}">
-                                                                        <a class="btn btn-danger" href="CanclePostToConfirm?postId=${post.postId}">Cancel pending</a>
+                                                                    <c:if test="${status == 5}">
+                                                                        <a class="btn btn-danger" href="RemovePostFromFavourite?postId=${post.postId}">Remove from favourite</a>
                                                                     </c:if>
-                                                                    <c:if test="${post.status == 2}">
-                                                                        <a class="btn btn-danger" href="SendPostToConfirm?postId=${post.postId}">Resend Post</a>
-                                                                    </c:if>
-                                                                    <c:if test="${post.status == 3}">
-                                                                        <a class="btn btn-danger" href="DeletePost?postId=${post.postId}">Delete Post</a>  
-                                                                        <!--<a class="btn btn-danger" onclick="">Delete Post</a>-->
-                                                                    </c:if>
-                                                                    <c:if test="${post.status == 4}">
-                                                                        <a class="btn btn-danger" href="RestorePost?postId=${post.postId}">Restore Post</a>
-                                                                    </c:if>
-                                                                </c:if>
-                                                                <c:if test="${status == 5}">
-                                                                    <a class="btn btn-danger" href="RemovePostFromFavourite?postId=${post.postId}">Remove from favourite</a>
-                                                                </c:if>
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -234,55 +268,31 @@
                             </c:forEach>
                         </div>
 
-
-
                         <nav aria-label="Page navigation example" style="display: flex; justify-content:center;margin-top: 15px;">
                             <ul class="pagination">
 
                                 <c:choose>
-                                    
-                                    
                                     <c:when test ="${selectedPage - 1 < 1}">
                                         <li class="page-item disabled">
                                             <a class="page-link" href="#">«</a>
                                         </li>
                                     </c:when>
-                                        
-                                        
                                     <c:otherwise>
-                                        <li class="page-item">
-                                            <a class="page-link" href="profile?action=view&type=${type}&search=${search}&index=${selectedPage-1}">«</a>
-                                        </li>
-                                    </c:otherwise>
-                                        
-                                        
-                                    </c:choose>
-                                        
-                                        
-                                    <c:forEach var="i" begin="1" end="${endP}">
-                                        <li class="page-item ${i == selectedPage ? "active" : "" }"> 
-                                            <a class="page-link" href="profile?action=view&type=${type}search=${search}&index=${i}">${i}</a> 
-                                        <li>
-                                    </c:forEach>
-                                        
-                                        
-                                    <c:choose>
-                                        
-                                        
-                                        <c:when test ="${selectedPage >= endP}">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" href="#">»</a>
-                                            </li>
-                                        </c:when>
-                                        
-                                        
-                                        <c:otherwise>
-                                            <li class="page-item">
-                                                <a class="page-link" href="profile?action=view&type=${type}search=${search}&index=${selectedPage+1}">»</a>
-                                            </li>
+                                        <li class="page-item"><a class="page-link" href="profile?action=view&type=${type}&search=${search}&index=${selectedPage-1}">«</a></li>
                                         </c:otherwise>
-                                        
-                                        
+                                    </c:choose>
+                                    <c:forEach var="i" begin="1" end="${endP}">
+                                    <li class="page-item ${i == selectedPage ? "active" : "" }"> <a class="page-link" href="profile?action=view&type=${type}search=${search}&index=${i}">${i}</a> <li>
+                                    </c:forEach>
+                                    <c:choose>
+                                        <c:when test ="${selectedPage >= endP}">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#">»</a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item"><a class="page-link" href="profile?action=view&type=${type}search=${search}&index=${selectedPage+1}">»</a></li>
+                                        </c:otherwise>
                                     </c:choose>
                             </ul>
                         </nav>
