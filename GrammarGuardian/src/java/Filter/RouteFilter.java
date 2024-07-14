@@ -20,10 +20,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-/**
- *
- * @author Datnt
- */
+
 public class RouteFilter implements Filter {
 
     private static final boolean debug = true;
@@ -116,7 +113,7 @@ public class RouteFilter implements Filter {
         HttpSession session = httpRequest.getSession(false); // Sử dụng false để không tạo session mới nếu chưa tồn tại
         String url = httpRequest.getServletPath();
         String contextPath = httpRequest.getContextPath();
-        String homepageUrl = contextPath + "/auth";
+        String homepageUrl = contextPath + "/HomeController";
 
         // Chuyển hướng đến /auth nếu context path là "/" và người dùng chưa đăng nhập
         if (url.equals("/") && (session == null || session.getAttribute("USER") == null)) {
