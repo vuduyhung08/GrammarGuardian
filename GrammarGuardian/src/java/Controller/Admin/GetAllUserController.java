@@ -30,9 +30,6 @@ public class GetAllUserController extends HttpServlet {
                 if (searchS == null) {
                     searchS = "";
                 }
-                else{
-                    searchS = searchS.trim();
-                }
                 int index = Integer.parseInt(indexS);
                 UserManageDAO userManageDAO = new UserManageDAO();
                 int total = userManageDAO.GetAllUserTotal();

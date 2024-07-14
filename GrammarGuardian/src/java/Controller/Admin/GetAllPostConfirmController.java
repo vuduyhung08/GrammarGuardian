@@ -33,15 +33,12 @@ public class GetAllPostConfirmController extends HttpServlet {
                 if (searchS == null) {
                     searchS = "";
                 }
-                else{
-                    searchS = searchS.trim();
-                }
                 int index = Integer.parseInt(indexS);
                 int total = postDAO.getAllPostSpendingTotal();
                 List<Post> listPost = postDAO.getAllPostSpending(index);
                 if (searchS != "") {
                     total = postDAO.searchPostManagePageTitleTotal(searchS);
-                    listPost = postDAO.searchPostManagePageByTitle(searchS, index);
+//                    listPost = postDAO.searchPostManagePageByTitle(searchS, index);
                     request.setAttribute("search", searchS);
                 }
                 int lastPage = total / 8;
