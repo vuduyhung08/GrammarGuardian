@@ -24,28 +24,44 @@
     }
 </script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
-    <form action="verify" method="post">
+
+<body class="flex items-center justify-center h-screen" style="background: linear-gradient(to right, #2F80ED, #56CCF2);">
+    <form action="verify" method="post" >
         <input type="hidden" name="action" value="setNewPassword"/>
-        <div class="bg-white p-6 rounded-lg shadow-md w-96">
+        <div class="bg-white p-6 rounded-lg shadow-md w-96" style="width: 500px">
             <div class="flex justify-center mb-4">
                 <!-- Replace with your actual logo if available -->
                 <span class="text-orange-500 font-bold text-2xl" style="color: green;">Grammar Guardian</span>
             </div>
+<<<<<<< HEAD
 
             <h2 class="text-center text-lg font-bold text-gray-700 mb-2">Xác minh thành công</h2>
 
             <p class="text-center text-sm text-gray-600 mb-4">Hãy nhập mật khẩu mới của bạn!</p>
 
+=======
+            <h2 class="text-center text-lg font-bold text-gray-700 mb-2">Verification sucessfully</h2>
+            <p class="text-center text-sm text-gray-600 mb-4">Please type new password!</p>
+>>>>>>> hainvt
             <div id="password-message" style="color:red;font-size:11px"></div>
 
             <input name="email" id="email" hidden value="${email}"> 
 
             <div class="mb-4 relative">
+<<<<<<< HEAD
                 <label for="new-password" class="block text-gray-700 text-sm font-bold mb-2">Mật khẩu mới</label>
                 <input name="newwPassword" type="password" id="newwpassword" placeholder="Mật khẩu mới" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 <div id="password-message" style="color:red;font-size:11px"></div>
                 <i class="fas fa-eye-slash password-toggle cursor-pointer absolute right-3 top-9" id="toggle-new-password" data-input="new-password"></i>
+=======
+                <input name="newPassword" type="password" id="password" placeholder="New password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <i class="fas fa-eye-slash absolute right-3 top-3 text-gray-400 cursor-pointer" onclick="togglePassword()" id="togglePasswordIcon"></i>
+                <div id="password-confirm-message" style="color:red;font-size:11px"></div>
+            </div>
+            <div class="mb-4 relative">
+                <input  type="password" id="confirmpassword" placeholder="Confirm password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <i class="fas fa-eye-slash absolute right-3 top-3 text-gray-400 cursor-pointer" onclick="togglePassword()" id="togglePasswordIcon"></i>
+>>>>>>> hainvt
             </div>
             
             
@@ -59,24 +75,41 @@
             <h5 style="color:red">${errorMessage}</h5>
 
             <div class="mb-4">
+<<<<<<< HEAD
                 <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 w-full rounded focus:outline-none focus:shadow-outline" style="background-image: linear-gradient(to right top,#45af2a,#3ba023,#30901c,#268215,#1b730d,#1b730d,#1b730d,#1b730d,#268215,#30901c,#3ba023,#45af2a">
                     XÁC NHẬN
                 </button>
             </div>
             <div class="text-center text-sm">
                 <a href="${pageContext.request.contextPath}/auth?action=login" class="btn btn-outline-light me-2">Login | Sign up</a>
+=======
+                <button disabled="true" type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 w-full rounded focus:outline-none focus:shadow-outline" style="background: linear-gradient(to right, #2F80ED, #56CCF2)">
+                    CONFIRM
+                </button>
+            </div>
+            <div class="text-center text-sm">
+                <a href="#" class="text-black-500 hover:text-blue-600 transition duration-300 ease-in-out">Remember password?</a>
+                <a href="#" class="text-green-500 hover:text-green-600 transition duration-300 ease-in-out ml-2">Login now?</a>
+>>>>>>> hainvt
             </div>
         </div>
     </form>
 
 </body>
+
 </html>
 
 <script>
      const passwordInput = document.getElementById('newwpassword');
     const passwordConfirmInput = document.getElementById('newPassword');
     const passwordMessage = document.getElementById('password-message');
+<<<<<<< HEAD
     const submitButton = document.getElementById('btn-submit');
+=======
+    const passwordMessageConfirm = document.getElementById('password-confirm-message');
+    const submitButton = document.querySelector('form button');
+    const passwordConfirm = document.getElementById('confirmpassword');
+>>>>>>> hainvt
 
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'*+,-\./:;<=>?@\[\]^_`{|}~])[^\s]{8,}$/;
 
@@ -87,7 +120,20 @@
 
         if (!passwordRegex.test(password)) {
             isValid = false;
-            passwordMessage.textContent = 'Mật khẩu phải chứa ít nhất 8 kí tự và ít nhất một kí tự hoa,1 kí tự thường, 1 số, và 1 kí tự đặc biệt.';
+            passwordMessage.textContent = 'Password must be at least 8 characters, include at least 1 uppercase letter, 1 lowercase letter, and 1 special character.';
+        }
+
+        submitButton.disabled = !isValid;
+    });
+
+    passwordConfirm.addEventListener('keyup', (event) => {
+        const password = event.target.value;
+        let isValid = true;
+        passwordMessageConfirm.textContent = '';
+
+        if (!(password == passwordInput.value)) {
+            isValid = false;
+            passwordMessageConfirm.textContent = 'Password not matching';
         }
         submitButton.disabled = !isValid;
     });

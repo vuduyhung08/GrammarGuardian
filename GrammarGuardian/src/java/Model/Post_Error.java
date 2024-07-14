@@ -16,13 +16,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Post {
+public class Post_Error {
+    private int Id;
     private int PostId;
-    private String Title;
-    private String Description;
-    private int UserId;
-    private int Status;
-    private String CreateAt;
-    private String UpdateAt;
-    private String DeleteAt;
+    private String ErrorText;    
+    private String Explain;
+    private String Suggestion;
+    private int Start_Position;
+    private int End_Position;
 }

@@ -132,7 +132,11 @@ public class AuthenticationController extends HttpServlet {
             userSignUp.setLastName(lastName);
             userSignUp.setPhone(phone);
             session.setAttribute("email", email);
+<<<<<<< HEAD
 
+=======
+            // B1 gui mail truoc
+>>>>>>> hainvt
             String link = "http://localhost:9999/GrammarGuardian/auth?action=confirm-email";
             AuthenticationDAO authDAO = new AuthenticationDAO();
             // tao tai khoan.

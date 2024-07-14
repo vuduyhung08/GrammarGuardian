@@ -14,7 +14,7 @@
         }
 
         body {
-            background: #f6f5f7;
+            background: linear-gradient(to right, #2F80ED, #56CCF2);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -54,9 +54,9 @@
 
         button {
             border-radius: 20px;
-            border: 1px solid #039a21;
-            background-color: #039a21;
-            color: #FFFFFF;
+            border: 1px solid #fff;
+            background-color: #ccc;
+            color: #000;
             font-size: 12px;
             font-weight: bold;
             padding: 12px 45px;
@@ -74,8 +74,8 @@
         }
 
         button.ghost {
-            background-color: #039a21;
-            border-color: #FFFFFF;
+            background-color: #ccc;
+            border-color: #ccc;
         }
 
         form {
@@ -98,7 +98,7 @@
         }
 
         .container {
-            background-color: #fff;
+            background: #fff;
             border-radius: 10px;
             box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
                 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -173,7 +173,7 @@
         .overlay {
             background: #027513;
             background: -webkit-linear-gradient(to right, #027513, #2eef1d);
-            background: linear-gradient(to right, #026010, #3bbe27);
+            background: linear-gradient(to right, #2F80ED, #56CCF2);
             background-repeat: no-repeat;
             background-size: cover;
             background-position: 0 0;
@@ -265,7 +265,7 @@
     </style>
 </head>
 <div class="container" id="container">
-    <h2>Đăng Nhập/Đăng Ký</h2>
+    <h2>Sign In/Sign Up</h2>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
 
@@ -287,12 +287,7 @@
                 <div id="password-message" style="color:red;font-size:11px"></div>
                 <input type="password" placeholder="Confirm password" name="repass" id="confirmpassword" required/>
 
-                <!--                <select name="gender" style="width: 100%; padding: 12px 15px; margin: 8px 0; background-color: #eee; border: none;">
-                                    <option value="" selected="true" disabled="true">Giới tính</option>
-                                    <option value="1">Nam</option>
-                                    <option value="0">Nữ</option>
-                                </select>-->
-                <button type="submit" disabled="true">Đăng ký</button>
+                <button type="submit" disabled="true">Sign Up</button>
             </form>
         </div>
         
@@ -304,7 +299,7 @@
                 <c:if test="${not empty successMessage}">
                     <h5 style="color:green">${successMessage}</h5>
                 </c:if>
-                <h1>Đăng nhập</h1>
+                <h1>Sign In</h1>
 
 <!--                <div class="social-container">
                     <a href="https://www.facebook.com/dialog/oauth?client_id=1509092289871952&redirect_uri=http://localhost:8080/FBK74/login-facebook" class="social"
@@ -321,7 +316,11 @@
                 <span>Sử dụng tài khoản mạng xã hội</span>-->
 
                 <input type="hidden" placeholder="UserName" name="action" value="login"/>
+<<<<<<< HEAD
 
+=======
+                <span>Use social account?</span>
+>>>>>>> hainvt
                 <input type="UserName" placeholder="UserName" name="userName" required/>
 
                 <input type="password" placeholder="Password" name="password" required/>
@@ -332,10 +331,10 @@
                     <h5 style="green">${SUCCESSMESSAGE}</h5>
                 </c:if>
                 <c:if test="${not empty EMAIL_URL}">
-                   <a href="${EMAIL_URL}">Go to your mail</a>
+                    <a href="${EMAIL_URL}">Go to your mail</a>
                 </c:if>
-                <a href="verify">Quên Mật Khẩu?</a>
-                <button type="submit">Đăng nhập</button>
+                <a href="verify">Forgot password?</a>
+                <button type="submit">Sign In</button>
             </form>
         </div>
         <h5 style="color:red">${errorMessage}</h5>
@@ -343,14 +342,14 @@
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
-                    <h1>Grammar Guardian- Giúp bạn cải thiện kỉ năng viết</h1>
-                    <p>Nhập thông tin cá nhân của bạn và bắt đầu hành trình với chúng tôi</p>
-                    <button class="ghost" id="signIn">Đăng Nhập</button>
+                    <h1>Grammar Guardian- Imporve your writing skill</h1>
+                    <p>Please type your info to contact with us</p>
+                    <button class="ghost" id="signIn">Sign In</button>
                 </div>
                 <div class="overlay-panel overlay-right">
                     <h1>Grammar Guardian</h1>
-                    <p>Nhập thông tin cá nhân của bạn và bắt đầu hành trình với chúng tôi</p>
-                    <button class="ghost" id="signUp">Đăng Ký</button>
+                    <p>Please type your info to contact with us</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
                 </div>
             </div>
         </div>
@@ -384,26 +383,26 @@
 
         if (!passwordRegex.test(password)) {
             isValid = false;
-            passwordMessage.textContent = 'Mật khẩu phải chứa ít nhất 8 kí tự và ít nhất một kí tự hoa,1 kí tự thường, 1 số, và 1 kí tự đặc biệt.';
+            passwordMessage.textContent = 'Password must be at least 8 characters, include at least 1 uppercase letter, 1 lowercase letter, and 1 special character.';
         }
 
         submitButton.disabled = !isValid;
     });
-    
-    
-     passwordConfirm.addEventListener('keyup', (event) => {
+
+
+    passwordConfirm.addEventListener('keyup', (event) => {
         const password = event.target.value;
         let isValid = true;
         passwordMessage.textContent = '';
 
         if (!(password == passwordInput.value)) {
             isValid = false;
-            passwordMessage.textContent = 'Mật khẩu không khớp với mật khẩu bạn đăng kí';
+            passwordMessage.textContent = 'Password not matching';
         }
 
         submitButton.disabled = !isValid;
     });
-    
+
 
 //
     document.addEventListener('DOMContentLoaded', function () {
@@ -419,14 +418,14 @@
         // Validate Name
         function validateName() {
             const nameIsValid = nameRegex.test(nameInput.value);
-            nameMessage.textContent = nameIsValid ? '' : 'Tên chỉ được chứa chữ cái và khoảng trắng, không chứa số hoặc ký tự đặc biệt.';
+            nameMessage.textContent = nameIsValid ? '' : 'Required character and not include special character..';
             checkFormValidity();
         }
 
         // Validate Phone
         function validatePhone() {
             const phoneIsValid = phoneRegex.test(phoneInput.value);
-            phoneMessage.textContent = phoneIsValid ? '' : 'Số điện thoại chỉ chứa số và không quá 10 chữ số.';
+            phoneMessage.textContent = phoneIsValid ? '' : 'Required 10 character and number only';
             checkFormValidity();
         }
 
@@ -453,7 +452,7 @@
         formMessage.style.fontSize = '14px';
         formMessage.style.textAlign = 'center';
         formMessage.style.marginTop = '10px';
-        formMessage.textContent = 'Vui lòng điền đủ thông tin để đăng ký.';
+        formMessage.textContent = 'Requried all feild.';
         formMessage.hidden = true; // Ẩn thông báo này mặc định
         form.appendChild(formMessage);
 

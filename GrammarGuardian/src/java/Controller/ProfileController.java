@@ -21,8 +21,16 @@ import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.util.List;
 import org.checkerframework.checker.units.qual.A;
+<<<<<<< HEAD
 
 
+=======
+
+/**
+ *
+ * @author ADMIN
+ */
+>>>>>>> hainvt
 @MultipartConfig
 public class ProfileController extends HttpServlet {
 

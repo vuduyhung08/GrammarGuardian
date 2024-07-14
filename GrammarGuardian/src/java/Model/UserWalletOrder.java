@@ -8,21 +8,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class Post {
-    private int PostId;
-    private String Title;
-    private String Description;
-    private int UserId;
-    private int Status;
+public class UserWalletOrder {
+    private int Id;
+    private int UserWalletId;
+    private float Ammount;
     private String CreateAt;
-    private String UpdateAt;
-    private String DeleteAt;
+    private int Status;
+
 }

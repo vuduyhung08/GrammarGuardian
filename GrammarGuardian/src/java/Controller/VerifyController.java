@@ -15,7 +15,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
+<<<<<<< HEAD
 
+=======
+/**
+ *
+ * @author ADMIN
+ */
+>>>>>>> hainvt
 public class VerifyController extends HttpServlet {
 
     @Override

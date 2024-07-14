@@ -8,21 +8,20 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class Post {
-    private int PostId;
-    private String Title;
+public class PostPackage {
+    private int Id;
     private String Description;
-    private int UserId;
-    private int Status;
+    private String Title;
+    private float Price;
+    private int LimitText;
+    private int CheckTime;
+    private boolean Status;
     private String CreateAt;
     private String UpdateAt;
-    private String DeleteAt;
 }

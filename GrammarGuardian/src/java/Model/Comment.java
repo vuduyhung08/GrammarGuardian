@@ -9,7 +9,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> hainvt
 @Setter
 @Getter
 @NoArgsConstructor
@@ -17,6 +20,7 @@ import lombok.Setter;
 public class Comment {
     private int Id;
     private int PostId;
-    private int Description;   
+    private String Content;   
     private int UserId;
+    private String CreateAt;
 }

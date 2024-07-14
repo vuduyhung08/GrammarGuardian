@@ -2,27 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Model;
+package Model.ViewModel;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class Post {
-    private int PostId;
-    private String Title;
-    private String Description;
+public class UserWalletVM {
+    private int WalletId;
     private int UserId;
-    private int Status;
+    private float Ammount;
     private String CreateAt;
     private String UpdateAt;
-    private String DeleteAt;
+    private int Status;
+    private String Email;
+    private String Image;
 }
