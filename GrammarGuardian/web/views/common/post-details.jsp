@@ -57,17 +57,22 @@
         <%@include file="header.jsp" %>
 
 
-        <div class="row">
+        <div class="container">
             <div class="col-md-12 p-5 ">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                </ul>
                 <a class="btn btn-danger" href="AddToFavouriteList?postId=${POST.postId}">Add to favourite</a>
-                <h2 id="course-intro" class="p-3">Title: </h2>
-                <p>
-                    ${POST.title}
-                </p>
-                <h3 class="p-3">Content </h3>
-                <p>
-                    ${POST.description}
-                </p>
+                <h2 id="course-intro" class="p-3">Title:  <span>
+                        ${POST.title}
+                    </span></h2>
+                <div style="display: flex; justify-content: space-between">
+                    <div>
+                        <h3 class="p-3">Content </h3>
+                        <p>
+                            ${POST.description} 
+                        </p>
+                    </div>
+                </div>
 
 
                 <hr>
@@ -86,7 +91,7 @@
                         <div class="col-md-11">
                             <p class="heading-md">name: ${comment.userName}</p>
                             <span style="color: gray">${comment.createAt}</span>
-                            <p style="padding-top: 10px">
+                            <p style="padding-top: 10px; font-size: 18px">
                                 ${comment.content}
                             </p>
                         </div>

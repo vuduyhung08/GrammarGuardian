@@ -4,7 +4,6 @@
 
 <head>
     <title>Sign in</title>
-    <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <style>
         @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
@@ -269,7 +268,7 @@
     <div class="container" id="container">
         <div class="form-container sign-up-container">
 
-            <form action="auth" style="" method="post">
+            <form action="RegisterController" method="post">
                 <input type="hidden" name="action" value="register"/>
                 <div style="display: flex" class="form-control">
                     <input class="form-control" type="text" placeholder="FirstName" name="firstName" required/>
@@ -280,23 +279,17 @@
                 </div>
                 <input type="text" placeholder="Username" name="username" required/>
                 <input type="email" placeholder="Email" name="email" required/>
-
                 <input type="text" placeholder="Phone" name="phone" required/>
                 <div id="phone-message" style="color:red;font-size:11px"></div>
                 <input type="password" placeholder="Password" name="password" id="password" required/>
                 <div id="password-message" style="color:red;font-size:11px"></div>
                 <input type="password" placeholder="Confirm password" name="repass" id="confirmpassword" required/>
 
-                <!--                <select name="gender" style="width: 100%; padding: 12px 15px; margin: 8px 0; background-color: #eee; border: none;">
-                                    <option value="" selected="true" disabled="true">Giới tính</option>
-                                    <option value="1">Nam</option>
-                                    <option value="0">Nữ</option>
-                                </select>-->
                 <button type="submit" disabled="true">Sign Up</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="${pageContext.request.contextPath}/auth" method="post">
+            <form action="LoginController" method="POST">
 
                 <c:if test="${not empty successMessage}">
                     <h5 style="color:green">${successMessage}</h5>
@@ -314,7 +307,7 @@
                        color: white;
                        "><i class="fab fa-google-plus-g"></i></a>
                 </div>
-                <input type="hidden" placeholder="UserName" name="action" value="login"/>
+                <!--<input type="hidden" placeholder="UserName" name="action" value="login"/>-->
                 <span>Use social account?</span>
                 <input type="UserName" placeholder="UserName" name="userName" required/>
 
@@ -378,7 +371,7 @@
 
         if (!passwordRegex.test(password)) {
             isValid = false;
-            passwordMessage.textContent = 'Password must be at least 8 characters, include at least 1 uppercase letter, 1 lowercase letter, and 1 special character.';
+            passwordMessage.textContent = 'Mật khẩu phải chứa ít nhất 8 kí tự và ít nhất một kí tự hoa,1 kí tự thường, 1 số, và 1 kí tự đặc biệt.';
         }
 
         submitButton.disabled = !isValid;
@@ -390,9 +383,12 @@
         let isValid = true;
         passwordMessage.textContent = '';
 
-        if (!(password == passwordInput.value)) {
+        if (!passwordRegex.test(password)) {
             isValid = false;
-            passwordMessage.textContent = 'Password not matching';
+            passwordMessage.textContent = 'Mật khẩu phải chứa ít nhất 8 kí tự và ít nhất một kí tự hoa,1 kí tự thường, 1 số, và 1 kí tự đặc biệt.';
+        } else if (!(password == passwordInput.value)) {
+            isValid = false;
+            passwordMessage.textContent = 'Mật khẩu không khớp với mật khẩu bạn đăng kí';
         }
 
         submitButton.disabled = !isValid;
@@ -413,14 +409,14 @@
         // Validate Name
         function validateName() {
             const nameIsValid = nameRegex.test(nameInput.value);
-            nameMessage.textContent = nameIsValid ? '' : 'Required character and not include special character..';
+            nameMessage.textContent = nameIsValid ? '' : 'Tên chỉ được chứa chữ cái và khoảng trắng, không chứa số hoặc ký tự đặc biệt.';
             checkFormValidity();
         }
 
         // Validate Phone
         function validatePhone() {
             const phoneIsValid = phoneRegex.test(phoneInput.value);
-            phoneMessage.textContent = phoneIsValid ? '' : 'Required 10 character and number only';
+            phoneMessage.textContent = phoneIsValid ? '' : 'Số điện thoại chỉ chứa số và không quá 10 chữ số.';
             checkFormValidity();
         }
 
@@ -435,7 +431,6 @@
         phoneInput.addEventListener('keyup', validatePhone);
     });
 
-//moi
 
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.querySelector('form[action="register"]');
@@ -447,7 +442,7 @@
         formMessage.style.fontSize = '14px';
         formMessage.style.textAlign = 'center';
         formMessage.style.marginTop = '10px';
-        formMessage.textContent = 'Requried all feild.';
+        formMessage.textContent = 'Vui lòng điền đủ thông tin để đăng ký.';
         formMessage.hidden = true; // Ẩn thông báo này mặc định
         form.appendChild(formMessage);
 
@@ -473,7 +468,7 @@
 
             // Kiểm tra mật khẩu phức tạp
             const passwordInput = form.querySelector('input[name="password"]');
-            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'*+,-\./:;<=>?@\[\]^_`{|}~])[^\s]{8,}$/;
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]).{8,}$/;
             if (!passwordRegex.test(passwordInput.value)) {
                 isValid = false;
             }
