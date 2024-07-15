@@ -15,10 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-/**
- *
- * @author Datnt
- */
+
 public class FilterPostController extends HttpServlet {
 
     @Override
@@ -52,8 +49,8 @@ public class FilterPostController extends HttpServlet {
                 total = postDAO.getPostFilterSearchTotal(search, userLogin.getId(), status);
             }
 
-            int lastPage = total / 12;
-            if (total % 12 != 0) {
+            int lastPage = total / 8;
+            if (total % 8 != 0) {
                 lastPage++;
             }
             request.setAttribute("LIST_POST", listPost);

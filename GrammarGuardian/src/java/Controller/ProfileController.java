@@ -40,8 +40,6 @@ public class ProfileController extends HttpServlet {
                 User user = (User) session.getAttribute("USER");
                 switch (action) {
                     case "view": {
-                        // set thong tin cua user vao bien requestScope user
-//                        request.setAttribute("USER", user);
                         LoadUserPost(request, response);
                         url = "views/user/profile.jsp";
                         break;

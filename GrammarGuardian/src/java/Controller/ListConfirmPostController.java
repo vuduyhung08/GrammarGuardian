@@ -43,8 +43,8 @@ public class ListConfirmPostController extends HttpServlet {
         int index = Integer.parseInt(indexS);
         int total = grammarCheckerDAO.getAllPostConfirmTotal(userLogin.getId());
         List<Post> listPost = grammarCheckerDAO.getAllPostConfirm(userLogin.getId(), index);
-        int lastPage = total / 12;
-            if (total % 12 != 0) {
+        int lastPage = total / 8;
+            if (total % 8 != 0) {
                 lastPage++;
             }
             request.setAttribute("LIST_POST", listPost);

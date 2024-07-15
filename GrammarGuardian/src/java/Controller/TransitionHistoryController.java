@@ -31,7 +31,7 @@ public class TransitionHistoryController extends HttpServlet {
             String url = "views/user/wallet-history.jsp";
             HttpSession session = request.getSession(false);
             User user = (User) session.getAttribute("USER");
-            request.setAttribute("USER", user);
+            session.setAttribute("USER", user);
             UserWalletDAO userWalletDAO = new UserWalletDAO();
             int walletId = userWalletDAO.getUserWalletByUserId(user.getId()).getWalletId();
             int total = userWalletDAO.getWalletHistoryTotal(walletId);

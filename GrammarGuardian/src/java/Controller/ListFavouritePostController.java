@@ -44,7 +44,7 @@ public class ListFavouritePostController extends HttpServlet {
         int total = grammarCheckerDAO.getAllFavourtePostTotal(userLogin.getId());
         List<Post> listPost = grammarCheckerDAO.getAllFavourtePost(userLogin.getId(), index);
         int status = 5;
-        int lastPage = total / 12;
+        int lastPage = total / 8;
             if (total % 12 != 0) {
                 lastPage++;
             }
