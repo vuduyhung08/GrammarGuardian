@@ -167,7 +167,21 @@ public class GrammarChecker extends HttpServlet {
             GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
             int postId = grammarCheckerDAO.savePost(userLogedIn.getId(), post);
 
-         
+             for (RuleMatch match : matches) {
+                Post_Error error = new Post_Error();
+                error.setPostId(postId);
+                error.setExplain(match.getMessage());
+                error.setErrorText(match.getMessage());
+                error.setStart_Position(match.getFromPos());
+                String errorText = textInput.substring(match.getFromPos(), match.getToPos());
+                error.setErrorText(errorText);
+                error.setEnd_Position(match.getToPos());
+                for (String suggestion : match.getSuggestedReplacements()) {
+                    error.setSuggestion(suggestion);
+                    grammarCheckerDAO.saveError(error);
+
+                }
+            }
            
             request.getRequestDispatcher("HomeController").forward(request, response);
         } catch (Exception e) {
