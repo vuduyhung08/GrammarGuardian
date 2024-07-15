@@ -349,7 +349,7 @@
             })
         }
 
-
+        
         function countWords() {
             var text = document.getElementById("textarea").value;
             var words = text.trim().split(/\s+/);
@@ -359,6 +359,23 @@
             document.getElementById("wordCount").innerHTML = "Word Count: " + wordCount;
             document.getElementById("word-cout-input").value = wordCount;
         }
+        
+        document.getElementById('fileInput').addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById('text').value = e.target.result;
+                    };
+                    if (file.type === "text/plain") {
+                        reader.readAsText(file);
+                    } else if (file.name.endsWith('.docx')) {
+                        readDocxFile(file);
+                    }
+                }
+                countWords();
+
+            });
     </script>
 </body>
 </html>
