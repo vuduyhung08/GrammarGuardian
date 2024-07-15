@@ -6,11 +6,8 @@ package DAO;
 
 import DAL.DBContext;
 import Model.Post;
-<<<<<<< HEAD
-=======
 import Model.Post_Error;
 import Model.Post_Update;
->>>>>>> hainvt
 import Model.ViewModel.CommentViewModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,8 +35,7 @@ public class PostDAO extends DBContext {
         }
     }
 
-<<<<<<< HEAD
-=======
+
     public int UpdatePostWithSuggestion(Post post) {
         try {
             int updatedPostId = 0;
@@ -114,7 +110,6 @@ public class PostDAO extends DBContext {
         }
         return null;
     }
->>>>>>> hainvt
     public int getAllPostSpendingTotal() {
         List<Post> listPosts = new ArrayList();
         try {
