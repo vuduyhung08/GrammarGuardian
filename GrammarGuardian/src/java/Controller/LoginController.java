@@ -5,9 +5,9 @@
 package Controller;
 
 import DAO.AuthenticationDAO;
-import DAO.UserWalletDAO;
+import DAO.UserSessionDAO;
 import Model.User;
-import Model.UserWallet;
+import Model.UserSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -82,6 +83,15 @@ public class LoginController extends HttpServlet {
         User userLogedIn = authDAO.Login(userName, password);
         if (userLogedIn != null) {
             if (userLogedIn.isIsActive() && userLogedIn.isIsCofirm()) {
+                UserSessionDAO userSessionDAO = new UserSessionDAO();
+                UserSession userSession = new UserSession();
+                userSession.setUserId(userLogedIn.getId());
+                boolean createSessionResult = userSessionDAO.createUserSession(userSession);
+
+                if (!createSessionResult) {
+                // Log the error or display it to the UI         
+                    System.out.println("Error creating user session");
+                }
                 session.setAttribute("USER", userLogedIn);
                 if (userLogedIn.getRoleId() == 1) {
                     url = "HomeController";

@@ -7,6 +7,7 @@ package DAO;
 import DAL.DBContext;
 import Model.Permission;
 import Model.PostPackage;
+import Model.ViewModel.PermissionVM;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -103,7 +104,33 @@ public class PackageDAO extends DBContext {
         }
     }
 
-    public boolean updatePackage(PostPackage p) {
+    public PermissionVM getUserPermissionByUserId(int UserId) {
+        try {
+            String sql = "SELECT pm.Id, pm.CheckTime, pm.LimitText, pk.Price, pk.LimitText as LimitTextPackage, pk.CheckTime as CheckTimePage, "
+                    + " pk.Title, pk.Description, pk.Id as PackageId "
+                    + " FROM Permission pm JOIN [Package] pk ON pm.PackageId = pk.Id WHERE UserId = ? ORDER BY pm.Id DESC";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, UserId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                PermissionVM p = new PermissionVM();
+                p.setId(rs.getInt("Id"));
+                p.setDescription(rs.getString("Description"));
+                p.setTitle(rs.getString("Title"));
+                p.setPrice(rs.getFloat("Price"));
+                p.setLimitText(rs.getInt("LimitText"));
+                p.setCheckTime(rs.getInt("CheckTime"));
+                p.setPackageLimitText(rs.getInt("LimitTextPackage"));
+                p.setPakcageCheckTime(rs.getInt("CheckTimePage"));
+                return p;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+}
+
+public boolean updatePackage(PostPackage p) {
         try {
             String sql = "SELECT * FROM Package WHERE Id = ?";
             ps = con.prepareStatement(sql);
@@ -141,13 +168,13 @@ public class PackageDAO extends DBContext {
             return false;
         }
     }
-    
+
     public boolean addPermission(int userId, PostPackage packge) {
         try {
             String sql = "INSERT INTO Permission (UserId, PackageId, LimitText, CheckTime) VALUES (?, ?, ?, ?)";
             ps = con.prepareStatement(sql);
             ps.setInt(1, userId);
-            ps.setInt(2, packge.getId());    
+            ps.setInt(2, packge.getId());
             ps.setInt(3, packge.getLimitText());
             ps.setInt(4, packge.getCheckTime());
             int affectedRows = ps.executeUpdate();
@@ -157,10 +184,10 @@ public class PackageDAO extends DBContext {
             return false;
         }
     }
-    
+
     public Permission getPermissionsByUserId(int userId) {
         try {
-            String sql = "SELECT * FROM Permission WHERE UserId = ?";
+            String sql = "SELECT * FROM Permission WHERE UserId = ? AND CheckTime != 0";
             ps = con.prepareStatement(sql);
             ps.setInt(1, userId);
             rs = ps.executeQuery();
@@ -168,7 +195,7 @@ public class PackageDAO extends DBContext {
                 Permission p = new Permission();
                 p.setId(rs.getInt("Id"));
                 p.setUserId(rs.getInt("UserId"));
-                p.setPackageId(rs.getInt("PackageId"));    
+                p.setPackageId(rs.getInt("PackageId"));
                 p.setCheckTime(rs.getInt("CheckTime"));
                 p.setLimitText(rs.getInt("LimitText"));
                 return p;
@@ -178,13 +205,15 @@ public class PackageDAO extends DBContext {
         }
         return null;
     }
-    
-       public boolean updateUserPermission(int userId, int checkTimeRemains) {
+
+    public boolean updateUserPermission(int packageID ,int userId, int checkTimeRemains) {
         try {
-            String sql = "UPDATE Permission SET CheckTime = ?  WHERE UserId = ?";
+            String sql = "UPDATE Permission SET CheckTime = ?  WHERE UserId = ? AND PackageId = ?";
             ps = con.prepareStatement(sql);
             ps.setInt(1, checkTimeRemains);
-            ps.setInt(2, userId);    
+            ps.setInt(2, userId);  
+            ps.setInt(3, packageID);
+
             int affectedRows = ps.executeUpdate();
             return affectedRows > 0;
         } catch (Exception e) {

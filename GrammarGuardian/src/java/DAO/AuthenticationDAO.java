@@ -12,6 +12,8 @@ import Service.EncryptString;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Date;
@@ -68,6 +70,8 @@ public class AuthenticationDAO extends DBContext {
                 user.setIsCofirm(IsConfirm);
                 user.setImage(base64Image);
                 user.setRoleId(roleId);
+                // get check free time
+                user.setCheckFreeTime(rs.getInt("CheckTimeFree"));
                 String passwordHashed = EncryptString.hashPassword(password);
                 if (_password.equals(passwordHashed)) {
                     return user;
@@ -83,6 +87,51 @@ public class AuthenticationDAO extends DBContext {
         return user;
     }
 
+     public User getUserById(int Id) {
+        String sql = "SELECT * FROM [User] WHERE [Id] = ?";
+        User user = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, Id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                user = new User();
+                int userId = rs.getInt("UserId");
+                String userName = rs.getString("UserName");
+                String firstName = rs.getString("FirstName");
+                String lastName = rs.getString("LastName");
+                String phone = rs.getString("Phone");
+                String email = rs.getString("Email");
+                boolean isActive = rs.getBoolean("IsActive");
+                boolean IsConfirm = rs.getBoolean("IsConfirm");
+                String _password = rs.getString("Password");
+                int roleId = rs.getInt("RoleId");
+                byte[] imgData = rs.getBytes("Image");
+                String base64Image = null;
+                if (imgData != null) {
+                    base64Image = Base64.getEncoder().encodeToString(imgData);
+                }
+
+                user.setId(userId);
+                user.setUserName(userName);
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setPhone(phone);
+                user.setEmail(email);
+                user.setIsActive(isActive);
+                user.setIsCofirm(IsConfirm);
+                user.setImage(base64Image);
+                user.setRoleId(roleId);
+                user.setCheckFreeTime(rs.getInt("CheckTimeFree"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Cannot found");
+        }
+        return user;
+    }
+    
     public int Register(UserSignUp userSignUp) {
 
         try {
@@ -95,8 +144,9 @@ public class AuthenticationDAO extends DBContext {
             if (isDuplicateEmail) {
                 return 3;
             }
-            String sql = "INSERT INTO [User] (UserName, Password, Email, FirstName, LastName, Phone, IsActive, RoleId, IsConfirm, CreateAt)"
-                    + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            // set default free for user can check for free 3 times after validate.
+            String sql = "INSERT INTO [User] (UserName, Password, Email, FirstName, LastName, Phone, IsActive, RoleId, IsConfirm, CreateAt, CheckTimeFree)"
+                    + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 10)";
             ps = con.prepareStatement(sql);
             String userPassword = EncryptString.hashPassword(userSignUp.getPassword());
             ps.setString(1, userSignUp.getUserName());
@@ -114,6 +164,26 @@ public class AuthenticationDAO extends DBContext {
 
             int affectedRow = ps.executeUpdate();
             if (affectedRow > 0) {
+                sql = "SELECT * FROM [USER] ORDER BY UserId DESC";
+                ps = con.prepareStatement(sql);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    int userId = rs.getInt("UserId");
+                    if (userId > 0) {
+                        sql = "INSERT INTO [UserWallet] (Ammount, CreateAt, UserId) VALUES (?, ?, ?)";
+                        ps = con.prepareStatement(sql);
+                        ps.setFloat(1, 0);
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                        Date date = new Date();
+                        String currentDate = dateFormat.format(date);
+                        ps.setString(2, currentDate);
+                        ps.setInt(3, userId);
+                        affectedRow =  ps.executeUpdate();
+                        if(affectedRow >0) {
+                            System.out.println("Taoj vi tien thanh cong");
+                        }
+                    }
+                }
                 return 1;
             }
         } catch (Exception e) {

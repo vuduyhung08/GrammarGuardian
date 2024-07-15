@@ -20,4 +20,5 @@ public class UserWallet {
     private float Ammount;
     private String CreateAt;
     private String UpdateAt;
+    private int Status;
 }

@@ -5,41 +5,37 @@
 package Controller;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-
-@WebServlet(name = "AdminController", urlPatterns = {"/admin"})
-public class AdminController extends HttpServlet {
+public class SendWalletRequestPageController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            HttpSession session = request.getSession(false);
-            String action = request.getParameter("action") == null ? "" : request.getParameter("action");
-            String url = "";
-            if (session != null && session.getAttribute("USER") != null) {
-                switch(action) {
-                    case "dashboard": {
-                        url = "admin/dashboard.jsp";
-                    }
-                }
-            }
-            request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher("views/user/send-order.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
 }

@@ -21,16 +21,11 @@ import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.util.List;
 import org.checkerframework.checker.units.qual.A;
-<<<<<<< HEAD
-
-
-=======
 
 /**
  *
  * @author ADMIN
  */
->>>>>>> hainvt
 @MultipartConfig
 public class ProfileController extends HttpServlet {
 
@@ -45,8 +40,6 @@ public class ProfileController extends HttpServlet {
                 User user = (User) session.getAttribute("USER");
                 switch (action) {
                     case "view": {
-                        // set thong tin cua user vao bien requestScope user
-//                        request.setAttribute("USER", user);
                         LoadUserPost(request, response);
                         url = "views/user/profile.jsp";
                         break;

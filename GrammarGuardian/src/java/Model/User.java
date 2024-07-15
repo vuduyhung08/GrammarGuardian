@@ -16,10 +16,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+
     private int Id;
     private String UserName;
     private String Password;
-    private String FirstName;    
+    private String FirstName;
     private String LastName;
     private String Phone;
     private String Email;
@@ -30,4 +31,5 @@ public class User {
     private String Image;
     private boolean IsCofirm;
     private int RoleId;
+    private int CheckFreeTime;
 }

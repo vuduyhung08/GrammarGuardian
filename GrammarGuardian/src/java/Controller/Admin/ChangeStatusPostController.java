@@ -7,6 +7,8 @@ package Controller.Admin;
 import DAO.PostDAO;
 import Model.Post;
 import Model.User;
+
+import Model.ViewModel.ViewPostDetailAdmin;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -58,10 +60,12 @@ public class ChangeStatusPostController extends HttpServlet {
                 indexS = "1";
             }
             int index = Integer.parseInt(indexS);
-            int total = postDAO.getAllPostSpendingTotal();
-            List<Post> listPost = postDAO.getAllPostSpending(index);
-            int lastPage = total / 12;
-            if (total % 12 != 0) {
+
+            int total = postDAO.getAllPostAdminTotal();
+            List<ViewPostDetailAdmin> listPost = postDAO.getAllPostInAdmin(index);
+            int lastPage = total / 8;
+            if (total % 8 != 0) {
+
                 lastPage++;
             }
             request.setAttribute("LIST_POST", listPost);
@@ -85,10 +89,12 @@ public class ChangeStatusPostController extends HttpServlet {
                 indexS = "1";
             }
             int index = Integer.parseInt(indexS);
-            int total = postDAO.getAllPostSpendingTotal();
-            List<Post> listPost = postDAO.getAllPostSpending(index);
-            int lastPage = total / 12;
-            if (total % 12 != 0) {
+
+            int total = postDAO.getAllPostAdminTotal();
+            List<ViewPostDetailAdmin> listPost = postDAO.getAllPostInAdmin(index);
+            int lastPage = total / 8;
+            if (total % 8 != 0) {
+
                 lastPage++;
             }
             request.setAttribute("LIST_POST", listPost);

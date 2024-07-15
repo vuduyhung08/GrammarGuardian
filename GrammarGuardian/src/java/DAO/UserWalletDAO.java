@@ -5,6 +5,7 @@
 package DAO;
 
 import DAL.DBContext;
+import Model.TransitionHistory;
 import Model.UserWallet;
 import Model.ViewModel.UserWalletOrderVM;
 import java.sql.Connection;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -79,25 +81,6 @@ public class UserWalletDAO extends DBContext {
         }
         return null;
     }
-    
-    public boolean addTransitionHistory(String Content, int WalletId) {
-        try {
-            String sql = "INSERT INTO TransitionHistory (Content, CreateAt, WalletId) VALUES (?, ?, ?)";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, Content);
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Date date = new Date();
-            String currentDate = dateFormat.format(date);
-            ps.setString(2, currentDate);
-            ps.setInt(3, WalletId);
-
-            int affectedRows = ps.executeUpdate();
-            return affectedRows > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     public boolean addWalletOrder(int userWalletId, int userId, float amount) {
         try {
@@ -120,10 +103,74 @@ public class UserWalletDAO extends DBContext {
         }
     }
 
-    public List<UserWalletOrderVM> getWalletOrders() {
+    public int getWalletOrdersTotal(int status) {
         List<UserWalletOrderVM> orders = new ArrayList<>();
         try {
-            String sql = "SELECT uwo.Id, uwo.UserId, uwo.Ammount, uwo.UserId, uwo.UserWalletId, uwo.Status, u.Email, u.Image FROM UserWalletOrder uwo JOIN [User] u ON uwo.UserId = u.UserId";
+            if (status == 4) {
+                String sql = "SELECT COUNT(*) FROM UserWalletOrder uwo JOIN [User] u ON uwo.UserId = u.UserId";
+                ps = con.prepareStatement(sql);
+
+            } else {
+                String sql = "SELECT COUNT(*) FROM UserWalletOrder uwo JOIN [User] u ON uwo.UserId = u.UserId WHERE uwo.Status = ?";
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, status);
+            }
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List<UserWalletOrderVM> getWalletOrders(int index, int status) {
+        List<UserWalletOrderVM> orders = new ArrayList<>();
+        try {
+            if (status == 4) {
+                String sql = "SELECT uwo.Id, uwo.UserId, uwo.Ammount, uwo.UserId, uwo.UserWalletId, uwo.Status, u.Email, u.Image "
+                        + "FROM UserWalletOrder uwo JOIN [User] u ON uwo.UserId = u.UserId "
+                        + "ORDER BY uwo.CreateAt DESC OFFSET ? ROW FETCH NEXT 5 ROWS ONLY";
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, (index - 1) * 5);
+            } else {
+                String sql = "SELECT uwo.Id, uwo.UserId, uwo.Ammount, uwo.UserId, uwo.UserWalletId, uwo.Status, u.Email, u.Image "
+                        + "FROM UserWalletOrder uwo JOIN [User] u ON uwo.UserId = u.UserId WHERE uwo.Status = ? "
+                        + "ORDER BY uwo.CreateAt DESC OFFSET ? ROW FETCH NEXT 5 ROWS ONLY ";
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, status);
+                ps.setInt(2, (index - 1) * 5);
+            }
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                UserWalletOrderVM order = new UserWalletOrderVM();
+                order.setId(rs.getInt("Id"));
+                order.setUserWalletId(rs.getInt("UserWalletId"));
+                order.setAmmount(rs.getFloat("Ammount"));
+                order.setStatus(rs.getInt("Status"));
+                order.setUserId(rs.getInt("UserId"));
+                order.setEmail(rs.getString("Email"));
+
+                byte[] imgData = rs.getBytes("Image");
+                String base64Image = null;
+                if (imgData != null) {
+                    base64Image = Base64.getEncoder().encodeToString(imgData);
+                }
+                order.setImage(base64Image);
+                orders.add(order);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    public List<UserWalletOrderVM> getWalletOrdersPending() {
+        List<UserWalletOrderVM> orders = new ArrayList<>();
+        try {
+            String sql = "SELECT uwo.Id, uwo.UserId, uwo.Ammount, uwo.UserId, uwo.UserWalletId, uwo.Status, u.Email, u.Image FROM UserWalletOrder uwo JOIN [User] u ON uwo.UserId = u.Id WHERE uwo.Status = 0";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -134,8 +181,13 @@ public class UserWalletDAO extends DBContext {
                 order.setStatus(rs.getInt("Status"));
                 order.setUserId(rs.getInt("UserId"));
                 order.setEmail(rs.getString("Email"));
-                
-                order.setImage(rs.getString("Image"));
+
+                byte[] imgData = rs.getBytes("Image");
+                String base64Image = null;
+                if (imgData != null) {
+                    base64Image = Base64.getEncoder().encodeToString(imgData);
+                }
+                order.setImage(base64Image);
                 orders.add(order);
             }
         } catch (Exception e) {
@@ -177,11 +229,102 @@ public class UserWalletDAO extends DBContext {
             ps = con.prepareStatement(sql);
             ps.setInt(1, orderId);
             int affectedRows = ps.executeUpdate();
+            if (affectedRows > 0) {
+                sql = "SELECT UserId, Ammount, UserWalletId FROM UserWalletOrder WHERE Id = ?";
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, orderId);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    int userId = rs.getInt("UserId");
+                    float amount = rs.getFloat("Ammount");
+                    int walletId = rs.getInt("UserWalletId");
+                    String content = "Send request not sucessfully: " + amount + " will refund to your account";
+                    boolean result = addTransitionHistory(content, walletId);
+                    return result;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+
+    public boolean updateUserWalletBalance(int userId, int userWalletId, float amount) {
+        try {
+            String sql = "UPDATE UserWallet SET Ammount = Ammount + ? WHERE UserId = ? AND Id = ?";
+            ps = con.prepareStatement(sql);
+            ps.setFloat(1, amount);
+            ps.setInt(2, userId);
+            ps.setInt(3, userWalletId);
+
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows > 0) {
+                String content = "Add " + amount + " sucessfully to your wallet";
+                addTransitionHistory(content, userWalletId);
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
+    public boolean addTransitionHistory(String Content, int WalletId) {
+        try {
+            String sql = "INSERT INTO TransitionHistory (Content, CreateAt, WalletId) VALUES (?, ?, ?)";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, Content);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
+            String currentDate = dateFormat.format(date);
+            ps.setString(2, currentDate);
+            ps.setInt(3, WalletId);
+
+            int affectedRows = ps.executeUpdate();
             return affectedRows > 0;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public int getWalletHistoryTotal(int walletId) {
+        try {
+            String sql = "SELECT COUNT(*) FROM TransitionHistory WHERE WalletId = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, walletId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List<TransitionHistory> getWalletHistory(int walletId, int index) {
+        List<TransitionHistory> listHistory = new ArrayList();
+        try {
+            String sql = "SELECT * FROM TransitionHistory WHERE WalletId = ? ORDER BY CreateAt DESC  OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, walletId);
+            ps.setInt(2, (index - 1) * 8);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                TransitionHistory order = new TransitionHistory();
+                order.setWalletId(rs.getInt("Id"));
+                order.setContent(rs.getString("Content"));
+                order.setCreateAt(rs.getString("CreateAt"));
+                order.setWalletId(rs.getInt("WalletId"));
+                listHistory.add(order);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listHistory;
     }
 
     public UserWallet getUserWalletById(int userId) {
@@ -205,25 +348,24 @@ public class UserWalletDAO extends DBContext {
         }
         return null;
     }
-    public boolean updateUserWalletBalance(int userId, int userWalletId, float amount) {
-        try {
-            String sql = "UPDATE UserWallet SET Ammount = Ammount + ? WHERE UserId = ? AND Id = ?";
-            ps = con.prepareStatement(sql);
-            ps.setFloat(1, amount);
-            ps.setInt(2, userId);
-            ps.setInt(3, userWalletId);
 
-            int affectedRows = ps.executeUpdate();
-            if (affectedRows > 0) {
-                String content = "Add to your wallet " + amount;
-                addTransitionHistory(content, userWalletId);
-                return true;
+    public float getTotalWalletBalance() {
+        float totalBalance = 0.0f;
+        try {
+            String sql = "SELECT SUM(Ammount) AS TotalBalance FROM UserWallet";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                totalBalance = rs.getFloat("TotalBalance");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
-
+        return totalBalance;
     }
 
+    public static void main(String[] args) {
+        UserWalletDAO userwallet = new UserWalletDAO();
+        System.out.println("ammouint" + userwallet.getUserWalletById(1).getAmmount());
+    }
 }

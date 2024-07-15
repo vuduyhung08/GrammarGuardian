@@ -5,8 +5,11 @@
 package Controller;
 
 import DAO.GrammarCheckerDAO;
-import DAO.PostDAO;
+import DAO.PackageDAO;
+import DAO.ProfileDAO;
+import Model.Permission;
 import Model.Post;
+import Model.Post_Error;
 import Model.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -22,7 +25,6 @@ import org.languagetool.JLanguageTool;
 import org.languagetool.language.AmericanEnglish;
 import org.languagetool.rules.Rule;
 import org.languagetool.rules.RuleMatch;
-
 
 public class GrammarChecker extends HttpServlet {
 
@@ -52,9 +54,10 @@ public class GrammarChecker extends HttpServlet {
                 case "save-post":
                     savePost(request, response);
                     break;
+
             }
         } else {
-            response.sendRedirect("views/common/sign-in.jsp");
+            response.sendRedirect("LoginController");
         }
     }
 
@@ -68,99 +71,126 @@ public class GrammarChecker extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void loadHomePage(HttpServletRequest request, HttpServletResponse response) {
+    private void getResult(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
-            PostDAO postDAO = new PostDAO();
-            String indexS = request.getParameter("index");
-            String searchS = request.getParameter("search");
-            if (indexS == null) {
-                indexS = "1";
-            }
-            if (searchS == null) {
-                searchS = "";
-            }
-            int index = Integer.parseInt(indexS);
-
-            int total = grammarCheckerDAO.getAllPostAvailableTotal();
-            List<Post> listPost = grammarCheckerDAO.getAllPostAvailable(index);
-            if (searchS != "") {
-                total = postDAO.searchPostHomePageByTitleTotal(searchS);
-                listPost = postDAO.searchPostHomePageByTitle(searchS, index);
-                request.setAttribute("search", searchS);
-            }
-            int lastPage = total / 12;
-            if (total % 12 != 0) {
-                lastPage++;
-            }
-            request.setAttribute("LIST_POST", listPost);
-            request.setAttribute("endP", lastPage);
-            request.setAttribute("selectedPage", index);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void getResult(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            HttpSession session = request.getSession(false);
+            // Sẽ cho check free 3 lần. 
+            HttpSession session = request.getSession();
+            User userLogined = (User) session.getAttribute("USER");
             String text = request.getParameter("text");
+            String wordCount = request.getParameter("word-count"); // lay word count.
             String checkType = request.getParameter("check-type"); // Lấy giá trị của check-type
+            ProfileDAO profileDAO = new ProfileDAO();
 
-            JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
+            PackageDAO packageDAO = new PackageDAO();
+            Permission userPermission = packageDAO.getPermissionsByUserId(userLogined.getId());
 
-            // Chặn kiểm tra theo loại được chọn
-            if ("spell".equals(checkType)) {
-                // Chỉ kiểm tra chính tả
-                for (Rule rule : langTool.getAllRules()) {
-                    if (!rule.isDictionaryBasedSpellingRule()) {
-                        langTool.disableRule(rule.getId());
-                    }
+            boolean isValidateToChecker = true;
+            int wordInput = Integer.parseInt(wordCount);
+            if (userPermission == null) {
+                // get user ra first
+                if (userLogined.getCheckFreeTime() == 0) {
+                    isValidateToChecker = false;
+                    request.setAttribute("ERROR", "You already using leat 3 times free checking! Please register our package to try more!");
+                    request.getRequestDispatcher("HomeController").forward(request, response);
+                    return;
                 }
-            } else if ("grammar".equals(checkType)) {
-                // Chỉ kiểm tra ngữ pháp
-                for (Rule rule : langTool.getAllRules()) {
-                    if (rule.isDictionaryBasedSpellingRule()) {
-                        langTool.disableRule(rule.getId());
+            } // validate checkTime
+            else if (userPermission.getCheckTime() == 0) {
+                isValidateToChecker = false;
+                request.setAttribute("ERROR", "You dont have any remains time to check anymore");
+                request.getRequestDispatcher("HomeController").forward(request, response);
+                return;
+            } // validate word cound 
+            else if (userPermission.getLimitText() < wordInput) {
+                isValidateToChecker = false;
+                request.setAttribute("ERROR", "Your package's word limit is not validate");
+                request.getRequestDispatcher("HomeController").forward(request, response);
+                return;
+            }
+
+            if (isValidateToChecker) {
+                JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
+
+                // Chặn kiểm tra theo loại được chọn
+                if ("spell".equals(checkType)) {
+                    // Chỉ kiểm tra chính tả
+                    for (Rule rule : langTool.getAllRules()) {
+                        if (!rule.isDictionaryBasedSpellingRule()) {
+                            langTool.disableRule(rule.getId());
+                        }
                     }
+                } else if ("grammar".equals(checkType)) {
+                    // Chỉ kiểm tra ngữ pháp
+                    for (Rule rule : langTool.getAllRules()) {
+                        if (rule.isDictionaryBasedSpellingRule()) {
+                            langTool.disableRule(rule.getId());
+                        }
+                    }
+                } // Không cần else cho "all" vì mặc định kiểm tra tất cả các lỗi
+
+                List<RuleMatch> matches = langTool.check(text);
+
+                // Tạo các đoạn văn với phần lỗi được đánh dấu
+                List<Map<String, Object>> segments = new ArrayList<>();
+                int lastPos = 0;
+                for (RuleMatch match : matches) {
+                    if (match.getFromPos() > lastPos) {
+                        Map<String, Object> segment = new HashMap<>();
+                        segment.put("text", text.substring(lastPos, match.getFromPos()));
+                        segment.put("error", false);
+                        segments.add(segment);
+                    }
+                    Map<String, Object> errorSegment = new HashMap<>();
+                    errorSegment.put("text", text.substring(match.getFromPos(), match.getToPos()));
+                    errorSegment.put("error", true);
+
+                    segments.add(errorSegment);
+                    lastPos = match.getToPos();
                 }
-            } // Không cần else cho "all" vì mặc định kiểm tra tất cả các lỗi
-
-            List<RuleMatch> matches = langTool.check(text);
-
-            // Tạo các đoạn văn với phần lỗi được đánh dấu
-            List<Map<String, Object>> segments = new ArrayList<>();
-            int lastPos = 0;
-            for (RuleMatch match : matches) {
-                if (match.getFromPos() > lastPos) {
+                if (lastPos < text.length()) {
                     Map<String, Object> segment = new HashMap<>();
-                    segment.put("text", text.substring(lastPos, match.getFromPos()));
+                    segment.put("text", text.substring(lastPos));
                     segment.put("error", false);
                     segments.add(segment);
                 }
-                Map<String, Object> errorSegment = new HashMap<>();
-                errorSegment.put("text", text.substring(match.getFromPos(), match.getToPos()));
-                errorSegment.put("error", true);
-                segments.add(errorSegment);
-                lastPos = match.getToPos();
-            }
-            if (lastPos < text.length()) {
-                Map<String, Object> segment = new HashMap<>();
-                segment.put("text", text.substring(lastPos));
-                segment.put("error", false);
-                segments.add(segment);
+
+                // this is store for result
+                StringBuilder correctedText = new StringBuilder(text);
+
+                for (int i = matches.size() - 1; i >= 0; i--) {
+                    RuleMatch match = matches.get(i);
+                    if (!match.getSuggestedReplacements().isEmpty()) {
+                        correctedText.replace(match.getFromPos(), match.getToPos(), match.getSuggestedReplacements().get(0));
+                    }
+                }
+
+                request.setAttribute("wordCount", wordCount);
+                request.setAttribute("segments", segments);
+                request.setAttribute("matches", matches);
+                request.setAttribute("text", text);
+                request.setAttribute("checkType", checkType); // Thiết lập giá trị của checkType trong request
+                session.setAttribute("TEXT_SOLUTION", correctedText);
+                session.setAttribute("TEXT_RESULT", segments);
+                session.setAttribute("ESSAY_INPUT", text);
+                session.setAttribute("CHECK_RESULT", matches);
+
+                // tru so lan mien phi neu con
+                if (userLogined.getCheckFreeTime() != 0) {
+                    int remainsTime = userLogined.getCheckFreeTime() - 1;
+                    userLogined.setCheckFreeTime(remainsTime);
+                    profileDAO.updateRemainsTime(userLogined);
+                }
+
+                if (userPermission != null) {
+                    // get user ra first
+                    int checkTimePackageRemains = userPermission.getCheckTime() - 1;
+                    packageDAO.updateUserPermission(userPermission.getPackageId(), userPermission.getUserId(), checkTimePackageRemains);
+                }
+            } else {
+                request.setAttribute("ERROR", "ERROR In Check Post");
             }
 
-            request.setAttribute("segments", segments);
-            request.setAttribute("matches", matches);
-            request.setAttribute("text", text);
-            request.setAttribute("checkType", checkType); // Thiết lập giá trị của checkType trong request
-
-            session.setAttribute("ESSAY_INPUT", text);
-            session.setAttribute("CHECK_RESULT", matches);
-            loadHomePage(request, response);
-            request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
+            request.getRequestDispatcher("HomeController").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -170,6 +200,7 @@ public class GrammarChecker extends HttpServlet {
         try {
             HttpSession session = request.getSession(false);
             String title = request.getParameter("title");
+            List<Map<String, Object>> segments = (List<Map<String, Object>>) session.getAttribute("CHECK_RESULT");
             List<RuleMatch> matches = (List<RuleMatch>) session.getAttribute("CHECK_RESULT");
             String textInput = (String) session.getAttribute("ESSAY_INPUT");
             User userLogedIn = (User) session.getAttribute("USER");
@@ -178,13 +209,27 @@ public class GrammarChecker extends HttpServlet {
             post.setTitle(title);
             post.setDescription(textInput);
             GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
-            boolean result = grammarCheckerDAO.SavePost(userLogedIn.getId(), post);
-            loadHomePage(request, response);
-            request.getRequestDispatcher("views/common/index.jsp").forward(request, response);
+            int postId = grammarCheckerDAO.savePost(userLogedIn.getId(), post);
 
+            // save check result.
+            for (RuleMatch match : matches) {
+                Post_Error error = new Post_Error();
+                error.setPostId(postId);
+                error.setExplain(match.getMessage());
+                error.setErrorText(match.getMessage());
+                error.setStart_Position(match.getFromPos());
+                String errorText = textInput.substring(match.getFromPos(), match.getToPos());
+                error.setErrorText(errorText);
+                error.setEnd_Position(match.getToPos());
+                for (String suggestion : match.getSuggestedReplacements()) {
+                    error.setSuggestion(suggestion);
+                    grammarCheckerDAO.saveError(error);
+
+                }
+            }
+            request.getRequestDispatcher("HomeController").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-    <filter>
+<!--    <filter>
         <filter-name>RouteFilter</filter-name>
         <filter-class>Filter.RouteFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>RouteFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
     <servlet>
         <servlet-name>ProfileController</servlet-name>
         <servlet-class>Controller.ProfileController</servlet-class>
@@ -88,8 +88,6 @@
         <servlet-name>RestorePostController</servlet-name>
         <servlet-class>Controller.RestorePostController</servlet-class>
     </servlet>
-<<<<<<< HEAD
-=======
     <servlet>
         <servlet-name>EditPostController</servlet-name>
         <servlet-class>Controller.EditPostController</servlet-class>
@@ -218,7 +216,6 @@
         <servlet-name>GetAllPostInController</servlet-name>
         <servlet-class>Controller.Admin.GetAllPostInController</servlet-class>
     </servlet>
->>>>>>> hainvt
     <servlet-mapping>
         <servlet-name>ProfileController</servlet-name>
         <url-pattern>/profile</url-pattern>
@@ -299,8 +296,6 @@
         <servlet-name>RestorePostController</servlet-name>
         <url-pattern>/RestorePost</url-pattern>
     </servlet-mapping>
-<<<<<<< HEAD
-=======
     <servlet-mapping>
         <servlet-name>EditPostController</servlet-name>
         <url-pattern>/EditPostController</url-pattern>
@@ -429,5 +424,4 @@
         <servlet-name>GetAllPostInController</servlet-name>
         <url-pattern>/admin/GetAllPostInController</url-pattern>
     </servlet-mapping>
->>>>>>> hainvt
 </web-app>

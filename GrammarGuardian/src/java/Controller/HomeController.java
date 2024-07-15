@@ -5,9 +5,11 @@
 package Controller;
 
 import DAO.GrammarCheckerDAO;
+import DAO.UserSessionDAO;
 import DAO.UserWalletDAO;
 import Model.Post;
 import Model.User;
+import Model.UserSession;
 import Model.UserWallet;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -41,6 +43,10 @@ public class HomeController extends HttpServlet {
         if (indexS == null) {
             indexS = "1";
         }
+        UserSessionDAO userSessionDAO = new UserSessionDAO();
+        int createSessionResult = userSessionDAO.getTotalActiveUsers();
+        session.setAttribute("VIEWS", createSessionResult);
+        
         int index = Integer.parseInt(indexS);
         int total = grammarCheckerDAO.getAllPostAvailableTotal();
         List<Post> listPost = grammarCheckerDAO.getAllPostAvailable(index);

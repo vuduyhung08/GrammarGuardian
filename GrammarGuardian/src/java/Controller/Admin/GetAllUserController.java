@@ -24,12 +24,17 @@ public class GetAllUserController extends HttpServlet {
             if (session != null && session.getAttribute("USER") != null) {
                 String indexS = request.getParameter("index");
                 String searchS = request.getParameter("search");
+
                 if (indexS == null) {
                     indexS = "1";
                 }
                 if (searchS == null) {
                     searchS = "";
+
+                } else {
+                    searchS = searchS.trim();
                 }
+
                 int index = Integer.parseInt(indexS);
                 UserManageDAO userManageDAO = new UserManageDAO();
                 int total = userManageDAO.GetAllUserTotal();
@@ -39,8 +44,10 @@ public class GetAllUserController extends HttpServlet {
                     userList = userManageDAO.GetAllUserByUserName(searchS, index);
                     request.setAttribute("search", searchS);
                 }
-                int lastPage = total / 12;
-                if (total % 12 != 0) {
+
+                int lastPage = total / 8;
+                if (total % 8 != 0) {
+
                     lastPage++;
                 }
                 request.setAttribute("LIST_USER", userList);

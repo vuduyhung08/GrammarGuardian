@@ -17,7 +17,10 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
 
-
+/**
+ *
+ * @author Datnt
+ */
 public class ProfileDAO extends DBContext {
 
     private Connection con;
@@ -86,6 +89,7 @@ public class ProfileDAO extends DBContext {
                         base64Image = Base64.getEncoder().encodeToString(imgData);
                     }
 
+                    userUpdate.setCheckFreeTime(rs.getInt("CheckTimeFree"));
                     userUpdate.setFirstName(firstName);
                     userUpdate.setLastName(lastName);
                     userUpdate.setPhone(phone);
@@ -102,8 +106,8 @@ public class ProfileDAO extends DBContext {
     }
 
     public boolean changePassword(User user, String newPassword) {
-        String password = EncryptString.hashPassword(newPassword);     
-        String userPassword =   EncryptString.hashPassword(user.getPassword());
+        String password = EncryptString.hashPassword(newPassword);
+        String userPassword = EncryptString.hashPassword(user.getPassword());
 
         String sql = "SELECT * FROM [User] WHERE [UserName] = ? AND [Password] = ?";
         try {
@@ -129,4 +133,22 @@ public class ProfileDAO extends DBContext {
         }
         return false;
     }
+
+    public boolean updateRemainsTime(User user) {
+        try {
+            User userUpdate = new User();
+            String sql = "";
+            sql = "UPDATE dbo.[User] SET CheckTimeFree = ?  "
+                    + "WHERE [UserId] = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, user.getCheckFreeTime());
+            ps.setInt(2, user.getId());
+            int afftectedRow = ps.executeUpdate();
+            return afftectedRow > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }
