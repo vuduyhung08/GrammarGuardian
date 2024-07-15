@@ -99,10 +99,11 @@ public class GrammarCheckerDAO extends DBContext {
     public List<Post> getAllUserPost(int userId, int index) {
         List<Post> listPosts = new ArrayList();
         try {
-            String sql = "SELECT * FROM [Post] WHERE UserId = ? ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
+            String sql = "SELECT p.UserId, p.PostId, p.Title, p.Description, p.CreateAt, p.Status, p.Image FROM [Post] p WHERE p.UserId = ? "
+                        + " ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
             ps = con.prepareStatement(sql);
             ps.setInt(1, userId);
-            ps.setInt(2, (index - 1) * 12);
+            ps.setInt(2, (index - 1) * 8);
 
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -112,12 +113,6 @@ public class GrammarCheckerDAO extends DBContext {
                 post.setDescription(rs.getString("Description"));
                 post.setStatus(rs.getInt("Status"));
                 post.setUserId(rs.getInt("UserId"));
-                String base64Image = null;
-                byte[] imgData = rs.getBytes("Image");
-                if (imgData != null) {
-                    base64Image = Base64.getEncoder().encodeToString(imgData);
-                }
-                post.setImage(base64Image);
                 listPosts.add(post);
             }
             return listPosts;
@@ -341,10 +336,10 @@ public class GrammarCheckerDAO extends DBContext {
         List<Post> listPosts = new ArrayList();
         try {
             // status = 3 was post manager approval
-            String sql = "SELECT * FROM [Post] WHERE Status = 2 AND UserId = ? ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
+            String sql = "SELECT * FROM [Post] WHERE Status = 2 AND UserId = ? ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
             ps = con.prepareStatement(sql);
             ps.setInt(1, userId);
-            ps.setInt(2, (index - 1) * 12);
+            ps.setInt(2, (index - 1) * 8);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Post post = new Post();
@@ -391,10 +386,10 @@ public class GrammarCheckerDAO extends DBContext {
         List<Post> listPosts = new ArrayList();
         try {
             // status = 3 was post manager approval
-            String sql = "SELECT * FROM [Post] WHERE Status = 3 AND UserId = ? ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
+            String sql = "SELECT * FROM [Post] WHERE Status = 3 AND UserId = ? ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
             ps = con.prepareStatement(sql);
             ps.setInt(1, userId);
-            ps.setInt(2, (index - 1) * 12);
+            ps.setInt(2, (index - 1) * 8);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Post post = new Post();
@@ -440,10 +435,10 @@ public class GrammarCheckerDAO extends DBContext {
     public List<Post> getAllPostDelete(int userId, int index) {
         List<Post> listPosts = new ArrayList();
         try {
-            String sql = "SELECT * FROM [Post] WHERE Status = 4 AND UserId = ? ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
+            String sql = "SELECT * FROM [Post] WHERE Status = 4 AND UserId = ? ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
             ps = con.prepareStatement(sql);
             ps.setInt(1, userId);
-            ps.setInt(2, (index - 1) * 12);
+            ps.setInt(2, (index - 1) * 8);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Post post = new Post();
@@ -576,10 +571,10 @@ public class GrammarCheckerDAO extends DBContext {
         try {
             // status = 3 was post manager approval
             String sql = "SELECT p.UserId, p.PostId, p.Title, p.Description, p.CreateAt, p.Status, p.Image FROM [Post] p JOIN [Post_Favourite] pf ON p.PostId = pf.PostId AND pf.UserId = ?"
-                    + " ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
+                    + " ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
             ps = con.prepareStatement(sql);
             ps.setInt(1, userId);
-            ps.setInt(2, (index - 1) * 12);
+            ps.setInt(2, (index - 1) * 8);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Post post = new Post();

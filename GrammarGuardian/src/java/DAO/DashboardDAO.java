@@ -5,14 +5,15 @@
 package DAO;
 
 import DAL.DBContext;
-import Model.User;
-import Model.UserWallet;
 import Model.UserWalletOrder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DashboardDAO extends DBContext {
 
@@ -107,4 +108,43 @@ public class DashboardDAO extends DBContext {
         }
         return orders;
     }
+
+    public Map<YearMonth, Integer> getMonthlyConfirmedPosts() {
+        Map<YearMonth, Integer> monthlyConfirmedPosts = new HashMap<>();
+        try {
+            String sql = "SELECT MONTH(CreateAt) AS Month, YEAR(CreateAt) AS Year, COUNT(*) AS TotalPosts " + "FROM Post " + "WHERE Status = 3 " + "GROUP BY MONTH(CreateAt), YEAR(CreateAt)";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int month = rs.getInt("Month");
+                int year = rs.getInt("Year");
+                int totalPosts = rs.getInt("TotalPosts");
+                YearMonth yearMonth = YearMonth.of(year, month);
+                monthlyConfirmedPosts.put(yearMonth, totalPosts);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return monthlyConfirmedPosts;
+    }
+
+    public Map<YearMonth, Integer> getMonthlySavedPosts() {
+        Map<YearMonth, Integer> monthlySavedPosts = new HashMap<>();
+        try {
+            String sql = "SELECT MONTH(CreateAt) AS Month, YEAR(CreateAt) AS Year, COUNT(*) AS TotalPosts " + "FROM Post " + "WHERE Status = 0 " + "GROUP BY MONTH(CreateAt), YEAR(CreateAt)";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int month = rs.getInt("Month");
+                int year = rs.getInt("Year");
+                int totalPosts = rs.getInt("TotalPosts");
+                YearMonth yearMonth = YearMonth.of(year, month);
+                monthlySavedPosts.put(yearMonth, totalPosts);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return monthlySavedPosts;
+    }
+
 }

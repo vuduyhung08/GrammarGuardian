@@ -146,7 +146,7 @@ public class AuthenticationDAO extends DBContext {
             }
             // set default free for user can check for free 3 times after validate.
             String sql = "INSERT INTO [User] (UserName, Password, Email, FirstName, LastName, Phone, IsActive, RoleId, IsConfirm, CreateAt, CheckTimeFree)"
-                    + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 3)";
+                    + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 10)";
             ps = con.prepareStatement(sql);
             String userPassword = EncryptString.hashPassword(userSignUp.getPassword());
             ps.setString(1, userSignUp.getUserName());

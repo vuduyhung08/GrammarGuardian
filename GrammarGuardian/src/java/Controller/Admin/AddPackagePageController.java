@@ -20,7 +20,7 @@ public class AddPackagePageController extends HttpServlet {
         if (session != null && session.getAttribute("USER") != null) {
             request.getRequestDispatcher("/views/manage/add-package.jsp").forward(request, response);
         } else {
-            response.sendRedirect("auth?action=login");
+            response.sendRedirect(request.getContextPath() + "/LoginController");
         }
     }
 

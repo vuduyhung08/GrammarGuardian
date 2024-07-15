@@ -9,12 +9,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post_Category {
+public class UserSession {
     private int Id;
-    private int PostId;
-    private int CategoryId;
+    private int UserId;
+    private String LoginTime;
+    private String LogoutTime;
 }

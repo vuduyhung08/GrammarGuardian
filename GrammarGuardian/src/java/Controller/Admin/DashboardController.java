@@ -5,7 +5,6 @@
 package Controller.Admin;
 
 import DAO.DashboardDAO;
-import DAO.UserWalletDAO;
 import Model.UserWalletOrder;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -14,7 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
+import java.util.Map;
 
 public class DashboardController extends HttpServlet {
 
@@ -33,9 +34,9 @@ public class DashboardController extends HttpServlet {
                 LocalDateTime now = LocalDateTime.now();
                 int currentMonth = now.getMonthValue();
                 int currentYear = now.getYear();
-                
+
                 String months = request.getParameter("month");
-                if(months != null) {
+                if (months != null) {
                     currentMonth = Integer.parseInt(months);
                 }
                 float monthlyWalletRevenueCurentMonth = 0.0f;
@@ -44,7 +45,7 @@ public class DashboardController extends HttpServlet {
                     float revenueMoneth = 0.0f;
                     List<UserWalletOrder> monthlyWalletOrdersMonth = dashboardDAO.getMonthlyWalletOrders(i, currentYear);
                     for (UserWalletOrder order : monthlyWalletOrdersMonth) {
-                            System.out.println("Month" + i + " " + order.getAmmount());
+                        System.out.println("Month" + i + " " + order.getAmmount());
                         if (order.getAmmount() == 0) {
                             revenueMoneth += 0;
                         } else {
@@ -56,7 +57,11 @@ public class DashboardController extends HttpServlet {
                     }
                     request.setAttribute("REVENUE_MOUNTH_" + i, revenueMoneth);
                 }
-                
+                Map<YearMonth, Integer> monthlyConfirmedPosts = dashboardDAO.getMonthlyConfirmedPosts();
+                Map<YearMonth, Integer> monthlySavedPosts = dashboardDAO.getMonthlySavedPosts();
+                request.setAttribute("MONTHLY_CONFIRMED_POSTS", monthlyConfirmedPosts);
+                request.setAttribute("MONTHLY_SAVED_POSTS", monthlySavedPosts);
+
                 request.setAttribute("currentMonth", currentMonth);
                 request.setAttribute("TOTAL_USERS", totalUsers);
                 request.setAttribute("TOTAL_PENDING_POSTS", totalPendingPosts);

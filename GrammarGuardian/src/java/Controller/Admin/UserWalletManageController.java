@@ -58,7 +58,7 @@ public class UserWalletManageController extends HttpServlet {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("auth?action=login");
+            response.sendRedirect(request.getContextPath() + "/HomeController");
         }
     }
 
