@@ -328,7 +328,6 @@
     ></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js" integrity="sha512-wuWo/cLB9W5BsZeyTYLuiTwr+FDlvjQC7C6atr+To7Jk92XHWI7WsImJZiruw7C9bnc8Zg7N0ncQI2Q/B4PQYw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         var error = document.getElementById('error');
         var message = document.getElementById('success');
@@ -349,7 +348,7 @@
             })
         }
 
-        
+
         function countWords() {
             var text = document.getElementById("textarea").value;
             var words = text.trim().split(/\s+/);
@@ -359,23 +358,6 @@
             document.getElementById("wordCount").innerHTML = "Word Count: " + wordCount;
             document.getElementById("word-cout-input").value = wordCount;
         }
-        
-        document.getElementById('fileInput').addEventListener('change', function (event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        document.getElementById('text').value = e.target.result;
-                    };
-                    if (file.type === "text/plain") {
-                        reader.readAsText(file);
-                    } else if (file.name.endsWith('.docx')) {
-                        readDocxFile(file);
-                    }
-                }
-                countWords();
-
-            });
     </script>
 </body>
 </html>
