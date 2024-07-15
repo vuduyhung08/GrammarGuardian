@@ -78,16 +78,6 @@
                 <hr>
                 <c:forEach items="${COMMENTS}" var="comment">
                     <div class="row p-3" id="faq">
-                        <div class="col-md-1">
-                            <c:choose>
-                                <c:when test="${comment.avatar != null}">
-                                    <img  src="data:image/png;base64,${comment.avatar}" alt="" width="100"  class="rounded-circle reviews" />
-                                </c:when>
-                                <c:otherwise>
-                                    <img src="https://placehold.co/100x100" width="50" >
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
                         <div class="col-md-11">
                             <p class="heading-md">name: ${comment.userName}</p>
                             <span style="color: gray">${comment.createAt}</span>

@@ -1,4 +1,4 @@
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset = UTF-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <head>
@@ -33,19 +33,18 @@
     </style>
 </head>
 
-<div class="flex justify-center mt-10" >
-    <div class="w-full max-w-4xl bg-white shadow-lg rounded-lg">
-        <div class="flex flex-col md:flex-row">
-            <div class="w-full md:w-1/2 p-5 border-b md:border-b-0 md:border-r">
-                <div class="flex items-center mb-5">
-                    <i class="fas fa-key text-lg text-gray-500" style="color: #3ba023;"></i>
-                    <h2 class="text-xl font-bold pl-3" style="color: #176d07;">Change password</h2>
-
-
-                </div>
-                <form action="profile" method="post">
-                    <input type="hidden" name="action" value="changePassword"/>
-                    <h3 class="text-xl font-bold pl-3" style="color: green;">${successMessage}</h2>
+<body>
+    <div class="flex justify-center mt-10">
+        <div class="w-full max-w-4xl bg-white shadow-lg rounded-lg">
+            <div class="flex flex-col md:flex-row">
+                <div class="w-full md:w-1/2 p-5 border-b md:border-b-0 md:border-r">
+                    <div class="flex items-center mb-5">
+                        <i class="fas fa-key text-lg text-gray-500" style="color: #3ba023;"></i>
+                        <h2 class="text-xl font-bold pl-3" style="color: #176d07;">Change password</h2>
+                    </div>
+                    <form action="profile" method="post">
+                        <input type="hidden" name="action" value="changePassword"/>
+                        <h3 class="text-xl font-bold pl-3" style="color: green;">${successMessage}</h3>
                         <div class="mb-4 relative">
                             <label for="old-password" class="block text-gray-700 text-sm font-bold mb-2">Current Password</label>
                             <input name="oldpassword" type="password" id="old-password" placeholder="Your current password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -64,70 +63,84 @@
                             <i class="fas fa-eye-slash password-toggle cursor-pointer absolute right-3 top-9" id="toggle-confirm-password" data-input="confirm-password"></i>
                             <input name="email" value="${sessionScope.account.IDEmail}" hidden>
                         </div>
-                        <h3 id="update-message" style="color:red">${ERRORMESSAGE}</h5>
-
-                            <div class="flex items-center justify-between">
-                                <button type="submit" class="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800 border border-gray-300 py-2 px-4 rounded hover:border-gray-500 focus:outline-none focus:border-gray-500" type="button" >
-                                    Save
+                        <h3 id="update-message" style="color:red">${ERRORMESSAGE}</h3>
+                        <div class="flex items-center justify-between">
+                            <button id="btn-submit" type="submit" class="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800 border border-gray-300 py-2 px-4 rounded hover:border-gray-500 focus:outline-none focus:border-gray-500">
+                                Save
+                            </button>
+                            <a href="profile?action=view">
+                                <button class="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800 border border-gray-300 py-2 px-4 rounded hover:border-gray-500 focus:outline-none focus:border-gray-500" type="button">
+                                    Cancel
                                 </button>
-                                <a href="profile?action=view">
-                                    <button class="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-800 border border-gray-300 py-2 px-4 rounded hover:border-gray-500 focus:outline-none focus:border-gray-500" type="button" >
-                                        Cancle
-                                    </button>
-                                </a>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+                <div class="w-full md:w-1/2 p-5">
+                    <div class="flex items-center mb-5">
+                        <i class="fas fa-shield-alt text-lg text-gray-500" style="color: rgb(229, 69, 10);"></i>
+                        <h2 class="text-xl font-bold pl-3" style="color: #cf6203;">Set a strong password to keep your account secure.</h2>
+                    </div>
+                    <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
+                        <p class="font-bold">Make sure it has 8 or more characters, at least 1 uppercase letter, 1 lowercase letter and 1 special character</p>
+                        <p>Change password to ensure safety.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const passwordInput = document.getElementById('new-password');
+        const oldPassword = document.getElementById('old-password');
+        const passwordConfirm = document.getElementById('confirm-password');
+        const passwordConfirmMessage = document.getElementById('password-confirm-message');
+        const updateMessage = document.getElementById('update-message');
+        const passwordMessage = document.getElementById('password-message');
+        const submitButton = document.getElementById('btn-submit');
 
 
-                            </div>
-                            </form>
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'*+,-./:;<=>?@[\\\]^_`{|}~])[^\s]{8,}$/;
 
 
-                            </div>
-                            <div class="w-full md:w-1/2 p-5">
-                                <div class="flex items-center mb-5">
-                                    <i class="fas fa-shield-alt text-lg text-gray-500" style="color: rgb(229, 69, 10);"></i>
-                                    <h2 class="text-xl font-bold pl-3" style="color: #cf6203;">Two-factor authentication </h2>
-                                </div>
-                                <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
-                                    <p class="font-bold">Two-factor authentication  not active</p>
-                                    <p>Two-factor authentication adds an extra layer of security to your account by requiring more than just your login password. Learn more.</p>
-                                </div>
-                            </div>
-                            </div>
-                            </div>
-                            </div>
+
+        passwordInput.addEventListener('keyup', (event) => {
+            const password = event.target.value;
+            let isValid = true;
+            passwordMessage.textContent = '';
+
+            if (!passwordRegex.test(password)) {
+                isValid = false;
+                passwordMessage.textContent = 'Password must contain at least 8 characters and at least one uppercase letter, one lowercase letter, one number, and one special character.';
+            }
+
+            if (oldPassword.value.trim() === "") {
+                isValid = false;
+            }
+
+            submitButton.disabled = !isValid;
+
+        });
 
 
-                            <script>
-                                const passwordInput = document.getElementById('new-password');
-                                const passwordConfirmInput = document.getElementById('confirm-password');
-                                const passwordConfirmMessage = document.getElementById('password-confirm-message');
-                                const updateMessage = document.getElementById('update-message');
-                                const passwordMessage = document.getElementById('password-message');
-                                const submitButton = document.getElementById('btn-submit');
+        passwordConfirm.addEventListener('keyup', (event) => {
+            const password = event.target.value;
+            let isValid = true;
+            passwordMessage.textContent = '';
 
-                                const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'*+,-\./:;<=>?@\[\]^_`{|}~])[^\s]{8,}$/;
+            if (!passwordRegex.test(password)) {
+                isValid = false;
+                passwordMessage.textContent = 'Password must contain at least 8 characters and at least one uppercase letter, one lowercase letter, one number, and one special character.';
+            } else if (!(password == passwordInput.value)) {
+                isValid = false;
+                passwordMessage.textContent = 'Password does not match the password you registered with.';
+            }
+            if (oldPassword.value.trim() === "") {
+                isValid = false;
+            }
 
-                                passwordInput.addEventListener('keyup', (event) => {
-                                    const password = event.target.value;
-                                    let isValid = true;
-                                    passwordMessage.textContent = '';
-                                    updateMessage.textContent = '';
+            submitButton.disabled = !isValid;
+        });
 
-                                    if (!passwordRegex.test(password)) {
-                                        isValid = false;
-                                        passwordMessage.textContent = 'Password must be at least 8 characters, include at least 1 uppercase letter, 1 lowercase letter, and 1 special character.';
-                                    }
-                                    submitButton.disabled = !isValid;
-                                });
-
-                                passwordConfirmInput.addEventListener('keyup', (event) => {
-                                    const password = event.target.value;
-                                    let isValid = true;
-                                    passwordConfirmMessage.textContent = '';
-                                    if (!(password == passwordInput.value)) {
-                                        isValid = false;
-                                        passwordConfirmMessage.textContent = 'Password not matching';
-                                    }
-                                    submitButton.disabled = !isValid;
-                                });
-                            </script>
+    </script>
+</body>

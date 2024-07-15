@@ -14,9 +14,7 @@
             <div class="row">
                 <jsp:include page="navadmin.jsp"/>
                 <div  class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                    
-                    <a href="${pageContext.request.contextPath}/admin/AddPackagePageController" class="btn btn-primary mb-3">Add Package</a>
-                    
+                    <h1>Add Package</h1>
                     <form action="${pageContext.request.contextPath}/admin/AddPackagePageController" method="post">
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>

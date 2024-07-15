@@ -371,7 +371,7 @@
 
         if (!passwordRegex.test(password)) {
             isValid = false;
-            passwordMessage.textContent = 'Mật khẩu phải chứa ít nhất 8 kí tự và ít nhất một kí tự hoa,1 kí tự thường, 1 số, và 1 kí tự đặc biệt.';
+            passwordMessage.textContent = 'Password must contain at least 8 characters and at least one uppercase letter, one lowercase letter, one number, and one special character.';
         }
 
         submitButton.disabled = !isValid;
@@ -385,10 +385,10 @@
 
         if (!passwordRegex.test(password)) {
             isValid = false;
-            passwordMessage.textContent = 'Mật khẩu phải chứa ít nhất 8 kí tự và ít nhất một kí tự hoa,1 kí tự thường, 1 số, và 1 kí tự đặc biệt.';
+            passwordMessage.textContent = 'Password must contain at least 8 characters and at least one uppercase letter, one lowercase letter, one number, and one special character.';
         } else if (!(password == passwordInput.value)) {
             isValid = false;
-            passwordMessage.textContent = 'Mật khẩu không khớp với mật khẩu bạn đăng kí';
+            passwordMessage.textContent = 'Password does not match the password you registered with.';
         }
 
         submitButton.disabled = !isValid;
@@ -409,14 +409,14 @@
         // Validate Name
         function validateName() {
             const nameIsValid = nameRegex.test(nameInput.value);
-            nameMessage.textContent = nameIsValid ? '' : 'Tên chỉ được chứa chữ cái và khoảng trắng, không chứa số hoặc ký tự đặc biệt.';
+            nameMessage.textContent = nameIsValid ? '' : 'The name must contain only letters and spaces, no numbers or special characters.';
             checkFormValidity();
         }
 
         // Validate Phone
         function validatePhone() {
             const phoneIsValid = phoneRegex.test(phoneInput.value);
-            phoneMessage.textContent = phoneIsValid ? '' : 'Số điện thoại chỉ chứa số và không quá 10 chữ số.';
+            phoneMessage.textContent = phoneIsValid ? '' : 'Phone numbers must contain only numbers and no more than 10 digits.';
             checkFormValidity();
         }
 
@@ -442,7 +442,7 @@
         formMessage.style.fontSize = '14px';
         formMessage.style.textAlign = 'center';
         formMessage.style.marginTop = '10px';
-        formMessage.textContent = 'Vui lòng điền đủ thông tin để đăng ký.';
+        formMessage.textContent = 'Please fill in all information to register.';
         formMessage.hidden = true; // Ẩn thông báo này mặc định
         form.appendChild(formMessage);
 

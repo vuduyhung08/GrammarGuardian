@@ -20,7 +20,7 @@
 
                     <form action="UserWalletManageController" class="d-flex" style="margin-bottom: 15px; width: 30%">
                         <select name="status" class="form-select" aria-label="Default select example">
-                            <option  value="" selected>Choose</option>
+                            <option  value="" selected>Tất cả</option>
                             <option   ${status == 4 ? 'selected' : ''} value="4">All</option>  
                             <option   ${status == 0 ? 'selected' : ''} value="0">Pending</option>
                             <option   ${status == 1 ? 'selected' : ''} value="1">Approve</option>

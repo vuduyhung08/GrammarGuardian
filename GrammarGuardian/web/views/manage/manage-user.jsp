@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Admin user</title>
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -12,6 +12,16 @@
             crossorigin="anonymous"
             />
         <link rel="stylesheet" href="main.css" />
+        <style>
+            .select-option {
+                border: none;
+                border-radius: 10px;
+                padding: 5px;
+            }
+            .select-option:hover{
+                border: 1px solid blue
+            }
+        </style>
     </head>
     <body>
         <!--header area -->
@@ -30,20 +40,20 @@
                         <div>
                             <h1 class="h2">User Management</h1>
                         </div>
-                        <div class="col-sm-6 d-flex justify-content-end">
+                        <div class="col-sm-6 d-flex justify-content-end">a
                             <a id="submit" href="" class="btn btn-success mr-2"><i class="material-icons">&#xE147;</i> <span>Add new Permission</span></a>
                             <!--<a id="submit" href="" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>-->
                         </div>
                     </div>
 
                     <div class="table-responsive">
-
-
-                        <form action="GetAllUserController" class="d-flex" style="margin-bottom: 15px;">
-                            <!--<input type="hidden" name="action" />-->
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" value="${search}">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form>
+                        <div>
+                            <form action="GetAllUserController" class="d-flex" style="margin-bottom: 15px;">
+                                <!--<input type="hidden" name="action" />-->
+                                <input class="form-control" style="width: 400px" type="search" placeholder="Search" aria-label="Search" name="search" value="${search}">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>
+                        </div>
 
                         <table class="table table-striped table-sm">
                             <thead>

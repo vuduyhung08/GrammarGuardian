@@ -171,6 +171,7 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </button>
+                                    <input type="file" id="fileInput" accept=".txt,.docx">
                                     <c:if test="${segments != null}">
                                         <a class="edit-button" id="updateResult">Aply suggesstion</a>
                                     </c:if>
@@ -187,6 +188,9 @@
                                             </p>
                                         </c:otherwise>
                                     </c:choose>
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -270,6 +274,9 @@
                 <h2 class="text-body-emphasis text-center py-3">
                     You ready to learn new things ?
                 </h2>
+                <div class="ext-body-emphasis text-center py-3">
+                    Current user using our website ${VIEWS}</div>
+
                 <div class="container">
                     <form action="HomeSearchController" class="d-flex" style="margin-bottom: 15px;">
                         <!--<input type="hidden" name="action" />-->
@@ -343,11 +350,13 @@
         ></script>
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js" integrity="sha512-wuWo/cLB9W5BsZeyTYLuiTwr+FDlvjQC7C6atr+To7Jk92XHWI7WsImJZiruw7C9bnc8Zg7N0ncQI2Q/B4PQYw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
             var error = document.getElementById('error');
             var message = document.getElementById('success');
-            
-             if (message.value) {
+
+            if (message.value) {
                 Swal.fire({
                     title: message.value,
                     icon: "success",
@@ -364,7 +373,7 @@
                 });
             }
             ;
-            
+
             // update result 
             var suggestionText = document.getElementById('sugestion').value;
             var originText = document.getElementById('originText').value;
@@ -372,19 +381,22 @@
             var isUpdated = false;
 
             var updateBtn = document.getElementById('updateResult');
-            updateBtn.onclick = function () {
-                if (!isUpdated) {
-                    textInput.textContent = suggestionText;
-                    updateBtn.textContent = 'Restore';
-                    isUpdated = true;
-                } else {
-                    textInput.textContent = originText;
-                    updateBtn.textContent = 'Apply suggestion';
-                    isUpdated = false;
+            if (updateBtn != null) {
+                updateBtn.onclick = function () {
+                    if (!isUpdated) {
+                        textInput.textContent = suggestionText;
+                        updateBtn.textContent = 'Restore';
+                        isUpdated = true;
+                    } else {
+                        textInput.textContent = originText;
+                        updateBtn.textContent = 'Apply suggestion';
+                        isUpdated = false;
+                    }
                 }
             }
 
-           
+
+
 
             function countWords() {
                 var text = document.getElementById("text").value;
@@ -395,7 +407,46 @@
                 document.getElementById("wordCount").innerHTML = wordCount;
                 document.getElementById("word-count-input").value = wordCount;
             }
+
+
             countWords();
+
+            document.getElementById('fileInput').addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById('text').value = e.target.result;
+                    };
+                    if (file.type === "text/plain") {
+                        reader.readAsText(file);
+                    } else if (file.name.endsWith('.docx')) {
+                        readDocxFile(file);
+                    }
+                }
+                countWords();
+
+            });
+
+            function readDocxFile(file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var arrayBuffer = e.target.result;
+
+                    mammoth.extractRawText({arrayBuffer: arrayBuffer})
+                            .then(function (result) {
+                                document.getElementById('text').value = result.value;
+                            })
+                            .catch(function (err) {
+                                console.error('Error reading DOCX:', err);
+                            });
+                };
+                reader.readAsArrayBuffer(file);
+                countWords();
+
+            }
+
+
         </script>
     </body>
 </html>

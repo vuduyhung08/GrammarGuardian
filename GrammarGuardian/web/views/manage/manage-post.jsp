@@ -19,36 +19,51 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
             />
+
     </head>
     <body>
-        <div class="flex">
-            <div class="w-2/12 bg-gray-800 text-white min-h-screen p-4">
-                <div class="mb-4">
-                    <h1 class="text-2xl font-bold flex items-center p-4">
-                        <i class="fas fa-building mr-2"></i>Timeshare
-                    </h1>
+        <jsp:include page="headeradmin.jsp"/>
+        <div style="margin-left:10px" class="flex">
+            <nav
+                id="sidebarMenu"
+                >
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/admin/DashboardController">
+                                Dashboard
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/admin/GetAllUserController">
+                                User Management
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/admin/GetAllPostInController">
+                                Post Management
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/admin/UserWalletManageController">
+                                Wallet Management
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/admin/GetAllPackageController">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/LogoutController">
+                                Log out
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <nav class="space-y-2">
-                    <a
-                        href="GetAllPostInController"
-                        class="block py-2 px-4 rounded text-sm text-white flex items-center bg-blue-600"
-                        >
-                        <i class="fas fa-clipboard mr-2"></i>Post Management
-                    </a>
-                    <a
-                        href="GetAllUserController"
-                        class="block py-2 px-4 rounded text-sm flex items-center hover:bg-gray-700"
-                        >
-                        <i class="fas fa-user mr-2"></i>User Management
-                    </a>
-                    <a
-                        href="${pageContext.request.contextPath}/LogoutController"
-                        class="block py-2 px-4 rounded text-sm hover:bg-gray-700 flex items-center"
-                        >
-                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
-                    </a>
-                </nav>
-            </div>
+            </nav>
             <div class="w-9/12 p-8">
                 <div class="flex justify-between mb-4">
                     <h2 class="text-2xl font-bold">Post Management</h2>
@@ -66,7 +81,7 @@
                         <button type="submit" class="btn btn-success">Search</button>
                         Select post:
                         <select id="postSelect" name="searchType" class="post-select">
-                            <option value="all" ${"all".equals(searchType) ? "selected" : ""}>All</option>
+                            <option value="all" ${"all".equals(searchType) ? "selected" : "selected"}>All</option>
                             <option value="0" ${"0".equals(searchType) ? "selected" : ""}>Save posts</option>
                             <option value="1" ${"1".equals(searchType) ? "selected" : ""}>Pending posts</option>
                             <option value="3" ${"3".equals(searchType) ? "selected" : ""}>Confirm posts</option>
@@ -142,14 +157,9 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <c:if test="${post.status == 1}">
-                                    <a class="text-blue-500" data-bs-toggle="modal" data-bs-target="#post-detail-${post.postId}" aria-hidden="true">
-                                        <i class="fas fa-info-circle text-2xl"></i>
-                                    </a>
-                                </c:if>
-
-
+                                <a class="text-blue-500" data-bs-toggle="modal" data-bs-target="#post-detail-${post.postId}" aria-hidden="true">
+                                    <i class="fas fa-info-circle text-2xl"></i>
+                                </a>
                                 <div class="modal fade" id="post-detail-${post.postId}" tabindex="-1" aria-labelledby="post-detail-${post.postId}" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content" style="width: 150%; transform: translateX(-100px)">
@@ -163,14 +173,16 @@
                                                 </div>
                                                 <div>
                                                     <b>Description: </b>
-                                                    <textarea readonly style="width: 100%; height: 350px; text-align: left">
+                                                    <textarea readonly style="width: 100%; height: 300px; text-align: left">
                                                         ${post.description}
                                                     </textarea>
                                                 </div>
                                             </div>
                                             <div class="modal-footer" style="display: flex;">
-                                                <a class="btn btn-success"  href="ChangeStatusPostController?action=accept&postId=${post.postId}">Appove</a>        
-                                                <a class="btn btn-danger"  href="ChangeStatusPostController?action=reject&postId=${post.postId}">Reject</a>
+                                                <c:if test="${post.status == 1 || post.status == 2}">
+                                                    <a class="btn btn-success"  href="ChangeStatusPostController?action=accept&postId=${post.postId}">Appove</a>        
+                                                    <a class="btn btn-danger"  href="ChangeStatusPostController?action=reject&postId=${post.postId}">Reject</a>
+                                                </c:if>
 
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 

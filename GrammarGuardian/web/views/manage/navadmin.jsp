@@ -1,15 +1,9 @@
-<%-- 
-    Document   : navadmin
-    Created on : May 26, 2024, 11:55:38 AM
-    Author     : bachq
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Nav</title>
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -57,6 +51,11 @@
                             Package Management
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/LogoutController">
+                            Log out
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -67,6 +66,3 @@
         ></script>
     </body>
 </html>
-
-
-

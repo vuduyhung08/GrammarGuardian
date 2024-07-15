@@ -109,10 +109,16 @@
                             </div>
                         </div>
                     </div>
+                    <div style="display: flex">              
+                        <canvas id="monthly-confirmed-posts" style="width:100%;max-width:700px"></canvas>          
+                        <canvas id="monthly-saved-posts" style="width:100%;max-width:700px"></canvas>        
+                    </div>
                     <div style="display: flex">
                         <canvas id="wallet-revenue" style="width:100%;max-width:700px"></canvas>
-
                     </div>
+
+
+
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -170,6 +176,73 @@
                         responsive: true
                     }
                 });
+
+
+
+                const labels = [];
+                const data = [];
+            <c:forEach var="entry" items="${MONTHLY_CONFIRMED_POSTS}">
+                labels.push('${entry.key}');
+                data.push(${entry.value});
+            </c:forEach>
+
+                // Create the chart
+                const ctx = document.getElementById('monthly-confirmed-posts').getContext('2d');
+                const postChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                                label: 'Number of confirm post',
+                                data: data,
+                                backgroundColor: 'rgba(75, 192, 192, 0.8)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        responsive: true
+                    }
+                });
+
+                const labels2 = [];
+                const data2 = [];
+            <c:forEach var="entry" items="${MONTHLY_SAVED_POSTS}">
+                labels2.push('${entry.key}');
+                data2.push(${entry.value});
+            </c:forEach>
+
+                // Create the chart
+                const ctx2 = document.getElementById('monthly-saved-posts').getContext('2d');
+                const postSavedChart = new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: labels2,
+                        datasets: [{
+                                label: 'Number of saved post',
+                                data: data2,
+                                backgroundColor: 'rgb(255, 99, 71, 0.8)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        responsive: true
+                    }
+                });
+
+
+
         </script>
     </body>
 

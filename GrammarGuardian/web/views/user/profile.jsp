@@ -88,7 +88,7 @@
                                 Transition history
                             </button>
                         </a>
-                          <a href="GetUserPermission">
+                        <a href="GetUserPermission">
                             <button class="bg-green-500 text-white text-lg px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50" style="background: linear-gradient(to right, #2F80ED, #56CCF2); margin-bottom: 10px">
                                 User package
                             </button>
@@ -136,26 +136,19 @@
                     <h2 class="text-body-emphasis text-center py-3">
                         Your document history
                     </h2>
-                    
                     <div class="container">
                         <form action="FilterPostController" class="d-flex" style="margin-bottom: 15px;">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" value="${search}">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                             <select name="status" class="form-select" aria-label="Default select example">
                                 <option  value="" selected>All</option>
-                                <option   ${status == 0 ? 'selected' : ''}  value="0">Save post</option>
+                                <option   ${status == 0 ? 'selected' : ''} value="0">Saved</option>
                                 <option   ${status == 1 ? 'selected' : ''} value="1">Pending</option>
                                 <option   ${status == 3 ? 'selected' : ''} value="3">Confirmed</option>
                                 <option   ${status == 2 ? 'selected' : ''}  value="2">Rejected</option>
                                 <option   ${status == 4 ? 'selected' : ''}  value="4">Deleted</option>   
                                 <option   ${status == 5 ? 'selected' : ''}  value="5">Favourite</option>
-
-
                             </select>
-                            <button style="margin-left: 15px" type="submit" class="btn btn-success">Filter</button>
-
-
-
                         </form>
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                             <c:if test="${LIST_POST ==  null}">
@@ -194,23 +187,6 @@
                                                                 <div>
                                                                     <b>Description: </b>${post.description}
                                                                 </div>
-                                                                <c:choose>
-                                                                    <c:when test="${post.image != null}">
-                                                                        <img style="width: 100%; height:  350px;"
-                                                                             src="data:image/png;base64,${post.image}"
-                                                                             alt="Image"
-                                                                             class="w-full"
-                                                                             />
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        <img style="width: 100%; height:  250px;"
-                                                                             src="https://placehold.co/100x100"
-                                                                             alt="Image"
-                                                                             class="w-full"
-                                                                             />
-                                                                    </c:otherwise>
-                                                                </c:choose>
-
                                                             </div>
                                                             <div class="modal-footer" style="display: flex; justify-content: space-between">
                                                                 <div>

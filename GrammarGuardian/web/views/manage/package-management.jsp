@@ -15,13 +15,13 @@
                 <jsp:include page="navadmin.jsp"/>
                 <div  class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <h1>Package Management</h1>
-                    <a href="${pageContext.request.contextPath}/views/manage/add-package.jsp" class="btn btn-primary mb-3">Add Package</a>
+                    <a href="${pageContext.request.contextPath}/admin/AddPackagePageController" class="btn btn-primary mb-3">Add Package</a>
                     <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Description</th>
                                 <th>Title</th>
+                                <th>Description</th>
                                 <th>Price</th>
                                 <th>Limit Text</th>
                                 <th>Check Time</th>
@@ -33,8 +33,8 @@
                             <c:forEach items="${PACKAGES}" var="p">
                                 <tr>
                                     <td>${p.id}</td>
-                                    <td>${p.description}</td>
                                     <td>${p.title}</td>
+                                    <td>${p.description}</td>
                                     <td>${p.price}</td>
                                     <td>${p.limitText}</td>
                                     <td>${p.checkTime}</td>
