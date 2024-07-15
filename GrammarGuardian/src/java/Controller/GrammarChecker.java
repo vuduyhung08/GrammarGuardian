@@ -152,6 +152,28 @@ public class GrammarChecker extends HttpServlet {
             e.printStackTrace();
         }
     }
+     private void savePost(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            HttpSession session = request.getSession(false);
+            String title = request.getParameter("title");
+            List<Map<String, Object>> segments = (List<Map<String, Object>>) session.getAttribute("CHECK_RESULT");
+            List<RuleMatch> matches = (List<RuleMatch>) session.getAttribute("CHECK_RESULT");
+            String textInput = (String) session.getAttribute("ESSAY_INPUT");
+            User userLogedIn = (User) session.getAttribute("USER");
+
+            Post post = new Post();
+            post.setTitle(title);
+            post.setDescription(textInput);
+            GrammarCheckerDAO grammarCheckerDAO = new GrammarCheckerDAO();
+            int postId = grammarCheckerDAO.savePost(userLogedIn.getId(), post);
+
+         
+           
+            request.getRequestDispatcher("HomeController").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     
 
