@@ -48,7 +48,11 @@ public class UserWalletManageController extends HttpServlet {
                 if (total % 5 != 0) {
                     lastPage++;
                 }
-                request.setAttribute("endP", lastPage);
+                
+                List<UserWallet> listWallet = walletDAO.getUserWallet();
+                request.setAttribute("endP", lastPage);           
+                request.setAttribute("USER_WALLETS", listWallet);
+
                 request.setAttribute("selectedPage", index);
                 request.setAttribute("status", status);
                 request.setAttribute("WALLET_ORDERS", orders);
@@ -77,6 +81,7 @@ public class UserWalletManageController extends HttpServlet {
                     boolean result = walletDAO.approveWalletOrder(orderId);
                     if (result) {
                         response.sendRedirect("UserWalletManageController");
+                        
                     } else {
                         request.setAttribute("ERROR_MESSAGE", "Failed to approve wallet order.");
                     }
@@ -88,16 +93,7 @@ public class UserWalletManageController extends HttpServlet {
                     } else {
                         request.setAttribute("ERROR_MESSAGE", "Failed to reject wallet order.");
                     }
-                } else if (action.equals("add")) {
-                    float amount = Float.parseFloat(request.getParameter("amount"));
-                    UserWallet userWallet = walletDAO.getUserWalletByUserId(user.getId());
-                    boolean result = walletDAO.addWalletOrder(user.getId(), userWallet.getWalletId(), amount);
-                    if (result) {
-                        response.sendRedirect("UserWalletManageController");
-                    } else {
-                        request.setAttribute("ERROR_MESSAGE", "Failed to add wallet order.");
-                    }
-                }
+                } 
             } else {
                 response.sendRedirect("auth?action=login");
             }
