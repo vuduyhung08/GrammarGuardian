@@ -90,7 +90,7 @@ public class GrammarChecker extends HttpServlet {
                 // get user ra first
                 if (userLogined.getCheckFreeTime() == 0) {
                     isValidateToChecker = false;
-                    request.setAttribute("ERROR", "You already using leat 3 times free checking! Please register our package to try more!");
+                    request.setAttribute("ERROR", "You already using leat 10 times free checking! Please register our package to try more!");
                     request.getRequestDispatcher("HomeController").forward(request, response);
                     return;
                 }
@@ -108,7 +108,21 @@ public class GrammarChecker extends HttpServlet {
                 return;
             }
 
+            if(userLogined.getCheckFreeTime() != 0 && wordInput > 100) {
+                isValidateToChecker = false;
+                 request.setAttribute("ERROR", "You just able to check lower than 100 words");
+            }
+            
             if (isValidateToChecker) {
+                
+                  // tru so lan mien phi neu con
+                if (userLogined.getCheckFreeTime() != 0) {
+                    int remainsTime = userLogined.getCheckFreeTime() - 1;
+                    userLogined.setCheckFreeTime(remainsTime);
+                    profileDAO.updateRemainsTime(userLogined);
+                }
+
+                
                 JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
 
                 // Chặn kiểm tra theo loại được chọn
@@ -174,13 +188,7 @@ public class GrammarChecker extends HttpServlet {
                 session.setAttribute("ESSAY_INPUT", text);
                 session.setAttribute("CHECK_RESULT", matches);
 
-                // tru so lan mien phi neu con
-                if (userLogined.getCheckFreeTime() != 0) {
-                    int remainsTime = userLogined.getCheckFreeTime() - 1;
-                    userLogined.setCheckFreeTime(remainsTime);
-                    profileDAO.updateRemainsTime(userLogined);
-                }
-
+              
                 if (userPermission != null) {
                     // get user ra first
                     int checkTimePackageRemains = userPermission.getCheckTime() - 1;

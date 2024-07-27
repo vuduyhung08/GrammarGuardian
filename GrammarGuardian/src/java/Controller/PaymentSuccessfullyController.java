@@ -35,7 +35,7 @@ public class PaymentSuccessfullyController extends HttpServlet {
                 float ammountPrice = Float.parseFloat(ammount) / 100;
                 boolean result = userWalletDAO.addWalletOrder(userWallet.getWalletId(), user.getId(), ammountPrice);
                 if (result) {
-                    String content = "Send request to add  " + ammount + " to your wallet";
+                    String content = "Send request to add  " + Integer.parseInt(ammount) / 100 + " to your wallet";
                     userWalletDAO.addTransitionHistory(content, userWallet.getWalletId());
                     request.setAttribute("MESSAGE", "Send request successfully please wait admin approve");
                 }

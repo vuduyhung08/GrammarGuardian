@@ -102,7 +102,7 @@ public class LoginController extends HttpServlet {
                     url = "admin/DashboardController";
                     response.sendRedirect(url);
                     return;
-                }
+                }  
             } else if (!userLogedIn.isIsActive()) {
                 request.setAttribute("ERRORMESSAGE", "Your account not active please contact administration");
             } else if (!userLogedIn.isIsCofirm()) {

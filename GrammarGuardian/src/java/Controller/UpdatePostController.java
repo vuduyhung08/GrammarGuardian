@@ -52,12 +52,13 @@ public class UpdatePostController extends HttpServlet {
             String postId = request.getParameter("postId");
             String title = request.getParameter("title");
             Part image = request.getPart("image");
-            Post post = new Post();
-            post.setTitle(title);
-            if (postId != null) {
-                post.setPostId(Integer.parseInt(postId));
-            }
             PostDAO postDAO = new PostDAO();
+            Post post = new Post();
+
+            if (postId != null) {
+                post = postDAO.getPostById(Integer.parseInt(postId));
+                post.setTitle(title);
+            }
             boolean result = postDAO.updatePostDetail(post, image);
             if (result) {
                 request.setAttribute("MESSAGE", "Post updated successfully");

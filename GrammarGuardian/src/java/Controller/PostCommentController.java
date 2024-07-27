@@ -48,7 +48,7 @@ public class PostCommentController extends HttpServlet {
                 request.setAttribute("Failed", "Your comment post failed");
                 request.getRequestDispatcher("PostDetailController").forward(request, response);
             } else {
-                response.sendRedirect("auth?action=login");
+                response.sendRedirect("LoginController");
             }
         } catch (Exception e) {
             e.printStackTrace();

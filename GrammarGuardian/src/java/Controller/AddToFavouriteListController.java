@@ -30,20 +30,25 @@ public class AddToFavouriteListController extends HttpServlet {
             throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
-            User userLogin = (User) session.getAttribute("USER");
-            String postIds = request.getParameter("postId");
-            if (postIds != null) {
-                int postId = Integer.parseInt(postIds);
-                GrammarCheckerDAO grammarCheckDAO = new GrammarCheckerDAO();
-                boolean result = grammarCheckDAO.AddToFavouriteList(postId, userLogin.getId());
-                if (result) {
-                    request.setAttribute("MESSAGE", "Add to favourite list succesfully!!");
-                } else {
-                    request.setAttribute("ERROR", "This post was add in your favourite list");
-                    System.out.println("restorePost - Add to favourite  failed");
+            if (session != null && session.getAttribute("USER") != null) {
+                User userLogin = (User) session.getAttribute("USER");
+                String postIds = request.getParameter("postId");
+                if (postIds != null) {
+                    int postId = Integer.parseInt(postIds);
+                    GrammarCheckerDAO grammarCheckDAO = new GrammarCheckerDAO();
+                    boolean result = grammarCheckDAO.AddToFavouriteList(postId, userLogin.getId());
+                    if (result) {
+                        request.setAttribute("MESSAGE", "Add to favourite list succesfully!!");
+                    } else {
+                        request.setAttribute("ERROR", "This post was add in your favourite list");
+                        System.out.println("restorePost - Add to favourite  failed");
+                    }
+                    request.getRequestDispatcher("auth").forward(request, response);
                 }
-                request.getRequestDispatcher("auth").forward(request, response);
+            } else {
+                response.sendRedirect("LoginController");
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
