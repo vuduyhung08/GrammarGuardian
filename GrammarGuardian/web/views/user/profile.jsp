@@ -158,7 +158,7 @@
                                 <div class="col-md-3">
                                     <div class="card shadow-sm">
                                         <div class="card-body" style="display: flex; justify-content: space-between">
-                                            <div class="d-flex justify-content-center align-items-center" style="flex-direction: column">
+                                            <div class="d-flex justify-content-center align-items-center" style="flex-direction: column; height: 100px">
                                                 <div>
                                                     <b>Title</b>: ${post.title}
                                                 </div>

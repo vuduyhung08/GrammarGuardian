@@ -395,9 +395,6 @@
                 }
             }
 
-
-
-
             function countWords() {
                 var text = document.getElementById("text").value;
                 var words = text.trim().split(/\s+/);
@@ -407,9 +404,8 @@
                 document.getElementById("wordCount").innerHTML = wordCount;
                 document.getElementById("word-count-input").value = wordCount;
             }
-
-
             countWords();
+                      
 
             document.getElementById('fileInput').addEventListener('change', function (event) {
                 const file = event.target.files[0];

@@ -108,9 +108,98 @@
                         </ul>
                     </nav>
 
+                    <div  class="col-md-12 ms-sm-auto col-lg-12">
 
+                        <h1>Wallet Management</h1>
+                        <h3 style="color: red">${ERROR}</h3>         
+                        <h3 style="color: green">${MESSAGE}</h3>
+
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>User</th>    
+                                    <th>Email</th>
+                                    <th>Amount</th>    
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${USER_WALLETS}" var="w" varStatus="status">
+                                    <tr>
+                                        <td>${status.count}</td>      
+                                        <td>${w.walletId}</td>    
+                                        <td>${w.user.email}</td>     
+                                        <td>${w.ammount}</td>     
+
+                                        <td>
+                                            <a  data-bs-toggle="modal" data-bs-target="#disableModal-${w.userId}" aria-hidden="true" class="btn btn-success">
+                                                Add fund
+                                            </a>
+
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="disableModal-${w.userId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <form action="AddFundWalletController" method="GET">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" >Are you sure to add  money to ${w.user.email}</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Amount:
+                                                                <input type="hidden" name="userId" value="${w.userId}"/>
+                                                                <input type="number" name="amount"/>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button class="btn btn-success" type="submit">Add fund</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+
+                                            <a  data-bs-toggle="modal" data-bs-target="#refund-${w.userId}" aria-hidden="true" class="btn btn-warning">
+                                                Refund
+                                            </a>
+
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="refund-${w.userId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <form action="RefundWalletController" method="GET">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" >Are you sure to refund this user</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Amount:
+                                                                <input type="hidden" name="userId" value="${w.userId}"/>
+                                                                <input type="number" name="amount"/>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button class="btn btn-primary" type="submit">Refund</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+
+                    </div>
                 </div>
-            </div>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    </body>
-</html>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                </body>
+                </html>

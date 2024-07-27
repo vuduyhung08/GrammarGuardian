@@ -107,8 +107,8 @@
                                 <label for="inputOne" class="text-gray-700">Type your fund VND</label>
                                 <input placeholder="10000 vnđ" type="number" min="10000" name="ammount"  id="inputOne"  class="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
 
-                                <label for="inputTwo" class>The money (point) (1.000vnđ will equals to 1 point):</label>
-                                <input  type="number" id="inputTwo" placeholder="10 point" readonly class="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" required"/>
+                                <label for="inputTwo" class>The money (point) (1.000vnđ will equals to 1.000 point):</label>
+                                <input  type="number" id="inputTwo" placeholder="1000 point" readonly class="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" required"/>
                                 <label for="surname" class="text-gray-700">Please type your description of your banking is:</label>    
 
                                 <div for="surname" class="text-gray-700">Email - Phone - Add fund to my wallet</div>  
@@ -138,7 +138,7 @@
     <script>
        document.getElementById('inputOne').addEventListener('input', function () {
             var inputOneValue = this.value;
-            var resultValue = inputOneValue * 0.001; 
+            var resultValue = inputOneValue * 1; 
             document.getElementById('inputTwo').value = resultValue.toFixed(2); // Rounds the number to 2 decimal places
         });
         const profilePicture = document.getElementById('profile-picture');

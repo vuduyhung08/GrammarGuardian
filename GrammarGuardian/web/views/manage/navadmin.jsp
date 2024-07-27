@@ -46,9 +46,14 @@
                             Wallet Management
                         </a>
                     </li>
-                     <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/admin/GetAllPackageController">
                             Package Management
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/admin/GetAllFeedbackController">
+                            Feedback Management
                         </a>
                     </li>
                     <li class="nav-item">

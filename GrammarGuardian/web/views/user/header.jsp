@@ -24,7 +24,7 @@
                         <li><a class="dropdown-item" href="#">Design</a></li>
                     </ul>
                 </li>
-                <li><a href="#" class="nav-link px-2 text-white">About Us</a></li>
+                <li><a href="FeedbackController" class="nav-link px-2 text-white">About Us</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">Sale</a></li>
 
             </ul>
@@ -38,7 +38,7 @@
                 <c:if test="${sessionScope.USER != null}">
                 </c:if>  
 
-
+                <a href="RegisterPackagePageController" class="btn btn-success">Packages</a>
                 <div>
                     <c:if test="${sessionScope.USER == null}">
                         <!--<a href="${pageContext.request.contextPath}/auth?action=login" class="btn btn-outline-light me-2">Login!</a>-->

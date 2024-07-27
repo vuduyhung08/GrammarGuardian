@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -93,11 +95,11 @@
                         <c:choose>
                             <c:when test ="${selectedPage - 1 < 1}">
                                 <li class="page-item disabled">
-                                    <a class="page-link" href="#">«</a>
+                                    <a class="page-link" href="#">Â«</a>
                                 </li>
                             </c:when>
                             <c:otherwise>
-                                <li class="page-item"><a class="page-link" href="PostDetailController?postId=${POST.postId}&index=${selectedPage-1}">«</a></li>
+                                <li class="page-item"><a class="page-link" href="PostDetailController?postId=${POST.postId}&index=${selectedPage-1}">Â«</a></li>
                                 </c:otherwise>
                             </c:choose>
                             <c:forEach var="i" begin="1" end="${endP}">
@@ -106,11 +108,11 @@
                             <c:choose>
                                 <c:when test ="${selectedPage >= endP}">
                                 <li class="page-item disabled">
-                                    <a class="page-link" href="#">»</a>
+                                    <a class="page-link" href="#">Â»</a>
                                 </li>
                             </c:when>
                             <c:otherwise>
-                                <li class="page-item"><a class="page-link" href="PostDetailController?postId=${POST.postId}&index=${selectedPage+1}">»</a></li>
+                                <li class="page-item"><a class="page-link" href="PostDetailController?postId=${POST.postId}&index=${selectedPage+1}">Â»</a></li>
                                 </c:otherwise>
                             </c:choose>
                     </ul>

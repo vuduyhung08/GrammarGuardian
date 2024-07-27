@@ -57,6 +57,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/admin/GetAllFeedbackController">
+                                Feedback Management
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="${pageContext.request.contextPath}/LogoutController">
                                 Log out
                             </a>

@@ -112,16 +112,18 @@
             if (!passwordRegex.test(password)) {
                 isValid = false;
                 passwordMessage.textContent = 'Password must contain at least 8 characters and at least one uppercase letter, one lowercase letter, one number, and one special character.';
+            } else if (!(password == passwordConfirm.value)) {
+                isValid = false;
+                passwordMessage.textContent = 'Password does not match the password you registered with.';
             }
 
             if (oldPassword.value.trim() === "") {
                 isValid = false;
             }
-
+            
             submitButton.disabled = !isValid;
 
         });
-
 
         passwordConfirm.addEventListener('keyup', (event) => {
             const password = event.target.value;

@@ -276,9 +276,12 @@
                     <input style="margin-left: 5px" class="form-control" type="text" placeholder="LastName" name="lastName" required/>
                     <div id="name-message" style="color:red;font-size:11px"></div>
 
-                </div>
+                </div> 
+
                 <input type="text" placeholder="Username" name="username" required/>
+                <div id="name-message" style="color:red;font-size:11px"></div>
                 <input type="email" placeholder="Email" name="email" required/>
+                <div id="email-message" style="color:red;font-size:11px"></div>
                 <input type="text" placeholder="Phone" name="phone" required/>
                 <div id="phone-message" style="color:red;font-size:11px"></div>
                 <input type="password" placeholder="Password" name="password" id="password" required/>
@@ -296,19 +299,7 @@
                 </c:if>
                 <h1>Sign In</h1>
 
-                <div class="social-container">
-                    <a href="https://www.facebook.com/dialog/oauth?client_id=1509092289871952&redirect_uri=http://localhost:8080/FBK74/login-facebook" class="social"
-                       style="
-                       background-color: navy;
-                       color: white;
-                       "><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social"  style="
-                       background-color: red;
-                       color: white;
-                       "><i class="fab fa-google-plus-g"></i></a>
-                </div>
-                <!--<input type="hidden" placeholder="UserName" name="action" value="login"/>-->
-                <span>Use social account?</span>
+                
                 <input type="UserName" placeholder="UserName" name="userName" required/>
 
                 <input type="password" placeholder="Password" name="password" required/>
@@ -362,7 +353,60 @@
     const passwordMessage = document.getElementById('password-message');
     const submitButton = document.querySelector('form button');
 
+
+    const nameInput = document.querySelector('input[name="username"]');
+    const phoneInput = document.querySelector('input[name="phone"]');
+    const emailInput = document.querySelector('input[name="email"]');
+
+    const nameMessage = document.getElementById('name-message');
+    const emailMessage = document.getElementById('email-message');
+
+    const phoneMessage = document.getElementById('phone-message');
+
+
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'*+,-\./:;<=>?@\[\]^_`{|}~])[^\s]{8,}$/;
+    const nameRegex = /^[A-Za-z\s]+$/;
+    const phoneRegex = /^\d{10}$/;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    nameInput.addEventListener('keyup', (event) => {
+        const nameInputvalue = event.target.value;
+        let isValid = true;
+        nameMessage.textContent = '';
+
+        if (!nameRegex.test(nameInputvalue)) {
+            isValid = false;
+            nameMessage.textContent = 'The name must contain only letters and spaces, no numbers or special characters.';
+        }
+
+        submitButton.disabled = !isValid;
+    });
+
+    phoneInput.addEventListener('keyup', (event) => {
+        const phoneInputValue = event.target.value;
+        let isValid = true;
+        phoneMessage.textContent = '';
+        if (!phoneRegex.test(phoneInputValue)) {
+            isValid = false;
+            phoneMessage.textContent = 'Phone numbers must contain only numbers and no more than 10 digits.';
+        }
+        submitButton.disabled = !isValid;
+    });
+
+    emailInput.addEventListener('keyup', (event) => {
+        const emailInputValue = event.target.value;
+        let isValid = true;
+        emailMessage.textContent = '';
+
+        if (!emailRegex.test(emailInputValue)) {
+            isValid = false;
+            emailMessage.textContent = 'Invalidate email';
+        }
+
+        submitButton.disabled = !isValid;
+    });
+
 
     passwordInput.addEventListener('keyup', (event) => {
         const password = event.target.value;
@@ -376,8 +420,6 @@
 
         submitButton.disabled = !isValid;
     });
-
-
     passwordConfirm.addEventListener('keyup', (event) => {
         const password = event.target.value;
         let isValid = true;
@@ -395,90 +437,6 @@
     });
 
 
-//
-    document.addEventListener('DOMContentLoaded', function () {
-        const nameInput = document.querySelector('input[name="name"]');
-        const phoneInput = document.querySelector('input[name="phone"]');
-        const nameMessage = document.getElementById('name-message');
-        const phoneMessage = document.getElementById('phone-message');
-        const submitButton = document.querySelector('form button');
 
-        const nameRegex = /^[A-Za-z\s]+$/;
-        const phoneRegex = /^\d{1,10}$/;
-
-        // Validate Name
-        function validateName() {
-            const nameIsValid = nameRegex.test(nameInput.value);
-            nameMessage.textContent = nameIsValid ? '' : 'The name must contain only letters and spaces, no numbers or special characters.';
-            checkFormValidity();
-        }
-
-        // Validate Phone
-        function validatePhone() {
-            const phoneIsValid = phoneRegex.test(phoneInput.value);
-            phoneMessage.textContent = phoneIsValid ? '' : 'Phone numbers must contain only numbers and no more than 10 digits.';
-            checkFormValidity();
-        }
-
-        // Check overall form validity
-        function checkFormValidity() {
-            const nameIsValid = nameRegex.test(nameInput.value);
-            const phoneIsValid = phoneRegex.test(phoneInput.value);
-            submitButton.disabled = !(nameIsValid && phoneIsValid);
-        }
-
-        nameInput.addEventListener('keyup', validateName);
-        phoneInput.addEventListener('keyup', validatePhone);
-    });
-
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const form = document.querySelector('form[action="register"]');
-        const inputs = form.querySelectorAll('input');
-        const select = form.querySelector('select[name="gender"]');
-        const submitButton = form.querySelector('button[type="submit"]');
-        const formMessage = document.createElement('div');
-        formMessage.style.color = 'red';
-        formMessage.style.fontSize = '14px';
-        formMessage.style.textAlign = 'center';
-        formMessage.style.marginTop = '10px';
-        formMessage.textContent = 'Please fill in all information to register.';
-        formMessage.hidden = true; // Ẩn thông báo này mặc định
-        form.appendChild(formMessage);
-
-        function validateInputs() {
-            let isValid = true;
-            inputs.forEach(input => {
-                if (input.value.trim() === '') {
-                    isValid = false;
-                }
-            });
-
-            if (select.value === '') {
-                isValid = false;
-            }
-
-            // Kiểm tra định dạng của các trường như email và password nếu cần
-            // Ví dụ, kiểm tra định dạng email
-            const emailInput = form.querySelector('input[name="email"]');
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(emailInput.value)) {
-                isValid = false;
-            }
-
-            // Kiểm tra mật khẩu phức tạp
-            const passwordInput = form.querySelector('input[name="password"]');
-            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]).{8,}$/;
-            if (!passwordRegex.test(passwordInput.value)) {
-                isValid = false;
-            }
-
-            submitButton.disabled = !isValid;
-            formMessage.hidden = isValid; // Hiển thị thông báo nếu form không hợp lệ
-        }
-
-        inputs.forEach(input => input.addEventListener('input', validateInputs));
-        select.addEventListener('change', validateInputs);
-    });
 
 </script>

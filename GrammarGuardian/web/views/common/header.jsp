@@ -18,13 +18,12 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="featuresDropdown">
                         <li><a class="dropdown-item" href="#">Software engineer</a></li>
-
                         <li><a class="dropdown-item" href="#">Marketing</a></li>
                         <li><a class="dropdown-item" href="#">Business</a></li>
                         <li><a class="dropdown-item" href="#">Design</a></li>
                     </ul>
                 </li>
-                <li><a href="#" class="nav-link px-2 text-white">About Us</a></li>
+                <li><a href="FeedbackController" class="nav-link px-2 text-white">About Us</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">Sale</a></li>
 
             </ul>
@@ -38,11 +37,11 @@
                 <c:if test="${sessionScope.USER != null}">
                 </c:if>  
 
-                <a href="RegisterPackagePageController" class="btn btn-success">Packages</a>
+                <a href="RegisterPackagePageController" class="btn btn-success" style="margin-right: 15px">Packages</a>
                 <div>
                     <c:if test="${sessionScope.USER == null}">
                         <!--<a href="${pageContext.request.contextPath}/auth?action=login" class="btn btn-outline-light me-2">Login!</a>-->
-                        <a href="${pageContext.request.contextPath}/LoginController" class="btn btn-outline-light me-2">Login!</a>
+                        <a href="${pageContext.request.contextPath}/LoginController" class="btn btn-success me-2">Login!</a>
                     </c:if>  
                     <c:if test="${sessionScope.USER != null }">
                         <div class="dropdown">
