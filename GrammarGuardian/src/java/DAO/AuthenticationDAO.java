@@ -88,7 +88,7 @@ public class AuthenticationDAO extends DBContext {
     }
 
      public User getUserById(int Id) {
-        String sql = "SELECT * FROM [User] WHERE [Id] = ?";
+        String sql = "SELECT * FROM [User] WHERE [UserId] = ?";
         User user = null;
         try {
             ps = con.prepareStatement(sql);

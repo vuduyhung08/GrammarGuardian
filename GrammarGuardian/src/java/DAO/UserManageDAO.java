@@ -219,7 +219,6 @@ public class UserManageDAO {
     }
 
     public boolean changeStatus(int UserId) {
-
         try {
             User user = new User();
             String sql = "SELECT * FROM [User] WHERE UserId = ?";

@@ -52,7 +52,7 @@ public class PostDAO extends DBContext {
         }
         return 0;
     }
-    
+
     // get all post admin and total 
     public int getAllPostAdminTotal() {
         List<Post> listPosts = new ArrayList();
@@ -69,7 +69,7 @@ public class PostDAO extends DBContext {
         }
         return 0;
     }
-    
+
     public List<ViewPostDetailAdmin> getAllPostInAdmin(int index) {
         List<ViewPostDetailAdmin> listPostsView = new ArrayList<>();
         try {
@@ -100,9 +100,9 @@ public class PostDAO extends DBContext {
         }
         return listPostsView;
     }
-    
+
     // search title and type = all
-     public int searchPostManagePageTitleTotal(String title) {
+    public int searchPostManagePageTitleTotal(String title) {
         List<Post> listPosts = new ArrayList();
         try {
             String sql = "SELECT COUNT(*) FROM [Post] WHERE Title LIKE ? and Status != 2";
@@ -117,8 +117,8 @@ public class PostDAO extends DBContext {
         }
         return 0;
     }
-    
-     public List<ViewPostDetailAdmin> searchPostManagePageByTitle(String title, int index) {
+
+    public List<ViewPostDetailAdmin> searchPostManagePageByTitle(String title, int index) {
         List<ViewPostDetailAdmin> listPostsSearch = new ArrayList<>();
         try {
             String sql = "SELECT p.PostId, p.Title, p.Description, p.Status, p.CreateAt, u.UserName\n"
@@ -147,7 +147,7 @@ public class PostDAO extends DBContext {
         }
         return listPostsSearch;
     }
-     
+
     // getTotal Post Type Search  + Get list post search
     public int getPostTotalByTypeSearch(int type) {
         try {
@@ -192,8 +192,8 @@ public class PostDAO extends DBContext {
         }
         return listPostView;
     }
-     
-     // get total post by type and title + all post search title and 
+
+    // get total post by type and title + all post search title and 
     public int getPostTotalByTitleAndType(String title, int type) {
         try {
             String sql = "select count(*) from Post where Title like ? and Status = ?";
@@ -223,7 +223,7 @@ public class PostDAO extends DBContext {
             ps.setString(2, "%" + title + "%");
             ps.setInt(3, (index - 1) * 8);
             rs = ps.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
                 ViewPostDetailAdmin listPost = new ViewPostDetailAdmin();
                 listPost.setPostId(rs.getInt("PostId"));
                 listPost.setTitle(rs.getString("Title"));
@@ -238,7 +238,7 @@ public class PostDAO extends DBContext {
         }
         return listViewPost;
     }
-     
+
     // list user manager approve
     public List<Post> getAllPostSpending(int index) {
         List<Post> listPosts = new ArrayList();
@@ -317,8 +317,6 @@ public class PostDAO extends DBContext {
         }
         return listPosts;
     }
-
-   
 
     public Post getPostById(int postId) {
         try {
@@ -530,6 +528,13 @@ public class PostDAO extends DBContext {
                 ps.setInt(3, post.getPostId());
             }
             int affectedRows = ps.executeUpdate();
+            if (affectedRows > 0) {
+                String sql = "UPDATE Post_Update SET Title = ?  WHERE Id = ?";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, post.getTitle());     
+                ps.setInt(2, post.getUpdatePostId());
+                ps.executeUpdate();
+            }
             return affectedRows > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -720,7 +725,7 @@ public class PostDAO extends DBContext {
                         + " ORDER BY PostId DESC OFFSET ? ROWS FETCH NEXT 8 ROWS ONLY";
                 ps = con.prepareStatement(sql);
                 ps.setInt(1, userId);
-                ps.setString(2, "%" + search + "%");    
+                ps.setString(2, "%" + search + "%");
                 ps.setInt(3, (index - 1) * 8);
 
             } else {

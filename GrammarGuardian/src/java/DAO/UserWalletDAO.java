@@ -6,8 +6,10 @@ package DAO;
 
 import DAL.DBContext;
 import Model.TransitionHistory;
+import Model.User;
 import Model.UserWallet;
 import Model.ViewModel.UserWalletOrderVM;
+import Service.MailService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -252,8 +254,9 @@ public class UserWalletDAO extends DBContext {
 
     public boolean updateUserWalletBalance(int userId, int userWalletId, float amount) {
         try {
-            String sql = "UPDATE UserWallet SET Ammount = Ammount + ? WHERE UserId = ? AND Id = ?";
+            String sql = "UPDATE UserWallet SET Ammount = ? WHERE UserId = ? AND Id = ?";
             ps = con.prepareStatement(sql);
+            // đoạn này không cộng 
             ps.setFloat(1, amount);
             ps.setInt(2, userId);
             ps.setInt(3, userWalletId);
@@ -262,13 +265,19 @@ public class UserWalletDAO extends DBContext {
             if (affectedRows > 0) {
                 String content = "Add " + amount + " sucessfully to your wallet";
                 addTransitionHistory(content, userWalletId);
+
+                AuthenticationDAO authDAO = new AuthenticationDAO();
+                User user = authDAO.getUserById(userId);
+                // send mail
+                String contentEmail = "You was added " + amount + " amount by admin. Anything missing please contact with us!";
+                MailService.sendMailWithInfo(user.getEmail(), contentEmail);
+
                 return true;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
-
     }
 
     public boolean addTransitionHistory(String Content, int WalletId) {
@@ -364,8 +373,85 @@ public class UserWalletDAO extends DBContext {
         return totalBalance;
     }
 
+    public List<UserWallet> getUserWallet() {
+        List<UserWallet> listUser = new ArrayList<>();
+        try {
+            String sql = "SELECT uw.*, u.UserName, u.Email FROM UserWallet uw JOIN [User] u ON uw.UserId = u.UserId ";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                UserWallet userWallet = new UserWallet();
+                userWallet.setWalletId(rs.getInt("Id"));
+                userWallet.setAmmount(rs.getFloat("Ammount"));
+                userWallet.setWalletId(rs.getInt("UserId"));
+                userWallet.setCreateAt(rs.getString("CreateAt"));
+                userWallet.setUserId(rs.getInt("UserId"));
+
+                User user = new User();
+                user.setEmail(rs.getString("Email"));
+                user.setUserName(rs.getString("UserName"));
+
+                userWallet.setUser(user);
+                listUser.add(userWallet);
+            }
+            return listUser;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listUser;
+    }
+
+    public boolean addFundToUserWallet(int userId, double ammount) {
+        try {
+            UserWallet userWallet = getUserWalletByUserId(userId);
+            if (userWallet != null) {
+
+                double newAmmount = userWallet.getAmmount() + ammount;
+                String sql = "UPDATE UserWallet SET Ammount = ? WHERE UserId = ?";
+                ps = con.prepareStatement(sql);
+                ps.setDouble(1, newAmmount);
+                ps.setInt(2, userId);
+                int affectedRows = ps.executeUpdate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean reFundUserWallet(int userId, double ammount) {
+        try {
+            UserWallet userWallet = getUserWalletByUserId(userId);
+            if (userWallet != null) {
+
+                double newAmmount = userWallet.getAmmount() - ammount;
+                if (newAmmount >= 0) {
+                    String sql = "UPDATE UserWallet SET Ammount = ? WHERE UserId = ?";
+                    ps = con.prepareStatement(sql);
+                    ps.setDouble(1, newAmmount);
+                    ps.setInt(2, userId);
+                    int affectedRows = ps.executeUpdate();
+                    if(affectedRows > 0) {
+                        return true;
+                    }
+                } else { 
+                    return false;
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         UserWalletDAO userwallet = new UserWalletDAO();
-        System.out.println("ammouint" + userwallet.getUserWalletById(1).getAmmount());
+        userwallet.reFundUserWallet(19, 18000);
+//        List<UserWallet> lusi = userwallet.getUserWallet();
+//        for (UserWallet userWallet : lusi) {
+//            System.out.println(userWallet.toString());
+//        }
     }
 }
