@@ -122,7 +122,7 @@ public class RouteFilter implements Filter {
         }
 
         // Chuyển hướng nếu URL kết thúc bằng dấu "/"
-        if (url.endsWith("/")) {
+        if (url.endsWith("/") ) {
             httpResponse.sendRedirect(homepageUrl);
             return;
         }
